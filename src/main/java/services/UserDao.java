@@ -1,8 +1,6 @@
 package services;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+
 import model.Role;
 import model.User;
 import java.util.Optional;
@@ -12,10 +10,10 @@ public class UserDao{
     private static final Logger logger =Logger.getLogger(UserDao.class.getName());
     public UserDao() {
     }
-    public static void SaveUser(User user) throws SQLException{
+    public static Integer SaveUser(User user) throws SQLException{
        try{
            connection=BDConnection.getConnection();
-           PreparedStatement ps=connection.prepareStatement("insert into users(name,email,password,role,phone) values(?,?,?,?,?)");
+           PreparedStatement ps=connection.prepareStatement("insert into users(name,email,password,role,phone) values(?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
            ps.setString(1,user.getName());
            ps.setString(2,user.getEmail());
            String password=user.getPassword();
@@ -26,11 +24,18 @@ public class UserDao{
            int rows=ps.executeUpdate();
            if(rows>0){
                System.out.println("User Saved");
+               try (ResultSet rs = ps.getGeneratedKeys()) {
+                   if (rs.next()) {
+                       System.out.println("the generated key is " + rs.getInt(1));
+                       return rs.getInt(1);  // Retrieve the generated ID
+                   }
+               }
            }
        }
        catch(SQLException e){
            e.printStackTrace();
        }
+       return null;
     }
     public static Optional<User> authenticate(String email, String password) throws SQLException{
         //todo:return an object of the authenticated user
@@ -82,7 +87,7 @@ public class UserDao{
                 System.out.println("user already exists");
                 return false;
             }
-            SaveUser(user);
+
 
         }
         catch(SQLException e){
@@ -148,6 +153,26 @@ public class UserDao{
             ps.setInt(1,id);
             ps.executeUpdate();
 
+        }
+        catch(SQLException e){
+            e.printStackTrace();
+        }
+    }
+
+    public static void uploadPicture(String imageURL,Integer id) throws SQLException{
+        try{
+            connection = BDConnection.getConnection();
+            PreparedStatement ps= connection.prepareStatement("update users set pictures=? where id=?");
+            ps.setString(1,imageURL);
+            ps.setInt(2,id);
+
+            int rows=ps.executeUpdate();
+            if(rows>0){
+                System.out.println("User Updated");
+            }
+            else{
+                System.out.println("User Not Updated");
+            }
         }
         catch(SQLException e){
             e.printStackTrace();

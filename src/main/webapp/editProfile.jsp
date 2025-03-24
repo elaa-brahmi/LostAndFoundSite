@@ -40,9 +40,8 @@ int idUser=Integer.parseInt(request.getParameter("idUser"));
         }
 
         .nav {
-            margin-top:1%;
             position: relative;
-            height: 60px;
+            height: 100px;
         }
 
         .container:hover .outline .rect {
@@ -53,7 +52,6 @@ int idUser=Integer.parseInt(request.getParameter("idUser"));
 
         .container {
             width: 99%;
-            max-width:99%;
             position: absolute;
             inset: 0;
             background: grey;
@@ -65,7 +63,7 @@ int idUser=Integer.parseInt(request.getParameter("idUser"));
         }
 
         .btn {
-            padding: 0.5em 1.5em;
+            padding: 0.5em 1em;
             color: #fff;
             font-size: 2em;
             text-decoration: none;
@@ -75,7 +73,6 @@ int idUser=Integer.parseInt(request.getParameter("idUser"));
 
         .btn:hover {
             background: #fff3;
-            color: #fff;
         }
 
         .btn:nth-child(1):hover ~ svg .rect {
@@ -112,16 +109,17 @@ int idUser=Integer.parseInt(request.getParameter("idUser"));
 
 <div class="nav">
     <div class="container">
-        <a href="index.jsp" class="btn">Home</a>
+        <div><img src="assets/logo.png" alt="logo" width="100px" height="90px"></div>
+        <a href="home.jsp" class="btn">Home</a>
         <a href="MyPosts.jsp" class="btn">profile</a>
         <a href="addItem.jsp" class="btn" >report lost/found item </a>
-        <a href="about.jsp" class="btn">about</a>
+        <a href="index.jsp" class="btn">about</a>
         <svg
                 class="outline"
                 overflow="visible"
                 width="100%"
-                height="60"
-                viewBox="0 0 100% 60"
+                height="100px"
+                viewBox="0 0 100% 100px"
                 xmlns="http://www.w3.org/2000/svg"
         >
             <rect
@@ -130,7 +128,7 @@ int idUser=Integer.parseInt(request.getParameter("idUser"));
                     x="0"
                     y="0"
                     width="100%"
-                    height="60"
+                    height="100px"
                     fill="transparent"
                     stroke-width="5"
             ></rect>

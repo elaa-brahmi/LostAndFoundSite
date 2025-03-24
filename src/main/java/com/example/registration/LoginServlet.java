@@ -34,6 +34,8 @@ public class LoginServlet extends HttpServlet {
                 session=request.getSession();
                 //System.out.println(user.toString());
                 session.setAttribute("userId",user.get().getId());
+                System.out.println(" logged in User id is "+session.getAttribute("userId"));
+
                 session.setAttribute("email",email);
                 session.setAttribute("name",user.get().getName());
                 if(user.get().getRole().toString().equals("ADMIN")) {
@@ -44,7 +46,7 @@ public class LoginServlet extends HttpServlet {
                 else{
                         //System.out.println("user logged in in loginServlet");
                         session.setAttribute("role",user.get().getRole().toString().toLowerCase());
-                        response.sendRedirect("index.jsp");
+                        response.sendRedirect("home.jsp");
                     }
                 }
 

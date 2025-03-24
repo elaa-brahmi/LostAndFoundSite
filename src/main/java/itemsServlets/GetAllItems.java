@@ -41,7 +41,7 @@ public class GetAllItems extends HttpServlet {
             countRs.next();
             int totalItems = countRs.getInt("total");
             int totalPages = (int) Math.ceil((double) totalItems / pageSize);
-            PreparedStatement ps=con.prepareStatement("SELECT * FROM item WHERE status = 'ACCEPTED' LIMIT ? OFFSET ?");
+            PreparedStatement ps=con.prepareStatement("SELECT * FROM item WHERE status = 'ACCEPTED' ORDER BY datefound LIMIT ? OFFSET ?");
             ps.setInt(1, pageSize);
             ps.setInt(2, (page - 1) * pageSize);
             ResultSet rs=ps.executeQuery();

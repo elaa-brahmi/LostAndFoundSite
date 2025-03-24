@@ -10,6 +10,8 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    private  String picture;
+
     private String name;
     private String email;
     private String password;
@@ -20,12 +22,28 @@ public class User {
 
     public User() {}
 
-    public User(Integer id,String name, String email, String phone) {
+    public String getPicture() {
+        return picture;
+    }
+
+    public void setPicture(String picture) {
+        this.picture = picture;
+    }
+
+    public User(Integer id, String name, String email, String phone) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.phone = phone;
 
+    }
+
+    public User(Integer id, String name, String email, String phone, String image) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.phone = phone;
+        this.picture=image;
     }
 
     public int getId() {

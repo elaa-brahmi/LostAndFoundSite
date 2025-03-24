@@ -11,10 +11,10 @@ import java.io.IOException;
 @WebServlet(name="logout",urlPatterns = "/logout")
 public class Logout extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // Retrieve the existing session (do not create a new one)
-        HttpSession session = request.getSession(false);
-        session.removeAttribute("userId");
-        session.invalidate();
+        HttpSession session = request.getSession(false); // Do not create a new session
+        if (session != null) {
+            session.invalidate(); // Destroy session
+        }
         response.sendRedirect("login.jsp");
     }
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

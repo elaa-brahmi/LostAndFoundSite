@@ -2,6 +2,7 @@ package model;
 
 import jakarta.persistence.*;
 
+import java.sql.Date;
 import java.time.LocalDate;
 import java.util.Objects;
 
@@ -20,9 +21,20 @@ public class Item {
     private ItemStatus status;
     @Enumerated(EnumType.STRING)
     private ItemType type;
+    @Enumerated(EnumType.STRING)
+    private MatchedStatus matchedStatus;
     private LocalDate datefound;
     private int UserId;
     public Item() {}
+
+    public MatchedStatus getMatchedStatus() {
+        return matchedStatus;
+    }
+
+    public void setMatchedStatus(MatchedStatus matchedStatus) {
+        this.matchedStatus = matchedStatus;
+    }
+
     public Item(Integer id, String name, String description, String category, String location, String image, LocalDate date, ItemStatus itemStatus, Integer userid, ItemType itemType) {
 
         this.id = id;
@@ -109,6 +121,21 @@ public class Item {
         this.status = itemStatus;
         this.datefound = itemDate;
 
+
+
+    }
+
+    public Item(String name, String description, String category, String location, String imageUrl, ItemType itemType, LocalDate parse, ItemStatus itemStatus, Integer userId, MatchedStatus matchedStatus) {
+        this.name = name;
+        this.description = description;
+        this.category = category;
+        this.location = location;
+        this.image = imageUrl;
+        this.UserId = userId;
+        this.type = itemType;
+        this.datefound = parse;
+        this.status = itemStatus;
+        this.matchedStatus = matchedStatus;
 
 
     }

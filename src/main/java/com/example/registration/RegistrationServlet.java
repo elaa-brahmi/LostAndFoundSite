@@ -65,14 +65,17 @@ public class RegistrationServlet extends HttpServlet {
         User user=new User(name,email,password, Role.USER,phone);
         try {
             if(userDao.registerUser(user)){
+                Integer userId=userDao.SaveUser(user);
+                user.setId(userId);
                 System.out.println("User registered successfully");
                 request.setAttribute("status","success");
                 session=request.getSession();
                 session.setAttribute("userId",user.getId());
+                System.out.println(" registered User id is "+session.getAttribute("userId"));
                 session.setAttribute("name",user.getName());
                 session.setAttribute("email",user.getEmail());
                 session.setAttribute("role","user");
-                response.sendRedirect("index.jsp");
+                response.sendRedirect("home.jsp");
             }
             else{
                 System.out.println("User already exists with loginServlet");

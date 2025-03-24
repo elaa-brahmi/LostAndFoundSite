@@ -17,14 +17,11 @@ public class EmailSender {
         return String.valueOf(otp);
     }
 
-    public static void sendNotifEmail(String recipient, Item foundItem ) {
+    public static void sendNotifEmail(String recipient, Item foundItem,String messageText ) {
         String senderEmail = "alabrahmi12340@gmail.com";
         String senderPassword = "xwec eqjm nqqq wqla";
         String subject = "🔔 Lost & Found Match Found!";
-        String messageText = "A found item matches your lost item:\n" +
-                "📌 Title: " + foundItem.getName() + "\n" +
-                "📍 Location: " + foundItem.getLocation() + "\n" +
-                "📅 Found Date: " + foundItem.getDatefound();
+
         Properties props = new Properties();
         props.put("mail.smtp.host", "smtp.gmail.com");
         props.put("mail.smtp.port", "587");

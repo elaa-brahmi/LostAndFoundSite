@@ -4,15 +4,17 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
-import services.BDConnection;
+import model.Item;
+import model.ItemStatus;
+import model.ItemType;
+import model.MatchedStatus;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
 import java.time.LocalDate;
+import services.ItemDao;
 import services.cloudinary.CloudinaryServices;
-import java.util.logging.Logger;
+import services.notificationDao.NotificationDao;
+
+import java.util.List;
 
 @WebServlet(name="addItem",urlPatterns="/addItem")
 @MultipartConfig(
@@ -21,11 +23,8 @@ import java.util.logging.Logger;
         maxRequestSize = 1024 * 1024 * 50    // 50MB max request size
 )
 public class AddItem extends HttpServlet {
-    Connection con;
     HttpSession session;
     CloudinaryServices cloudinary=new CloudinaryServices();
-
-
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String name = request.getParameter("name");
@@ -36,37 +35,28 @@ public class AddItem extends HttpServlet {
         String type=request.getParameter("type");
         Part imagePart = request.getPart("image"); // Input name="image" in form
         // Upload to Cloudinary and get URL
+        String imageUrl = cloudinary.uploadToCloudinary(imagePart);
+        System.out.println(imageUrl);
+        session=request.getSession();
+        Integer userId= (Integer) session.getAttribute("userId");
+        Item item=new Item(name,description,category,location,imageUrl, ItemType.valueOf(type.toUpperCase()),LocalDate.parse(date), ItemStatus.PENDING,userId, MatchedStatus.PENDING);
+        int id=ItemDao.create(item);
+        item.setId(id);
+            if(type.equals("found")){
+                System.out.println("new item added of type found");
+                List<Item> lostItems = ItemDao.getLostItems();
+                NotificationDao.checkMatches(lostItems,item);
+            }
+            else{
+                System.out.println("new item added of type not found");
+                List<Item> foundItems=ItemDao.getFoundItems();
+                NotificationDao.checkMatches(foundItems,item);
 
-            String imageUrl = cloudinary.uploadToCloudinary(imagePart);
-            System.out.println(imageUrl);
+            }
 
-      try{
-             con= BDConnection.getConnection();
-            PreparedStatement ps=con.prepareStatement("insert into item(name,description,category,location,image,datefound,status,type,userid) values(?,?,?,?,?,?,?,?,?)");
-            ps.setString(1,name);
-            ps.setString(2,description);
-            ps.setString(3,category);
-            ps.setString(4,location);
-            ps.setString(5,imageUrl);
-            LocalDate localDate = LocalDate.parse(date);
-            ps.setDate(6,Date.valueOf(localDate));
-            ps.setString(7,"PENDING");
-            ps.setString(8,type.toUpperCase());
-            session=request.getSession();
-            Integer userId= (Integer) session.getAttribute("userId");
-            System.out.println(userId);
-            ps.setInt(9,userId);
-            int rows=ps.executeUpdate();
-            if(rows>0){
-                System.out.println("item added");
                 getServletContext().getRequestDispatcher("/MyPosts.jsp").forward(request,response);
             }
-        }catch(SQLException e){
-            e.printStackTrace();
-        }
 
-
-    }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 

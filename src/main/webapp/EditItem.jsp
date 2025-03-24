@@ -273,9 +273,9 @@
         }
 
         .nav {
-            margin-top:1%;
+            margin-top:0.5%;
             position: relative;
-            height: 60px;
+            height: 100px;
         }
 
         .container:hover .outline .rect {
@@ -304,13 +304,26 @@
             text-decoration: none;
             cursor: pointer;
             transition: 0.1s;
+            outline: unset;
         }
 
         .btn:hover {
             background: #fff3;
             color: #fff;
         }
+        .btn-check:checked+.btn, .btn.active, .btn.show, .btn:first-child:active, :not(.btn-check)+.btn:active {);
+            border:none!important;
+            color: #fff!important;
+            background-color: transparent!important;
+        }
 
+        .btn:focus-visible {
+            color: #fff!important;
+            background-color: transparent!important;
+            border:none!important;
+            outline: 0;
+            box-shadow: none!important;
+        }
         .btn:nth-child(1):hover ~ svg .rect {
             stroke-dashoffset: 0;
             stroke-dasharray: 0 2 8 73.3 8 10.7;
@@ -337,24 +350,23 @@
             transition: 0.5s !important;
         }
 
-
-
     </style>
 </head>
 <body class="vh-100" style="overflow-x: hidden;padding:0;"><!--Viewport Height-->
 
 <div class="nav">
     <div class="container">
-        <a href="index.jsp" class="btn">Home</a>
+        <div><img src="assets/logo.png" alt="logo" width="100px" height="90px"></div>
+        <a href="home.jsp" class="btn">Home</a>
         <a href="MyPosts.jsp" class="btn">profile</a>
         <a href="addItem.jsp" class="btn" >report lost/found item </a>
-        <a href="about.jsp" class="btn">about</a>
+        <a href="index.jsp" class="btn">about</a>
         <svg
                 class="outline"
                 overflow="visible"
                 width="100%"
-                height="60"
-                viewBox="0 0 100% 60"
+                height="100px"
+                viewBox="0 0 100% 100px"
                 xmlns="http://www.w3.org/2000/svg"
         >
             <rect
@@ -363,7 +375,7 @@
                     x="0"
                     y="0"
                     width="100%"
-                    height="60"
+                    height="100px"
                     fill="transparent"
                     stroke-width="5"
             ></rect>
@@ -423,8 +435,8 @@
             <option <%= "Hammamet".equals(item.getLocation()) ? "selected" : "" %> value="Hammamet">Hammamet</option>
             <option <%= "Tataouine".equals(item.getLocation()) ? "selected" : "" %> value="Tataouine">Tataouine</option>
             <option <%= "Monastir".equals(item.getLocation()) ? "selected" : "" %> value="Monastir">Monastir</option>
-            <option <%= "La Marsa".equals(item.getLocation()) ? "selected" : "" %> value="La Marsa">La Marsa</option>
-            <option <%= "Ben Arous".equals(item.getLocation()) ? "selected" : "" %> value="Ben Arous">Ben Arous</option>
+            <option <%= "tozeur".equals(item.getLocation()) ? "selected" : "" %> value="tozeur">tozeur</option>
+            <option <%= "Siliana".equals(item.getLocation()) ? "selected" : "" %> value="Siliana">Siliana</option>
 
 
         </select>

@@ -10,18 +10,22 @@ public class Notification {
     private int id;
     private String message;
     private Integer userId;
-    private String status ;
+    @Enumerated(EnumType.STRING)
+    private NotifStatus status ;
+
+    public Notification(Integer userIdPossible, String messagePossible, NotifStatus notifStatus) {
+        this.userId = userIdPossible;
+        this.message = messagePossible;
+        this.status = notifStatus;
+
+    }
 
     public int getId() {
         return id;
     }
     public Notification(){}
 
-    public Notification(String message, String status, Integer userId) {
-        this.message = message;
-        this.status = status;
-        this.userId = userId;
-    }
+
 
     public void setId(int id) {
         this.id = id;
@@ -43,11 +47,11 @@ public class Notification {
         this.userId = userId;
     }
 
-    public String getStatus() {
+    public NotifStatus getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(NotifStatus status) {
         this.status = status;
     }
 }

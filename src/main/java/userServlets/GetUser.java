@@ -32,7 +32,8 @@ public class GetUser extends HttpServlet {
                 String name = rs0.getString("name");
                 String email = rs0.getString("email");
                 String phone = rs0.getString("phone");
-                 user = new User(Id, name, email, phone);
+                String image = rs0.getString("pictures");
+                 user = new User(Id, name, email, phone,image);
                 //System.out.println("user: " + user);
             }
             Gson gson = new Gson();

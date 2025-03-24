@@ -16,6 +16,14 @@
 %>
 <html>
 <head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+    <!-- AOS JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            AOS.init();
+        });
+    </script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <title>My posts</title>
     <style>
@@ -41,14 +49,16 @@
 
         .card-author {
             position: relative;
-            display: grid;
-            grid-template-columns: 75px 1fr;
+            display: flex;
             align-items: center;
-            margin: 3rem 0 0;
+            row-gap: 1rem;
+            flex-direction: column;
         }
 
         .author-name {
             color: #7a7a8c;
+            text-align: start !important;
+            width: 100%;
         }
 
         .author-name-prefix {
@@ -65,17 +75,6 @@
             margin: 16px 10px;
         }
 
-        .half-circle {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 60px;
-            height: 48px;
-            fill: none;
-            stroke: #ff8a00;
-            stroke-width: 8;
-            stroke-linecap: round;
-        }
 
         .card-header {
             margin-bottom: auto;
@@ -299,46 +298,6 @@
 
         }
 
-        .slit-in-vertical {
-            -webkit-animation: slit-in-vertical 0.45s ease-out both;
-            animation: slit-in-vertical 0.45s ease-out both;
-        }
-
-        @-webkit-keyframes slit-in-vertical {
-            0% {
-                -webkit-transform: translateZ(-800px) rotateY(90deg);
-                transform: translateZ(-800px) rotateY(90deg);
-                opacity: 0;
-            }
-            54% {
-                -webkit-transform: translateZ(-160px) rotateY(87deg);
-                transform: translateZ(-160px) rotateY(87deg);
-                opacity: 1;
-            }
-            100% {
-                -webkit-transform: translateZ(0) rotateY(0);
-                transform: translateZ(0) rotateY(0);
-            }
-        }
-
-        @keyframes slit-in-vertical {
-            0% {
-                -webkit-transform: translateZ(-800px) rotateY(90deg);
-                transform: translateZ(-800px) rotateY(90deg);
-                opacity: 0;
-            }
-            54% {
-                -webkit-transform: translateZ(-160px) rotateY(87deg);
-                transform: translateZ(-160px) rotateY(87deg);
-                opacity: 1;
-            }
-            100% {
-                -webkit-transform: translateZ(0) rotateY(0);
-                transform: translateZ(0) rotateY(0);
-            }
-        }
-
-
 
 
         .outline {
@@ -356,7 +315,7 @@
 
         .nav {
             position: relative;
-            height: 60px;
+            height: 100px;
         }
 
         .container:hover .outline .rect {
@@ -378,7 +337,7 @@
         }
 
         .btn {
-            padding: 0.5em 1.5em;
+            padding: 0.5em 1em;
             color: #fff;
             font-size: 2em;
             text-decoration: none;
@@ -416,6 +375,89 @@
             transition: 0.5s !important;
         }
 
+        .profileimage {
+            background-color: transparent;
+            border: none;
+            margin-top: 20px;
+            border-radius: 5em;
+            width: 100px;
+            height: 100px;
+        }
+
+        .pfp {
+            border-radius: 35em;
+            fill: white;
+        }
+        #preview {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        /* ...existing code... */
+
+@media (max-width: 768px) {
+    .nav .container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .nav .btn {
+        font-size: 1.5em;
+    }
+
+    .containerPending {
+      width: 100%;
+        margin-top: 10px;
+    }
+
+    .cardUser {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+
+    #userProfile {
+        width: 100%;
+        margin-left: 0;
+        top: 0;
+    }
+
+    #PendingPosts, #acceptedPosts {
+        width: 100%;
+        margin-right: 0;
+    }
+
+    .container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .btn {
+        font-size: 1.5em;
+        padding: 0.5em 1em;
+    }
+
+    .profileimage {
+        width: 80px;
+        height: 80px;
+    }
+
+    .notifbutton {
+        width: 40px;
+        height: 40px;
+    }
+
+    .bell {
+        width: 16px;
+    }
+}
+
+/* ...existing code... */
 
 
 
@@ -427,16 +469,17 @@
 <body class="vh-100" style="overflow-x: hidden;  padding:0;">
 <div class="nav">
     <div class="container">
-        <a href="index.jsp" class="btn">Home</a>
+        <div><img src="assets/logo.png" alt="logo" width="100px" height="90px"></div>
+        <a href="home.jsp" class="btn">Home</a>
         <a href="MyPosts.jsp" class="btn">profile</a>
         <a href="addItem.jsp" class="btn" >report lost/found item </a>
-        <a href="about.jsp" class="btn">about</a>
+        <a href="index.jsp" class="btn">about</a>
         <svg
                 class="outline"
                 overflow="visible"
                 width="100%"
-                height="60"
-                viewBox="0 0 100% 60"
+                height="100px"
+                viewBox="0 0 100% 100px"
                 xmlns="http://www.w3.org/2000/svg"
         >
             <rect
@@ -445,7 +488,7 @@
                     x="0"
                     y="0"
                     width="100%"
-                    height="60"
+                    height="100px"
                     fill="transparent"
                     stroke-width="5"
             ></rect>
@@ -467,7 +510,7 @@
             },
             dataType: 'json',
             success: function (data) {
-                console.log(data);
+                console.log("user infos "+ data);
                 renderUserInfos(data);
             },
             error: function (xhr, status, error) {
@@ -482,7 +525,6 @@
             type: 'GET',
             data: {
                 userId: <%= session.getAttribute("userId") %>,
-
             },
             dataType: 'json',
             success: function (data) {
@@ -506,6 +548,10 @@
         PendingPosts.forEach(function (item) {
             var div = document.createElement("div");
             div.className = "containerPending";
+            div.setAttribute("data-aos","zoom-out-down");
+            div.setAttribute("data-aos-anchor-placement","bottom-bottom");
+
+
             div.innerHTML = `
 <div style="display: table-row;>
              <span style="font-size:18px;">` + item.name + `: ` + item.description + `</span></div>
@@ -550,6 +596,9 @@
         AcceptedPosts.forEach(function (item) {
         var divPosts=document.createElement("div");
         divPosts.className="containerPending";
+            divPosts.setAttribute("data-aos","zoom-out-down");
+            divPosts.setAttribute("data-aos-anchor-placement","bottom-bottom");
+
 
             divPosts.innerHTML = `
 <div style="display: table-row;>
@@ -601,12 +650,16 @@
             <span class="title">` + user.phone + `</span>
         </header>
         <div class="card-author">
-            <a class="author-avatar" href="#">
-    <span>
-  </span></a>
-            <svg class="half-circle" viewBox="0 0 106 57">
-                <path d="M102 4c0 27.1-21.9 49-49 49S4 31.1 4 4"></path>
-            </svg>
+
+<form id="uploadForm" action="saveUserPic" type="post" enctype="multipart/form-data">
+        <div class="profileimage" onclick="document.getElementById('upload').click()">
+        <input type="file" id="upload" accept="image/*" style="display: none" onchange="previewImage(event)">
+    <img id="preview" class="hidden" src="` + user.picture + `">
+    <svg id="svg" class="pfp" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 122.88 122.88"><g><path d="M61.44,0c8.32,0,16.25,1.66,23.5,4.66l0.11,0.05c7.47,3.11,14.2,7.66,19.83,13.3l0,0c5.66,5.65,10.22,12.42,13.34,19.95 c3.01,7.24,4.66,15.18,4.66,23.49c0,8.32-1.66,16.25-4.66,23.5l-0.05,0.11c-3.12,7.47-7.66,14.2-13.3,19.83l0,0 c-5.65,5.66-12.42,10.22-19.95,13.34c-7.24,3.01-15.18,4.66-23.49,4.66c-8.31,0-16.25-1.66-23.5-4.66l-0.11-0.05 c-7.47-3.11-14.2-7.66-19.83-13.29L18,104.87C12.34,99.21,7.78,92.45,4.66,84.94C1.66,77.69,0,69.76,0,61.44s1.66-16.25,4.66-23.5 l0.05-0.11c3.11-7.47,7.66-14.2,13.29-19.83L18.01,18c5.66-5.66,12.42-10.22,19.94-13.34C45.19,1.66,53.12,0,61.44,0L61.44,0z M16.99,94.47l0.24-0.14c5.9-3.29,21.26-4.38,27.64-8.83c0.47-0.7,0.97-1.72,1.46-2.83c0.73-1.67,1.4-3.5,1.82-4.74 c-1.78-2.1-3.31-4.47-4.77-6.8l-4.83-7.69c-1.76-2.64-2.68-5.04-2.74-7.02c-0.03-0.93,0.13-1.77,0.48-2.52 c0.36-0.78,0.91-1.43,1.66-1.93c0.35-0.24,0.74-0.44,1.17-0.59c-0.32-4.17-0.43-9.42-0.23-13.82c0.1-1.04,0.31-2.09,0.59-3.13 c1.24-4.41,4.33-7.96,8.16-10.4c2.11-1.35,4.43-2.36,6.84-3.04c1.54-0.44-1.31-5.34,0.28-5.51c7.67-0.79,20.08,6.22,25.44,12.01 c2.68,2.9,4.37,6.75,4.73,11.84l-0.3,12.54l0,0c1.34,0.41,2.2,1.26,2.54,2.63c0.39,1.53-0.03,3.67-1.33,6.6l0,0 c-0.02,0.05-0.05,0.11-0.08,0.16l-5.51,9.07c-2.02,3.33-4.08,6.68-6.75,9.31C73.75,80,74,80.35,74.24,80.7 c1.09,1.6,2.19,3.2,3.6,4.63c0.05,0.05,0.09,0.1,0.12,0.15c6.34,4.48,21.77,5.57,27.69,8.87l0.24,0.14 c6.87-9.22,10.93-20.65,10.93-33.03c0-15.29-6.2-29.14-16.22-39.15c-10-10.03-23.85-16.23-39.14-16.23 c-15.29,0-29.14,6.2-39.15,16.22C12.27,32.3,6.07,46.15,6.07,61.44C6.07,73.82,10.13,85.25,16.99,94.47L16.99,94.47L16.99,94.47z"></path></g></svg>
+  </div>
+  </form>
+
+
             <div class="author-name">
                 <div class="author-name-prefix">user</div> ` + user.name + `
             </div>
@@ -655,27 +708,24 @@
 </div>
 <script>
 
-    const cards = document.querySelectorAll(".containerPending *");
-    const observer = new IntersectionObserver(entries => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add("slit-in-vertical");
-                observer.unobserve(entry.target); // Ensures animation happens only once
-            }
-        });
-    }, {threshold: 0.2}); // Trigger when 20% of the element is visible
-
-    cards.forEach(card => observer.observe(card));
-    window.addEventListener("scroll", () => {
-        let scrollY = window.scrollY; // Get how much the user has scrolled
-        document.querySelector("#userProfile").style.transform = `translateY(`+scrollY`+px)`;
-    });
-
-
+//    const cards = document.querySelectorAll(".containerPending *");
+//    const observer = new IntersectionObserver(entries => {
+//        entries.forEach(entry => {
+//            if  (entry.intersectionRatio >= 0.5) { // Trigger when 50% is visible
+//                entry.target.classList.add("slit-in-vertical");
+//                //observer.unobserve(entry.target); // Ensures animation happens only once
+//            }
+//        });
+//    }, {threshold: 0.2}); // Trigger when 20% of the element is visible
+//
+//    cards.forEach(card => observer.observe(card));
+//    window.addEventListener("scroll", () => {
+//        let scrollY = window.scrollY; // Get how much the user has scrolled
+//        document.querySelector("#userProfile").style.transform = `translateY(`+scrollY`+px)`;
+//    });
     function editItem(itemId){
         // Redirect to EditItem.jsp with itemId in the URL
         window.location.href = "EditItem.jsp?itemId=" + itemId;
-
     }
     function fetchNotifs(id){
         console.log(id);
@@ -700,7 +750,6 @@
                 location.reload();
             })
             .catch(error => console.error("Error:", error));
-
     }
     function logout(){
         fetch("logout", { method: "GET" })
@@ -709,9 +758,66 @@
                     window.location.href = response.url; // Redirect to login page
                 }
             });
+    }
+    function previewImage(event){
+        const file = event.target.files[0];
+        const preview = document.getElementById("preview");
+        const defaultSvg = document.getElementById("svg");
+        if(file){
+            const reader = new FileReader();
+            reader.onload = function(){
+                preview.src = reader.result;
+                preview.classList.remove("hidden");
+                defaultSvg.style.display = "none";
 
+            };
+            reader.readAsDataURL(file);
+            uploadImage(file);
+        }
+            else{
+            preview.classList.add("hidden");
+            defaultSvg.style.display = "block";
+
+            }
+        }
+        function uploadImage(file){
+        console.log("image is uploaded");
+        console.log(file);
+            let formData = new FormData();
+            formData.append("image", file);
+
+            fetch("saveUserPic", {
+                method: "POST",
+                body: formData
+            })
+                .then(response => response.text()) // Assuming the server responds with text
+                .then(data => console.log("Upload successful: ", data))
+                .catch(error => console.error("Error:", error));
+        }
+    // Check if the user has a picture when the page loads
+    window.onload = function() {
+        setTimeout(() => {
+            const userPicture = document.getElementById('preview').src;
+            console.log("userpicture "+ userPicture);
+            const previewImage = document.getElementById('preview');
+            const svg = document.getElementById('svg');
+
+            if (userPicture) {
+                previewImage.style.display = "block";  // Show image
+                svg.style.display = "none";  // Hide SVG
+            } else {
+                previewImage.style.display = "none";  // Hide image
+                svg.style.display = "block";  // Show SVG
+            }
+        }, 300); // Delay execution by 500ms
 
     }
+
+
+
+
+
+
 </script>
 </body>
 </html>
