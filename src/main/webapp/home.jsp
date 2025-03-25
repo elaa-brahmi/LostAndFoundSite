@@ -843,21 +843,7 @@
           console.log(error);
         });
       }
-    $(".left").click(function () {
-      $(".panel").css("width","68px");
-      $(".left").hide();
-      $(".right").show();
-      bodyContainer.classList.toggle("bodyContainer");
-
-    });
-
-    $(".right").click(function () {
-      $(".panel").css("width","20vw");
-      var bodyContainer=document.getElementById("cardItems");
-      bodyContainer.classList.toggle("bodyContainer");
-      $(".right").hide();
-      $(".left").show();
-    });
+   
 
   </script>
   <div id="notFound" class="hidden"></div>
