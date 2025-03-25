@@ -11,6 +11,9 @@
 <html>
   <head>
     <title>Title</title>
+
+
+
     <!-- BOX ICONS CSS-->
     <link href="https://cdn.jsdelivr.net/npm/boxicons@2.0.5/css/boxicons.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
@@ -566,11 +569,8 @@
     color: #fff;
     font-size: 16px;
     text-transform: uppercase;
-
     border: 1px solid rgba(123, 36, 28 0.3);
     background: rgba(255, 255, 255, 0.1);
-    /*background: rgba(255, 255, 255, 0.1);*/
-    /*border: 1px solid rgba(255, 255, 255, 0.3);*/
     border-radius: 10px;
     backdrop-filter: blur(10px);
     cursor: pointer;
@@ -582,225 +582,55 @@
   .tooltip-trigger:hover {
     /*background: linear-gradient(45deg, #4facfe, #00f2fe);*/
     transform: translateY(-3px);
-    background-color: rgb(123, 36, 28)
+    background-color: rgb(123, 36, 28);
     /*box-shadow: 0 6px 15px rgba(0, 255, 255, 0.5);*/
   }
-/* filter css*/
 
-  .select {
-    width: fit-content;
+
+  .filterButton {
+    padding: 15px 30px;
+    color: #fff;
+    font-size: 16px;
+    text-transform: uppercase;
+    border: 1px solid rgba(123, 36, 28 0.3);
+    background-color: #3a3a3a;
+    border-radius: 10px;
+    backdrop-filter: blur(10px);
     cursor: pointer;
-    position: relative;
-    transition: 300ms;
-    color: white;
-    overflow: hidden;
+    transition:
+            background 0.3s ease,
+            transform 0.3s ease;
   }
 
-  .selected {
-    background-color: #2a2f3b;
-    padding: 5px;
-    margin-bottom: 3px;
-    border-radius: 5px;
-    position: relative;
-    z-index: 100000;
-    font-size: 15px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-
-  .arrow {
-    position: relative;
-    right: 0px;
-    height: 10px;
-    transform: rotate(-90deg);
-    width: 25px;
-    fill: white;
-    z-index: 100000;
-    transition: 300ms;
-  }
-
-  .options {
-    display: flex;
-    flex-direction: column;
-    border-radius: 5px;
-    padding: 5px;
-    background-color: #2a2f3b;
-    position: relative;
-    top: -100px;
-    opacity: 0;
-    transition: 300ms;
-  }
-
-  .select:hover > .options {
-    opacity: 1;
-    top: 0;
-  }
-
-  .select:hover > .selected .arrow {
-    transform: rotate(0deg);
-  }
-
-  .option {
-    border-radius: 5px;
-    padding: 5px;
-    transition: 300ms;
-    background-color: #2a2f3b;
-    width: 150px;
-    font-size: 15px;
-  }
-  .option:hover {
-    background-color: #323741;
-  }
-
-  .options input[type="radio"] {
-    display: none;
-  }
-
-  .options label {
-    display: inline-block;
-  }
-  .options label::before {
-    content: attr(data-txt);
-  }
-
-  .options input[type="radio"]:checked + label {
-    display: none;
-  }
-
-  .options input[type="radio"]#all:checked + label {
-    display: none;
-  }
-
-  .select:has(.options input[type="radio"]#all:checked) .selected::before {
-    content: attr(data-default);
-  }
-  .select:has(.options input[type="radio"]#option-1:checked) .selected::before {
-    content: attr(data-1);
+#notFound{
+  display:flex;
+  align-items: center;
+  justify-content: center;
+  margin: auto;
 }
-.select:has(.options input[type="radio"]#option-2:checked) .selected::before {
-    content: attr(data-2);
+.hidden{
+  display: none !important;
 }
-.select:has(.options input[type="radio"]#option-3:checked) .selected::before {
-    content: attr(data-3);
+.filters{
+  margin-top: 5%;
+  row-gap: 10px;
+  width: 20%;
+  max-width: 20%;
+  display: flex
+;
+  flex-direction: column;
 }
-.select:has(.options input[type="radio"]#option-4:checked) .selected::before {
-    content: attr(data-4);
+.filterButton:hover{
+  transform: translateY(-3px);
+  background-color: rgb(123, 36, 28);
 }
-.select:has(.options input[type="radio"]#option-5:checked) .selected::before {
-    content: attr(data-5);
-}
-.select:has(.options input[type="radio"]#option-6:checked) .selected::before {
-    content: attr(data-6);
-}
-.select:has(.options input[type="radio"]#option-7:checked) .selected::before {
-    content: attr(data-7);
-}
-.select:has(.options input[type="radio"]#option-8:checked) .selected::before {
-    content: attr(data-8);
-}
-.select:has(.options input[type="radio"]#option-9:checked) .selected::before {
-    content: attr(data-9);
-}
-.select:has(.options input[type="radio"]#option-10:checked) .selected::before {
-    content: attr(data-10);
-}
-.select:has(.options input[type="radio"]#option-11:checked) .selected::before {
-    content: attr(data-11);
-}
-.select:has(.options input[type="radio"]#option-12:checked) .selected::before {
-    content: attr(data-12);
-}
-.select:has(.options input[type="radio"]#option-13:checked) .selected::before {
-    content: attr(data-13);
-}
-.select:has(.options input[type="radio"]#option-14:checked) .selected::before {
-    content: attr(data-14);
-}
-.select:has(.options input[type="radio"]#option-15:checked) .selected::before {
-    content: attr(data-15);
-}
-.select:has(.options input[type="radio"]#option-16:checked) .selected::before {
-    content: attr(data-16);
-}
-.select:has(.options input[type="radio"]#option-17:checked) .selected::before {
-    content: attr(data-17);
-}
-.select:has(.options input[type="radio"]#option-18:checked) .selected::before {
-    content: attr(data-18);
-}
-.select:has(.options input[type="radio"]#option-19:checked) .selected::before {
-    content: attr(data-19);
-}
-.select:has(.options input[type="radio"]#option-20:checked) .selected::before {
-    content: attr(data-20);
-}
-.select:has(.options input[type="radio"]#option-21:checked) .selected::before {
-    content: attr(data-21);
-}
-.select:has(.options input[type="radio"]#option-22:checked) .selected::before {
-    content: attr(data-22);
+.filterCategories{
+  text-align: center;
+  height: 28px;
+  border-radius: 10px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
 }
 
-
-
-  .panel {
-    background: #e9e9e9;
-    border: 1px solid #d0d0d0;
-    width: 20vw;
-    height: 90vh;
-    position: relative;
-  }
-
-  .title {
-    font-family: sans-serif;
-    padding: 8px 0 7px 12px;
-    color: #808080;
-    font-weight: bold;
-    overflow: hidden;
-    white-space: nowrap;
-    background: #d0d0d0;
-  }
-
-  .left,
-  .right {
-    position: absolute;
-    top: 0;
-    right: 0;
-    font-size: 20px;
-    font-weight: bold;
-    letter-spacing: -6px;
-    display: inline-block;
-    cursor: pointer;
-    background: #d0d0d0;
-    color: #808080;
-  }
-
-  .left {
-    padding: 5px 19px 5px 15px;
-  }
-
-  .right {
-    padding: 5px 18px 5px 16px;
-    display: none;
-  }
-
-  .left:after {
-    content: '\2329\2329\00A0\00A0\00A0\00A0\00A0\00A0\00A0\00A0\00A0\00A0\00A0\2329\2329';
-  }
-
-  .right:after {
-    content: '\232A\232A\00A0\00A0\00A0\00A0\00A0\00A0\00A0\00A0\00A0\00A0\00A0\232A\232A';
-  }
-
-  .left:hover,
-  .right:hover {
-    color: #ffffff;
-    background: #808080;
-  }
-  .bodyContainer{
-    margin-left:350px;
-  }
 
 </style>
 
@@ -838,11 +668,55 @@
 
 
 
-  <div class="panel">
-    <div class="title">Expand / Collapse Panel</div>
-    <div class="left"></div>
-    <div class="right"></div>
-  </div>
+
+
+
+
+
+
+
+
+
+
+    <div class="filters">
+      <select id="categoryFilter" class="filterCategories">
+        <option value="">All Categories</option>
+        <option value="Personal Accessories">Personal Accessories</option>
+        <option value="Identification & Documents">Identification & Documents</option>
+        <option value="Clothing & Wearables">Clothing & Wearables</option>
+        <option value="Keys & Security Items">Keys & Security Items</option>
+        <option value="Travel & Transport Items">Travel & Transport Items</option>
+        <option value="Household & Miscellaneous Items">Household & Miscellaneous Items</option>
+      </select>
+      <select id="locationFilter" class="filterCategories">
+        <option value="">All Locations</option>
+        <option value="Tunis">Tunis</option>
+        <option value="Sidi Bouzid">Sidi Bouzid</option>
+        <option value="Sfax">Sfax</option>
+        <option value="Sousse">Sousse</option>
+        <option value="Kairouan">Kairouan</option>
+        <option value="Métouia">Métouia</option>
+        <option value="Kebili">Kebili</option>
+        <option value="Sukrah">Sukrah</option>
+        <option value="Gabès">Gabès</option>
+        <option value="Ariana">Ariana</option>
+        <option value="Sakiet ed Daier">Sakiet ed Daier</option>
+        <option value="Gafsa">Gafsa</option>
+        <option value="Msaken">Msaken</option>
+        <option value="Medenine">Medenine</option>
+        <option value="Béja">Béja</option>
+        <option value="Kasserine">Kasserine</option>
+        <option value="Radès">Radès</option>
+        <option value="Hammamet">Hammamet</option>
+        <option value="Tataouine">Tataouine</option>
+        <option value="Monastir">Monastir</option>
+        <option value="tozeur">tozeur</option>
+        <option value="Siliana">Siliana</option>
+      </select>
+    
+      <button class="filterButton" onclick="applyFilters()">Apply Filters</button>
+    </div>
+
 
   
   <script>
@@ -850,13 +724,15 @@
     $(document).ready(function() {
       fetchItems(currentPage);
     });
-    function fetchItems(page) {
+    function fetchItems(page,category='',location='') {
       $.ajax({
         url: 'http://localhost:8080/allItems', // URL of the servlet
         type: 'GET',
         data: {
           page: page,
-          pageSize: 6
+          pageSize: 6,
+          category: category,
+          location: location
         },
         dataType: 'json',
        success: function(data) {
@@ -868,21 +744,44 @@
         console.log(error);
       }
     });}
+    function applyFilters() {
+    const category = $('#categoryFilter').val();
+    const location = $('#locationFilter').val();
+    console.log(category, location);
+    fetchItems(1, category, location);
+  }
     function renderItems(items){
+      var notFound=document.getElementById("notFound");
       var cardItems=document.getElementById("cardItems");
-      cardItems.innerHTML="";
+
+      if(items.length ===0){
+        notFound.classList.remove('hidden');
+        cardItems.classList.add('hidden');
+        notFound.innerHTML=`<p style="font-size: 28px;">No items are found <svg style="position: relative;top: 14px;
+    width: 50px;
+    height: 50px;" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="256" height="256" viewBox="0 0 256 256" xml:space="preserve">
+                <g style="stroke: none; stroke-width: 0; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: none; fill-rule: nonzero; opacity: 1;" transform="translate(1.4065934065934016 1.4065934065934016) scale(2.81 2.81)">
+                  <path d="M 45 90 C 20.187 90 0 69.813 0 45 C 0 20.187 20.187 0 45 0 c 24.813 0 45 20.187 45 45 C 90 69.813 69.813 90 45 90 z M 45 4 C 22.393 4 4 22.393 4 45 s 18.393 41 41 41 s 41 -18.393 41 -41 S 67.607 4 45 4 z" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(0,0,0); fill-rule: nonzero; opacity: 1;" transform=" matrix(1 0 0 1 0 0) " stroke-linecap="round"/>
+                  <circle cx="30.344" cy="33.274" r="5.864" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(0,0,0); fill-rule: nonzero; opacity: 1;" transform="  matrix(1 0 0 1 0 0) "/>
+                  <circle cx="59.663999999999994" cy="33.274" r="5.864" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(0,0,0); fill-rule: nonzero; opacity: 1;" transform="  matrix(1 0 0 1 0 0) "/>
+                  <path d="M 72.181 65.49 c -0.445 0 -0.893 -0.147 -1.265 -0.451 c -7.296 -5.961 -16.5 -9.244 -25.916 -9.244 c -9.417 0 -18.62 3.283 -25.916 9.244 c -0.854 0.7 -2.115 0.572 -2.814 -0.283 c -0.699 -0.855 -0.572 -2.115 0.283 -2.814 C 24.561 55.398 34.664 51.795 45 51.795 c 10.336 0 20.438 3.604 28.447 10.146 c 0.855 0.699 0.982 1.959 0.283 2.814 C 73.335 65.239 72.76 65.49 72.181 65.49 z" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(0,0,0); fill-rule: nonzero; opacity: 1;" transform=" matrix(1 0 0 1 0 0) " stroke-linecap="round"/>
+                </g>
+      </svg></p>`;
+
+      } else{
+        notFound.classList.add('hidden');
+        cardItems.classList.remove('hidden');
+        cardItems.innerHTML="";
       items.forEach(function(item) {
         console.log(item);
         console.log(item.image);
-
-
         var cardItem = document.createElement("div");
         cardItem.classList.add("card");
         cardItem.setAttribute("data-aos","zoom-in-down");
         cardItem.innerHTML = `
         <div class="card-img">
 
-           <img src="`+item.image+`" alt="no image was provided" style="height:100%; padding:3px; ">
+           <img src="`+item.image+`" alt="no image was provided" width="250px" height="250px" style="height:100%; padding:3px; ">
         </div>
         <div class="card-info" >
             <p class="text-title">`+item.name+` <br>`+item.category+`</p>
@@ -904,7 +803,7 @@
 
     `;
         cardItems.appendChild(cardItem); // Make sure 'cardItems' is defined in your HTML
-      });
+      });}
 
     }
     function renderPagination(currentPage,totalPages){
@@ -961,6 +860,7 @@
     });
 
   </script>
+  <div id="notFound" class="hidden"></div>
 
   <div id="cardItems" class="mt-5 " style="margin-top: 10%;margin-left: 10%; " >
   </div>

@@ -50,6 +50,8 @@ public class UpdateUser extends HttpServlet {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+        request.setAttribute("alert_update_user","user profile updated ");
+
 getServletContext().getRequestDispatcher("/MyPosts.jsp").forward(request, response);
 
     }

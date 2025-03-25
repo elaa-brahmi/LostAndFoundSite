@@ -32,18 +32,55 @@ public class GetAllItems extends HttpServlet {
 
         int page = Integer.parseInt(request.getParameter("page") != null ? request.getParameter("page") : "1");
         int pageSize = Integer.parseInt(request.getParameter("pageSize") != null ? request.getParameter("pageSize") : "6");
+        String categoryS = request.getParameter("category") != null ? request.getParameter("category") : "";
+        String locationS = request.getParameter("location") != null ? request.getParameter("location") : "";
+        System.out.println("category selected " +categoryS);
+        System.out.println("location selected " +locationS);
+
 
         try{
-            con= BDConnection.getConnection();
-            // Query to get the total number of items
-            PreparedStatement countPs = con.prepareStatement("SELECT COUNT(*) AS total FROM item WHERE status = 'ACCEPTED'");
+            con = BDConnection.getConnection();
+        
+        // Build the base query
+        String baseQuery = "SELECT COUNT(*) AS total FROM item WHERE status = 'ACCEPTED'";
+        String filterQuery = "";
+        
+        // Add filters if category or location are provided
+        if (!categoryS.isEmpty()) {
+            filterQuery += " AND category = ?";
+        }
+        if (!locationS.isEmpty()) {
+            filterQuery += " AND location = ?";
+        }
+        
+        // Query to get the total number of items
+        PreparedStatement countPs = con.prepareStatement(baseQuery + filterQuery);
+        int paramIndex = 1;
+        if (!categoryS.isEmpty()) {
+            countPs.setString(paramIndex++, categoryS);}
+            if (!locationS.isEmpty()) {
+                countPs.setString(paramIndex, locationS);
+            }
             ResultSet countRs = countPs.executeQuery();
             countRs.next();
             int totalItems = countRs.getInt("total");
             int totalPages = (int) Math.ceil((double) totalItems / pageSize);
-            PreparedStatement ps=con.prepareStatement("SELECT * FROM item WHERE status = 'ACCEPTED' ORDER BY datefound LIMIT ? OFFSET ?");
-            ps.setInt(1, pageSize);
-            ps.setInt(2, (page - 1) * pageSize);
+            
+            // Query to get the items with pagination
+            PreparedStatement ps = con.prepareStatement("SELECT * FROM item WHERE status = 'ACCEPTED'" + filterQuery + " ORDER BY datefound LIMIT ? OFFSET ?");
+            paramIndex = 1;
+            if (!categoryS.isEmpty()) {
+                ps.setString(paramIndex++, categoryS);
+            }
+            if (!locationS.isEmpty()) {
+                ps.setString(paramIndex++, locationS);
+            }
+            ps.setInt(paramIndex++, pageSize);
+            ps.setInt(paramIndex, (page - 1) * pageSize);
+        
+
+
+
             ResultSet rs=ps.executeQuery();
             ArrayList<Item> items=new ArrayList<>();
             while(rs.next()){

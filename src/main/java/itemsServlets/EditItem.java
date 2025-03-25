@@ -54,6 +54,8 @@ public class EditItem extends HttpServlet {
 
         Item item=new Item(itemId,itemName,itemDescription,itemCategory,itemLocation, LocalDate.parse(itemDate), ItemType.valueOf(itemType.toUpperCase()), ItemStatus.valueOf(itemStatus),imageUrl,itemUserId);
         ItemDao.updateItem(item);
+        request.setAttribute("alert_update_item","item updated successfully");
+
         getServletContext().getRequestDispatcher("/MyPosts.jsp").forward(request, response);
     }
 }

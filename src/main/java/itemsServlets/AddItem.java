@@ -53,7 +53,7 @@ public class AddItem extends HttpServlet {
                 NotificationDao.checkMatches(foundItems,item);
 
             }
-
+                request.setAttribute("alert_add","item added successfully");
                 getServletContext().getRequestDispatcher("/MyPosts.jsp").forward(request,response);
             }
 

@@ -16,6 +16,9 @@
 %>
 <html>
 <head>
+    <!-- Inclure Toastr CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
     <!-- AOS JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
@@ -293,31 +296,22 @@
             padding: 5%;
             background: #f8f9f9;
             box-shadow: -1rem 0 3rem #00000067;
-
-
-
         }
-
-
-
         .outline {
             position: absolute;
             inset: 0;
             pointer-events: none;
         }
-
         .rect {
             stroke-dashoffset: 5;
             stroke-dasharray: 0 0 10 40 10 40;
             transition: 0.5s;
             stroke: #fff;
         }
-
         .nav {
             position: relative;
             height: 100px;
         }
-
         .container:hover .outline .rect {
             transition: 999999s;
             stroke-dashoffset: 1;
@@ -458,15 +452,79 @@
 }
 
 /* ...existing code... */
+.hiddenn{
+    display:none !important;
+}
+#notFound{
+    margin-left: 5% !important;
+}
+        .cookie-card {
+            border-radius: 15px;
+            width: 320px;
+            height: 200px;
+            background-color: #fff;
+        }
 
+        .cookie-title {
+            font-size: 20px;
+            position: relative;
+            left: 90px;
+            top: 15px;
+            font-weight: bold;
+            color: rgb(31 41 55);
+        }
 
+        .cookie-description {
+            position: relative;
+            top: 25px;
+            font-size: 15px;
+            text-align: center;
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+            color: rgb(75 85 99);
+        }
 
+        .cookies-policy {
+            color: rgb(31 41 55);
+            text-decoration: underline;
+        }
 
-
-
+        .cookies-policy:hover {
+            text-decoration: none;
+        }
+        .cookies-policy:active {
+            color: rgba(31, 41, 55, 0.61);
+        ;
+        }
+        .accept-button {
+            cursor: pointer;
+            font-weight: bold;
+            border-radius: 5px;
+            width: 85px;
+            height: 35px;
+            background-color: rgba(255, 255, 255, 0);
+            position: relative;
+            left: 115px;
+            top: 45px;
+        }
+        .accept-button:hover {
+            background-color: rgb(31 41 55);
+            color: #fff;
+            border: rgb(31 41 55);
+        ;
+        }
+        .accept-button:active {
+            font-weight: 100;
+        }
     </style>
 </head>
 <body class="vh-100" style="overflow-x: hidden;  padding:0;">
+<!-- Inclure jQuery (nécessaire pour Toastr) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+<!-- Inclure Toastr JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+
 <div class="nav">
     <div class="container">
         <div><img src="assets/logo.png" alt="logo" width="100px" height="90px"></div>
@@ -496,6 +554,19 @@
     </div>
 </div>
 <script>
+    <% if (request.getAttribute("alert_add") != null) { %>
+    toastr.success('<%= request.getAttribute("alert_add") %>', 'success');
+    <% } %>
+
+
+
+    <% if (request.getAttribute("alert_update_item") != null) { %>
+    toastr.info('<%= request.getAttribute("alert_update_item") %>', 'info');
+    <% } %>
+
+    <% if (request.getAttribute("alert_update_user") != null) { %>
+    toastr.info('<%= request.getAttribute("alert_update_user") %>', 'info');
+    <% } %>
     $(document).ready(function () {
         fetchItems();
         fetchUserInfos();
@@ -528,10 +599,24 @@
             },
             dataType: 'json',
             success: function (data) {
-                console.log(data.accepted);
-                console.log(data.pending);
-                renderItemsAccepted(data.accepted);
-                renderItemsPending(data.pending);
+                console.log("all data "+data);
+                console.log("accepted data "+data.accepted);
+                console.log("pending data "+data.pending);
+                var PostContainer=document.getElementById("PostContainer");
+                var notFound = document.getElementById("notFound");
+                if(data.accepted.length===0 && data.pending.length===0){
+                    console.log("no items found");
+                    PostContainer.classList.add("hiddenn");
+                    notFound.classList.remove("hiddenn");
+
+                }
+                else{
+                    PostContainer.classList.remove("hiddenn");
+                    notFound.classList.add("hiddenn");
+                    renderItemsAccepted(data.accepted);
+                    renderItemsPending(data.pending);
+
+                }
 
 
             },
@@ -590,7 +675,7 @@
     }
 
     function renderItemsAccepted(AcceptedPosts) {
-        console.log(AcceptedPosts);
+
         var acceptedPosts=document.getElementById("acceptedPosts");
         acceptedPosts.innerHTML = "";
         AcceptedPosts.forEach(function (item) {
@@ -658,8 +743,6 @@
     <svg id="svg" class="pfp" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 122.88 122.88"><g><path d="M61.44,0c8.32,0,16.25,1.66,23.5,4.66l0.11,0.05c7.47,3.11,14.2,7.66,19.83,13.3l0,0c5.66,5.65,10.22,12.42,13.34,19.95 c3.01,7.24,4.66,15.18,4.66,23.49c0,8.32-1.66,16.25-4.66,23.5l-0.05,0.11c-3.12,7.47-7.66,14.2-13.3,19.83l0,0 c-5.65,5.66-12.42,10.22-19.95,13.34c-7.24,3.01-15.18,4.66-23.49,4.66c-8.31,0-16.25-1.66-23.5-4.66l-0.11-0.05 c-7.47-3.11-14.2-7.66-19.83-13.29L18,104.87C12.34,99.21,7.78,92.45,4.66,84.94C1.66,77.69,0,69.76,0,61.44s1.66-16.25,4.66-23.5 l0.05-0.11c3.11-7.47,7.66-14.2,13.29-19.83L18.01,18c5.66-5.66,12.42-10.22,19.94-13.34C45.19,1.66,53.12,0,61.44,0L61.44,0z M16.99,94.47l0.24-0.14c5.9-3.29,21.26-4.38,27.64-8.83c0.47-0.7,0.97-1.72,1.46-2.83c0.73-1.67,1.4-3.5,1.82-4.74 c-1.78-2.1-3.31-4.47-4.77-6.8l-4.83-7.69c-1.76-2.64-2.68-5.04-2.74-7.02c-0.03-0.93,0.13-1.77,0.48-2.52 c0.36-0.78,0.91-1.43,1.66-1.93c0.35-0.24,0.74-0.44,1.17-0.59c-0.32-4.17-0.43-9.42-0.23-13.82c0.1-1.04,0.31-2.09,0.59-3.13 c1.24-4.41,4.33-7.96,8.16-10.4c2.11-1.35,4.43-2.36,6.84-3.04c1.54-0.44-1.31-5.34,0.28-5.51c7.67-0.79,20.08,6.22,25.44,12.01 c2.68,2.9,4.37,6.75,4.73,11.84l-0.3,12.54l0,0c1.34,0.41,2.2,1.26,2.54,2.63c0.39,1.53-0.03,3.67-1.33,6.6l0,0 c-0.02,0.05-0.05,0.11-0.08,0.16l-5.51,9.07c-2.02,3.33-4.08,6.68-6.75,9.31C73.75,80,74,80.35,74.24,80.7 c1.09,1.6,2.19,3.2,3.6,4.63c0.05,0.05,0.09,0.1,0.12,0.15c6.34,4.48,21.77,5.57,27.69,8.87l0.24,0.14 c6.87-9.22,10.93-20.65,10.93-33.03c0-15.29-6.2-29.14-16.22-39.15c-10-10.03-23.85-16.23-39.14-16.23 c-15.29,0-29.14,6.2-39.15,16.22C12.27,32.3,6.07,46.15,6.07,61.44C6.07,73.82,10.13,85.25,16.99,94.47L16.99,94.47L16.99,94.47z"></path></g></svg>
   </div>
   </form>
-
-
             <div class="author-name">
                 <div class="author-name-prefix">user</div> ` + user.name + `
             </div>
@@ -668,7 +751,6 @@
 <button class="notifbutton" onclick="fetchNotifs(` +user.id+ `)">
    <svg viewBox="0 0 448 512" class="bell"><path d="M224 0c-17.7 0-32 14.3-32 32V49.9C119.5 61.4 64 124.2 64 200v33.4c0 45.4-15.5 89.5-43.8 124.9L5.3 377c-5.8 7.2-6.9 17.1-2.9 25.4S14.8 416 24 416H424c9.2 0 17.6-5.3 21.6-13.6s2.9-18.2-2.9-25.4l-14.9-18.6C399.5 322.9 384 278.8 384 233.4V200c0-75.8-55.5-138.6-128-150.1V32c0-17.7-14.3-32-32-32zm0 96h8c57.4 0 104 46.6 104 104v33.4c0 47.9 13.9 94.6 39.7 134.6H72.3C98.1 328 112 281.3 112 233.4V200c0-57.4 46.6-104 104-104h8zm64 352H224 160c0 17 6.7 33.3 18.7 45.3s28.3 18.7 45.3 18.7s33.3-6.7 45.3-18.7s18.7-28.3 18.7-45.3z"></path></svg>
 </button>
-
 <button class="notifbutton" onclick="editProfile(` +user.id+ `)">
    <svg viewBox="0 0 448 512" class="bell"><path d="M410.3 231l11.3-11.3-33.9-33.9-62.1-62.1L291.7 89.8l-11.3 11.3-22.6 22.6L58.6 322.9c-10.4 10.4-18 23.3-22.2 37.4L1 480.7c-2.5 8.4-.2 17.5 6.1 23.7s15.3 8.5 23.7 6.1l120.3-35.4c14.1-4.2 27-11.8 37.4-22.2L387.7 253.7 410.3 231zM160 399.4l-9.1 22.7c-4 3.1-8.5 5.4-13.3 6.9L59.4 452l23-78.1c1.4-4.9 3.8-9.4 6.9-13.3l22.7-9.1v32c0 8.8 7.2 16 16 16h32zM362.7 18.7L348.3 33.2 325.7 55.8 314.3 67.1l33.9 33.9 62.1 62.1 33.9 33.9 11.3-11.3 22.6-22.6 14.5-14.5c25-25 25-65.5 0-90.5L453.3 18.7c-25-25-65.5-25-90.5 0zm-47.4 168l-144 144c-6.2 6.2-16.4 6.2-22.6 0s-6.2-16.4 0-22.6l144-144c6.2-6.2 16.4-6.2 22.6 0s6.2 16.4 0 22.6z"></path></svg>
 </button>
@@ -683,18 +765,28 @@
 
 
 </script>
-<div style="margin-top: 5%;display: flex;justify-content: space-around;">
+<div style="margin-top: 5%;
+    display: flex;
+    flex-direction: row;">
     <div id="userProfile" style="width: 35%;
     position: relative;
     top: 7%;
     margin-left: 5%;
  transition: transform 0.1s ease-out;">
     </div>
+    <div id="notFound" class="hiddenn">
+        <div class="cookie-card">
+            <span class="cookie-title">No posts yet</span>
+            <p class="cookie-description">"Lost something? Found an item? Post it here and let our system reunite owners with their belongings!"
+            </p>
+            <button class="accept-button" onclick="redirect()">post now</button>
+        </div>
+    </div>
     <div style="height: auto;
     width: 40%;
     margin-right: 10%;
     display: flex;
-    flex-direction: column;">
+    flex-direction: column;" id="PostContainer">
         <div id="PendingPosts" style="display: flex;
     height: auto;
     row-gap: 7%;
@@ -707,22 +799,10 @@
     </div>
 </div>
 <script>
+    function redirect(){
+        window.location.href="addItem.jsp";
+    }
 
-//    const cards = document.querySelectorAll(".containerPending *");
-//    const observer = new IntersectionObserver(entries => {
-//        entries.forEach(entry => {
-//            if  (entry.intersectionRatio >= 0.5) { // Trigger when 50% is visible
-//                entry.target.classList.add("slit-in-vertical");
-//                //observer.unobserve(entry.target); // Ensures animation happens only once
-//            }
-//        });
-//    }, {threshold: 0.2}); // Trigger when 20% of the element is visible
-//
-//    cards.forEach(card => observer.observe(card));
-//    window.addEventListener("scroll", () => {
-//        let scrollY = window.scrollY; // Get how much the user has scrolled
-//        document.querySelector("#userProfile").style.transform = `translateY(`+scrollY`+px)`;
-//    });
     function editItem(itemId){
         // Redirect to EditItem.jsp with itemId in the URL
         window.location.href = "EditItem.jsp?itemId=" + itemId;
@@ -746,8 +826,17 @@
             .then(response => response.text())
             .then(data => {
                 console.log("Server Response:", data);
-                alert("Item deleted successfully!");
-                location.reload();
+                try {
+                    let jsonData = JSON.parse(data);
+                    if (jsonData.status === "success") {
+                        toastr.error(jsonData.message, "Success");}}
+                catch (error) {
+                    console.error("Parsing Error: ", error);
+                    toastr.error("Une erreur est survenue", "Erreur");
+                }
+                setTimeout(() => {
+                    location.reload();
+                }, 1000);
             })
             .catch(error => console.error("Error:", error));
     }
@@ -803,11 +892,12 @@
             const svg = document.getElementById('svg');
 
             if (userPicture) {
-                previewImage.style.display = "block";  // Show image
-                svg.style.display = "none";  // Hide SVG
+                previewImage.classList.remove("hidden");
+                svg.classList.add('hidden');
             } else {
-                previewImage.style.display = "none";  // Hide image
-                svg.style.display = "block";  // Show SVG
+                previewImage.classList.add("hidden");
+                svg.classList.remove('hidden');
+
             }
         }, 300); // Delay execution by 500ms
 
