@@ -48,10 +48,7 @@ public class NotificationDao {
                     EmailSender.sendNotifEmail(emailFound, possible,messagePossible);
                     ItemDao.updateMatchStatus(item, MatchedStatus.MATCHED);
                     ItemDao.updateMatchStatus(possible, MatchedStatus.MATCHED);
-
-
                 }
-
         }
     }
      static boolean isPotentialMatch(Item lost, Item found) {

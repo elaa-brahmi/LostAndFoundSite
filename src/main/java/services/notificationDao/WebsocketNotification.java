@@ -14,9 +14,14 @@ public class WebsocketNotification {
     @OnOpen
     public void onOpen(Session session, EndpointConfig config) {
         String userId = (String) session.getUserProperties().get("userId");
+        System.out.println("Tentative d'ouverture WebSocket pour userId: " + userId);
         if(userId != null && !userSessions.containsKey(userId) ) {
             userSessions.put(userId, session);
+            System.out.println("User " + userId + " opened");
             System.out.println("🔗 WebSocket connected: " + userId);
+        }
+        else{
+            System.out.println("User id is null ");
         }
     }
     @OnClose
@@ -27,7 +32,19 @@ public class WebsocketNotification {
         System.out.println("❌ WebSocket closed: " + userId);
 
     }
-
+    @OnError
+    public void onError(Session session, Throwable throwable) {
+        System.out.println("WebSocket error: " + throwable.getMessage());
+    }
+    @OnMessage
+    public void onMessage(String message, Session session) {
+        System.out.println("Received message: " + message);
+        try {
+            session.getBasicRemote().sendText("{\"status\": \"success\", \"message\": \"Received your message!\"}");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     public static void sendNotificationToUser(String userId, String message) {  // Use String type for userId
         Session session = userSessions.get(userId);
         if (session != null && session.isOpen()) {

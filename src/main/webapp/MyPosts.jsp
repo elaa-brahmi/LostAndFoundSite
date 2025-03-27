@@ -16,6 +16,8 @@
 %>
 <html>
 <head>
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Material+Icons">
     <!-- Inclure Toastr CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 
@@ -515,6 +517,114 @@
         .accept-button:active {
             font-weight: 100;
         }
+
+        /*a {*/
+        /*    color: cornflowerblue;*/
+        /*    text-decoration: none;*/
+        /*}*/
+        /*a:hover {*/
+        /*    opacity: 0.8;*/
+        /*    cursor: pointer;*/
+        /*    text-decoration: underline;*/
+        /*}*/
+
+        .notification-container {
+            position: absolute;
+            z-index: 999;
+            top: 540px;
+            width: 350px;
+            background: white;
+            border-radius: 0.5rem;
+            box-shadow: 0.5rem 0.5rem 2rem rgba(0, 0, 0, 0.2);
+            font-weight: 300;
+        }
+
+        .notification-container h3 {
+            text-transform: uppercase;
+            font-size: 75%;
+            font-weight: 700;
+            color: #84929f;
+            padding: 1.5rem;
+        }
+
+        .notification.new {
+            background: #f3f9fd;
+        }
+
+        input.checkbox[type='checkbox'] {
+            display: none;
+        }
+        input.checkbox[type='checkbox'] + label {
+            display: block;
+        }
+        input.checkbox[type='checkbox']:not(:checked) + label {
+            transition: height .25s;
+            height: 0;
+            padding: 0;
+            font-size: 0;
+            border: none;
+            display: none;
+        }
+        input.checkbox[type='checkbox']:checked + label {
+            height: 3.25rem;
+            padding: 1.125rem 4rem 0.75rem 2rem;
+            font-size: 75%;
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .notification-container i {
+            color: #b5c4d2;
+            font-size: 140%;
+            position: absolute;
+            right: 1.5rem;
+        }
+
+        .notification-container i.right:hover {
+            opacity: 0.8;
+            cursor: pointer;
+        }
+
+        .notification {
+            display: block;
+            padding: 1rem;
+            border-bottom: 1px solid #e1e1e1;
+        }
+
+        .notification.new {
+            background: #f3f9fd;
+        }
+
+        .notification em {
+            font-weight: 700;
+            font-size: 115%;
+            color: #b5c4d2;
+        }
+
+        .notification-icon {
+            position: relative;
+            display: inline-block;
+            margin-right: 15px;
+        }
+
+        .notification-icon i {
+            font-size: 24px;
+        }
+
+        .notification-icon .num-count {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: red;
+            color: white;
+            font-size: 12px;
+            padding: 2px 6px;
+            border-radius: 50%;
+        }
+
+
+
+
+
     </style>
 </head>
 <body class="vh-100" style="overflow-x: hidden;  padding:0;">
@@ -635,8 +745,7 @@
             div.className = "containerPending";
             div.setAttribute("data-aos","zoom-out-down");
             div.setAttribute("data-aos-anchor-placement","bottom-bottom");
-
-
+            div.setAttribute("data-item-id", item.id); // Add this line
             div.innerHTML = `
 <div style="display: table-row;>
              <span style="font-size:18px;">` + item.name + `: ` + item.description + `</span></div>
@@ -683,7 +792,7 @@
         divPosts.className="containerPending";
             divPosts.setAttribute("data-aos","zoom-out-down");
             divPosts.setAttribute("data-aos-anchor-placement","bottom-bottom");
-
+            divPosts.setAttribute("data-item-id", item.id); // Add this line
 
             divPosts.innerHTML = `
 <div style="display: table-row;>
@@ -714,12 +823,6 @@
                 ></path>
             </svg>
         </button></div>
-
-
-
-
-
-
 <div class="w-100"></div><br><button class="acceptedBtn">` + item.status + `</button>
             `;
             acceptedPosts.appendChild(divPosts);
@@ -774,6 +877,8 @@
     margin-left: 5%;
  transition: transform 0.1s ease-out;">
     </div>
+
+
     <div id="notFound" class="hiddenn">
         <div class="cookie-card">
             <span class="cookie-title">No posts yet</span>
@@ -798,6 +903,50 @@
     flex-direction: column;"></div>
     </div>
 </div>
+
+
+
+<div class="notification-container hiddenn">
+    <h3>Notifications
+        <i class="material-icons dp48 right">settings</i>
+    </h3>
+
+    <input class="checkbox" type="checkbox" id="size_1" value="small" checked />
+    <label class="notification new" for="size_1">
+        <em>1</em> new <a href="">guest account(s)</a> have been created.
+        <i class="material-icons dp48 right">clear</i>
+    </label>
+
+    <input class="checkbox" type="checkbox" id="size_2" value="small" checked />
+    <label class="notification new" for="size_2">
+        <em>3</em> new <a href="">lead(s)</a> are available in the system.
+        <i class="material-icons dp48 right">clear</i>
+    </label>
+
+    <input class="checkbox" type="checkbox" id="size_3" value="small" checked />
+    <label class="notification" for="size_3">
+        <em>5</em> new <a href="">task(s)</a>.
+        <i class="material-icons dp48 right">clear</i>
+    </label>
+
+    <input class="checkbox" type="checkbox" id="size_4" value="small" checked />
+    <label class="notification" for="size_4">
+        <em>9</em> new <a href="">calendar event(s)</a> are scheduled for today.
+        <i class="material-icons dp48 right">clear</i>
+    </label>
+
+    <input class="checkbox" type="checkbox" id="size_5" value="small" checked />
+    <label class="notification" for="size_5">
+        <em>1</em> blog post <a href="">comment(s)</a> need approval.
+        <i class="material-icons dp48 right">clear</i>
+    </label>
+</div>
+
+<div id="messages"></div>
+
+
+
+
 <script>
     function redirect(){
         window.location.href="addItem.jsp";
@@ -809,6 +958,8 @@
     }
     function fetchNotifs(id){
         console.log(id);
+        var NotifContainer=document.querySelector(".notification-container");
+        NotifContainer.classList.toggle('hiddenn');
     }
     function editProfile(id){
         console.log(id);
@@ -829,14 +980,25 @@
                 try {
                     let jsonData = JSON.parse(data);
                     if (jsonData.status === "success") {
-                        toastr.error(jsonData.message, "Success");}}
+                        toastr.error(jsonData.message, "Success");
+                        // Remove the deleted item from the DOM
+                    const itemElement = document.querySelector(`[data-item-id="${idItem}"]`);
+                    if (itemElement) {
+                        itemElement.remove();
+                    }
+                    fetchItems();
+                     // Check if there are no more items and show the "No posts yet" message
+                     const remainingItems = document.querySelectorAll(".containerPending");
+                    if (remainingItems.length === 0) {
+                        document.getElementById("PostContainer").classList.add("hiddenn");
+                        document.getElementById("notFound").classList.remove("hiddenn");
+                    }
+                    }}
                 catch (error) {
                     console.error("Parsing Error: ", error);
                     toastr.error("Une erreur est survenue", "Erreur");
                 }
-                setTimeout(() => {
-                    location.reload();
-                }, 1000);
+
             })
             .catch(error => console.error("Error:", error));
     }
@@ -903,11 +1065,45 @@
 
     }
 
+</script>
+<script type="text/javascript">
+    var webSocket =
+        new WebSocket('ws://' + window.location.host + '/notification');
 
+    webSocket.onerror = function(event) {
+        onError(event)
+    };
 
+    webSocket.onopen = function(event) {
+        onOpen(event)
+    };
 
+    webSocket.onmessage = function(event) {
+        onMessage(event)
+    };
 
+    function onMessage(event) {
+        console.log("Message reçu du serveur : ", event.data);
+        document.getElementById('messages').innerHTML
+            += '<br />' + event.data;
+    }
 
+    function onOpen(event) {
+        console.log("Connexion WebSocket établie !");
+        webSocket.send("Test message");
+        document.getElementById('messages').innerHTML
+            = 'Connection established';
+    }
+
+    function onError(event) {
+        console.log("error Message  : ", event);
+        alert(event.data);
+    }
+
+    function start() {
+        webSocket.send('hello');
+        return false;
+    }
 </script>
 </body>
 </html>

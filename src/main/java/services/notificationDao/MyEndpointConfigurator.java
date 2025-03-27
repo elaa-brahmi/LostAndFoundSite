@@ -9,12 +9,15 @@ public class MyEndpointConfigurator extends ServerEndpointConfig.Configurator {
     @Override
     public void modifyHandshake(ServerEndpointConfig sec, HandshakeRequest request, HandshakeResponse response) {
         super.modifyHandshake(sec, request, response);
-
         // Retrieve the HttpSession from the request
         HttpSession httpSession = (HttpSession) request.getHttpSession();
-
         if (httpSession != null) {
             String userId = (String) httpSession.getAttribute("userId"); // Your stored userId in HttpSession
             sec.getUserProperties().put("userId", userId);
-        }}
+            System.out.println("✅ Handshake successful, userId: " + userId);
+        }
+        else{
+            System.out.println("No HttpSession found in handshake");
+        }
+    }
 }
