@@ -846,6 +846,11 @@
 
 
   </script>
+
+
+
+
+
   <div id="notFound" class="hidden"></div>
 
   <div id="cardItems" class="mt-5 " style="margin-top: 10%;margin-left: 10%; " >
@@ -854,5 +859,35 @@
   <div id="pagination" class="pagination"></div>
   </div>
 
+
+
+<%--  <script type="text/javascript">--%>
+<%--    var webSocket =--%>
+<%--            new WebSocket('ws://' + window.location.host + '/notification');--%>
+
+<%--    webSocket.onerror = function(event) {--%>
+<%--      onError(event)--%>
+<%--    };--%>
+
+<%--    webSocket.onopen = function(event) {--%>
+<%--      onOpen(event)--%>
+<%--    };--%>
+<%--    webSocket.onclose = function(event) {--%>
+<%--      console.log("WebSocket connection closed: ", event);--%>
+<%--      alert("WebSocket connection closed. Please refresh the page or try again later.");--%>
+<%--    };--%>
+<%--    function onOpen(event) {--%>
+<%--      console.log("Connexion WebSocket établie !");--%>
+<%--      const message = { type: "test", content: "Test message" };--%>
+<%--      webSocket.send(JSON.stringify(message));--%>
+<%--    }--%>
+<%--    function onError(event) {--%>
+<%--      console.log("error Message  : ", event);--%>
+<%--      alert("An error occurred while connecting to the WebSocket.");--%>
+<%--    }--%>
+
+
+
+<%--  </script>--%>
   </body>
 </html>

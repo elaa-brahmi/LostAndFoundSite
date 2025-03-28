@@ -12,12 +12,22 @@ public class Notification {
     private Integer userId;
     @Enumerated(EnumType.STRING)
     private NotifStatus status ;
+    private int itemId;
 
-    public Notification(Integer userIdPossible, String messagePossible, NotifStatus notifStatus) {
+    public Notification(Integer userIdPossible, String messagePossible, NotifStatus notifStatus,Integer itemId) {
         this.userId = userIdPossible;
         this.message = messagePossible;
         this.status = notifStatus;
+        this.itemId = itemId;
 
+    }
+
+    public int getItemId() {
+        return itemId;
+    }
+
+    public void setItemId(int itemId) {
+        this.itemId = itemId;
     }
 
     public int getId() {

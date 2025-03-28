@@ -193,13 +193,13 @@ public class ItemDao {
         return null;
     }
 
-    public static void updateMatchStatus(Item item, MatchedStatus matchedStatus) {
+    public static void updateMatchStatus(Integer idItem, MatchedStatus matchedStatus) {
         try{
             con = BDConnection.getConnection();
             String match_Status=MatchedStatus.MATCHED.toString();
             PreparedStatement ps = con.prepareStatement("UPDATE item  SET match_status= ? WHERE id = ?");
             ps.setString(1,match_Status);
-            ps.setInt(2,item.getId());
+            ps.setInt(2,idItem);
             int rows=ps.executeUpdate();
             if(rows>0) {
                 System.out.println("Item updated matched status to"+ match_Status);

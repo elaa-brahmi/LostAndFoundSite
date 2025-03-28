@@ -627,6 +627,7 @@
 
     </style>
 </head>
+
 <body class="vh-100" style="overflow-x: hidden;  padding:0;">
 <!-- Inclure jQuery (nécessaire pour Toastr) -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -1059,51 +1060,10 @@
             } else {
                 previewImage.classList.add("hidden");
                 svg.classList.remove('hidden');
-
             }
         }, 300); // Delay execution by 500ms
-
-    }
-
-</script>
-<script type="text/javascript">
-    var webSocket =
-        new WebSocket('ws://' + window.location.host + '/notification');
-
-    webSocket.onerror = function(event) {
-        onError(event)
-    };
-
-    webSocket.onopen = function(event) {
-        onOpen(event)
-    };
-
-    webSocket.onmessage = function(event) {
-        onMessage(event)
-    };
-
-    function onMessage(event) {
-        console.log("Message reçu du serveur : ", event.data);
-        document.getElementById('messages').innerHTML
-            += '<br />' + event.data;
-    }
-
-    function onOpen(event) {
-        console.log("Connexion WebSocket établie !");
-        webSocket.send("Test message");
-        document.getElementById('messages').innerHTML
-            = 'Connection established';
-    }
-
-    function onError(event) {
-        console.log("error Message  : ", event);
-        alert(event.data);
-    }
-
-    function start() {
-        webSocket.send('hello');
-        return false;
     }
 </script>
+<script src="webcoscketNotif.js"></script>
 </body>
 </html>

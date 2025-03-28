@@ -188,6 +188,7 @@ int idUser=Integer.parseInt(request.getParameter("idUser"));
     if(error!=="null" && error.trim()!==""){
         swal('Error', error, 'warning');
     }
-</script>
+</script><script src="/webcoscketNotif.js"></script>
+
 </body>
 </html>

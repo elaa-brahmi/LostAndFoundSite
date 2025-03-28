@@ -18,6 +18,6 @@
 //    public void requestInitialized(ServletRequestEvent sre) {
 //        System.out.println("httpServletRequestInitialized");
 //        ((HttpServletRequest) sre.getServletRequest()).getSession();
-//    }
 //
+//    }
 //}
