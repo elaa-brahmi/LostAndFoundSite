@@ -11,7 +11,6 @@ import services.UserDao;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.Objects;
 import java.util.Optional;
 
 @WebServlet(name="login" ,urlPatterns="/login")
