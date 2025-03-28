@@ -28,7 +28,13 @@ public class WebsocketNotification {
                 System.out.println(" userId added to map socket: " + userId);
             }
             else{
-                System.out.println("User id is already connected " + userId);
+                Session oldSession = userSessions.get(userId);
+                try {
+                    oldSession.close(new CloseReason(CloseReason.CloseCodes.NORMAL_CLOSURE, "New connection established for user id " + userId));
+                    userSessions.put(userId, session);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         }
     }
