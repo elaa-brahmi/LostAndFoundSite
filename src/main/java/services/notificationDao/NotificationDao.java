@@ -126,4 +126,19 @@ public class NotificationDao {
         }
         return null;
     }
+    public static void deleteNotificationById(Integer notificationId) {
+        try{
+            con=BDConnection.getConnection();
+            PreparedStatement ps = con.prepareStatement("delete from notification where id=?");
+            ps.setInt(1, notificationId);
+            ps.executeUpdate();
+            int rows=ps.executeUpdate();
+            if(rows>0){
+                System.out.println("a notification has been deleted to "+notificationId);
+            }
+        }
+        catch(SQLException e){
+            e.printStackTrace();
+        }
+    }
 }

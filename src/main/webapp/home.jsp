@@ -858,36 +858,6 @@
   <div class="d-flex justify-content-center" style="width:80%;margin-left: 20%; margin-top:5%;">
   <div id="pagination" class="pagination"></div>
   </div>
-
-
-
-<%--  <script type="text/javascript">--%>
-<%--    var webSocket =--%>
-<%--            new WebSocket('ws://' + window.location.host + '/notification');--%>
-
-<%--    webSocket.onerror = function(event) {--%>
-<%--      onError(event)--%>
-<%--    };--%>
-
-<%--    webSocket.onopen = function(event) {--%>
-<%--      onOpen(event)--%>
-<%--    };--%>
-<%--    webSocket.onclose = function(event) {--%>
-<%--      console.log("WebSocket connection closed: ", event);--%>
-<%--      alert("WebSocket connection closed. Please refresh the page or try again later.");--%>
-<%--    };--%>
-<%--    function onOpen(event) {--%>
-<%--      console.log("Connexion WebSocket établie !");--%>
-<%--      const message = { type: "test", content: "Test message" };--%>
-<%--      webSocket.send(JSON.stringify(message));--%>
-<%--    }--%>
-<%--    function onError(event) {--%>
-<%--      console.log("error Message  : ", event);--%>
-<%--      alert("An error occurred while connecting to the WebSocket.");--%>
-<%--    }--%>
-
-
-
-<%--  </script>--%>
+  <script src="webcoscketNotif.js"></script>
   </body>
 </html>
