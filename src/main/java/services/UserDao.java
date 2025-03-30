@@ -3,6 +3,9 @@ import java.sql.*;
 
 import model.Role;
 import model.User;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.logging.Logger;
 public class UserDao{
@@ -194,6 +197,30 @@ public class UserDao{
             e.printStackTrace();
         }
         return res;
+    }
+    public static List<User> getUsers() throws SQLException{
+        try{
+            List<User> res=new ArrayList<>();
+            connection = BDConnection.getConnection();
+            PreparedStatement ps=connection.prepareStatement("select * from users where role='USER'");
+            ResultSet rs=ps.executeQuery();
+            while(rs.next()){
+                User user=new User();
+                user.setId(rs.getInt("id"));
+                user.setEmail(rs.getString("email"));
+                user.setPassword(rs.getString("password"));
+                user.setName(rs.getString("name"));
+                user.setPhone(rs.getString("phone"));
+                user.setRole(Role.valueOf(rs.getString("role")));
+                user.setPicture(rs.getString("pictures"));
+                res.add(user);
+            }
+            return res;
+        }
+        catch(SQLException e){
+            e.printStackTrace();
+        }
+        return new ArrayList<>();
     }
 
 

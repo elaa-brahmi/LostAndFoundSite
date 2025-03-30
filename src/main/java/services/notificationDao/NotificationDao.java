@@ -141,4 +141,72 @@ public class NotificationDao {
             e.printStackTrace();
         }
     }
+    public static float getPercentageOfAcceptedNotifications() throws SQLException {
+        float acceptedNotifs=0;
+        try {
+            con = BDConnection.getConnection();
+            PreparedStatement ps = con.prepareStatement("select count(*) from notification where status='ACCEPTED'");
+            ResultSet rs = ps.executeQuery();
+          while  (rs.next()){
+            return (float) (rs.getInt(1) * 100) /getNbNotifs();
+          }
+
+        }
+        catch(SQLException e) {
+            e.printStackTrace();
+        }
+        return acceptedNotifs;
+
+    }
+    public static float getPercentageOfRejectedNotifications() throws SQLException {
+        int rejectedNotifs=0;
+        try {
+            con = BDConnection.getConnection();
+            PreparedStatement ps = con.prepareStatement("select count(*) from notification where status='REJECTED'");
+            ResultSet rs = ps.executeQuery();
+            while  (rs.next()){
+                return (float) (rs.getInt(1)*100)/getNbNotifs();}
+
+        }
+        catch(SQLException e) {
+            e.printStackTrace();
+        }
+        return rejectedNotifs;
+
+    }
+    public static Integer getNbNotifs() throws SQLException {
+        int notifs=0;
+        try{
+            con = BDConnection.getConnection();
+            PreparedStatement ps = con.prepareStatement("select count(*) from notification");
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()){
+                return rs.getInt(1);
+
+            }
+
+        }
+        catch(SQLException e) {
+            e.printStackTrace();
+        }
+        return notifs;
+    }
+
+
+    public static float getPercentageOfPendingNotifications() throws SQLException {
+        int rejectedNotifs=0;
+        try {
+            con = BDConnection.getConnection();
+            PreparedStatement ps = con.prepareStatement("select count(*) from notification where status='PENDING'");
+            ResultSet rs = ps.executeQuery();
+            while  (rs.next()){
+                return (float) (rs.getInt(1)*100)/getNbNotifs();}
+
+        }
+        catch(SQLException e) {
+            e.printStackTrace();
+        }
+        return rejectedNotifs;
+
+    }
 }

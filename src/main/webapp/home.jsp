@@ -665,19 +665,6 @@
     </div>
   </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
     <div class="filters">
       <select id="categoryFilter" class="filterCategories">
         <option value="">All Categories</option>
