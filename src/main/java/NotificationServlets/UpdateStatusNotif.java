@@ -20,8 +20,11 @@ public class UpdateStatusNotif extends HttpServlet {
         NotifStatus notifStatus=NotifStatus.valueOf(status);
         NotificationDao.updateNotifStatus(notifStatus,id);
         if(notifStatus.equals(NotifStatus.ACCEPTED)) {
+            notif.setStatus(NotifStatus.ACCEPTED);
             ItemDao.updateMatchStatus(notif.getItemId(), MatchedStatus.RESOLVED);
-
+        }
+        else{
+            notif.setStatus(NotifStatus.REJECTED);
 
         }
     }

@@ -209,4 +209,127 @@ public class ItemDao {
         catch(SQLException e){
         e.printStackTrace();}
     }
+
+
+
+    public static void updateStatus(Integer idItem, String status) {
+        try{
+            con = BDConnection.getConnection();
+            String STATUS=status.toUpperCase();
+            PreparedStatement ps = con.prepareStatement("UPDATE item  SET status= ? WHERE id = ?");
+            ps.setString(1,STATUS);
+            ps.setInt(2,idItem);
+            int rows=ps.executeUpdate();
+            if(rows>0) {
+                System.out.println("Item updated status to"+ STATUS);
+            }
+
+        }
+        catch(SQLException e){
+            e.printStackTrace();}
+    }
+
+    public static List<Item> filterItems(String status) throws SQLException{
+        try{
+            con = BDConnection.getConnection();
+            PreparedStatement ps = con.prepareStatement("SELECT * FROM item WHERE status = ?");
+            ps.setString(1,status.toUpperCase());
+            ResultSet rs = ps.executeQuery();
+            List<Item> items = new ArrayList<>();
+            while(rs.next()) {
+                Item i = new Item();
+                i.setId(rs.getInt("id"));
+                i.setName(rs.getString("name"));
+                i.setDescription(rs.getString("description"));
+                i.setCategory(rs.getString("category"));
+                i.setLocation(rs.getString("location"));
+                i.setStatus(ItemStatus.valueOf(rs.getString("status")));
+                i.setType(ItemType.valueOf(rs.getString("type")));
+                i.setDatefound(rs.getDate("datefound").toLocalDate());
+                i.setUserId(rs.getInt("userid"));
+                i.setMatchedStatus(MatchedStatus.valueOf(rs.getString("match_status")));
+                System.out.println(i);
+                items.add(i);
+            }
+            return items;
+
+        }
+        catch(SQLException e){
+            e.printStackTrace();
+        }
+        return new ArrayList<>();
+    }
+    public static Integer GetNbPendingItems() throws SQLException{
+        int res=0;
+        try{
+
+            con = BDConnection.getConnection();
+            PreparedStatement ps = con.prepareStatement("select count(*) from item where match_status='pending'");
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()) {
+                res = rs.getInt(1);
+
+            }
+
+        }
+        catch(SQLException e){
+            e.printStackTrace();
+        }
+        return res;
+    }
+    public static Integer GetNbMatchedItems() throws SQLException{
+        int res=0;
+        try{
+
+            con = BDConnection.getConnection();
+            PreparedStatement ps = con.prepareStatement("select count(*) from item where match_status='MATCHED'");
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()) {
+                res = rs.getInt(1);
+
+            }
+
+        }
+        catch(SQLException e){
+            e.printStackTrace();
+        }
+        return res;
+    }
+
+    public static Integer GetNbResolvedItems() throws SQLException{
+        int res=0;
+        try{
+
+            con = BDConnection.getConnection();
+            PreparedStatement ps = con.prepareStatement("select count(*) from item where match_status='RESOLVED'");
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()) {
+                res = rs.getInt(1);
+
+            }
+
+        }
+        catch(SQLException e){
+            e.printStackTrace();
+        }
+        return res;
+    }
+
+    public static Integer GetNbRejectedItems() throws SQLException{
+        int res=0;
+        try{
+            con = BDConnection.getConnection();
+            PreparedStatement ps = con.prepareStatement("select count(*) from item where match_status='REJECTED'");
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()) {
+                res = rs.getInt(1);
+            }
+        }
+        catch(SQLException e){
+            e.printStackTrace();
+        }
+        return res;
+    }
+
+
 }

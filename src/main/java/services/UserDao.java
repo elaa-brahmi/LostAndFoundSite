@@ -146,7 +146,7 @@ public class UserDao{
             e.printStackTrace();
         }
     }
-    public void deleteUser(int id) throws SQLException{
+    public static void deleteUser(int id) throws SQLException{
         try{
             connection = BDConnection.getConnection();
             PreparedStatement ps=connection.prepareStatement("delete from users where id=?");
@@ -178,6 +178,24 @@ public class UserDao{
             e.printStackTrace();
         }
     }
+    public static Integer getNumberOfUsers() throws SQLException{
+        int res=0;
+        try{
+
+            connection = BDConnection.getConnection();
+            PreparedStatement ps=connection.prepareStatement("select count(*) from users");
+            ResultSet rs=ps.executeQuery();
+            if(rs.next()){
+                res = rs.getInt(1);
+
+            }
+        }
+        catch(SQLException e){
+            e.printStackTrace();
+        }
+        return res;
+    }
+
 
 
 

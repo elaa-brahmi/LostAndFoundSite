@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="JavaScriptLibraryMappings">
-    <file url="file://$PROJECT_DIR$" libraries="{@popperjs, aos, bootstrap, bootstrap-social, bootstrap.bundle, boxicons, font-awesome, jquery, jquery-1.11.1, jquery-3.6.0, sweetalert, tailwindcss, three.js, toaster-js, toastr.js}" />
+    <file url="file://$PROJECT_DIR$" libraries="{@popperjs, aos, bootstrap, bootstrap-social, bootstrap.bundle, boxicons, buttons, font-awesome, jquery, jquery-1.11.1, jquery-3.6.0, nepcha-analytics, nucleo-icons, nucleo-svg, sweetalert, tailwindcss, three.js, toaster-js, toastr.js}" />
   </component>
 </project>
