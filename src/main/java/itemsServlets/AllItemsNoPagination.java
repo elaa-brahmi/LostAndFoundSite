@@ -15,7 +15,7 @@ import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
-@WebServlet(name="allItems",urlPatterns = "/allItems")
+@WebServlet(name="allItemsNoPagi",urlPatterns = "/allItemsNoPagi")
 public class AllItemsNoPagination extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {

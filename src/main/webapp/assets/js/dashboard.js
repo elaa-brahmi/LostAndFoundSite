@@ -7,8 +7,8 @@ $(document).ready(function(){
     fetchPercentageRejectedNotifs();
     fetchPendingMatches();
     fetchAllUsers();
-   
     fetchAllItems();
+    fetchAllItemsPending();
 });
 function fetchAllUsers(){
     $.ajax({
@@ -45,11 +45,7 @@ function fetchAllUsers(){
                       <td class="align-middle text-center">
                         <span class="text-secondary text-xs font-weight-bold">${user.role}</span>
                       </td>
-                      <td class="align-middle">
-                        <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                          Edit
-                        </a>
-                      </td>
+                      
                     
                  
                 `;
@@ -207,7 +203,7 @@ function fetchPendingItems(){
 }
 function fetchAllItems(){
     $.ajax({
-        url: 'http://localhost:8080/allItems',
+        url: 'http://localhost:8080/allItemsNoPagi',
         type: 'GET',
         datatype: 'json',
         success: function(data){
@@ -292,8 +288,7 @@ function fetchAllItems(){
                         <span class="text-xs font-weight-bold mb-0">${item.type}</span>
                       </td>
                         <td class="align-middle text-center text-sm">
-                       <span class="text-xs font-weight-bold mb-0">${item.
-                        matchedStatus}</span>
+                       <span class="text-xs font-weight-bold mb-0">${item.matchedStatus}</span>
                       </td>
                       <td class="align-middle">
                       <p class="text-xs font-weight-bold mb-0">accepted</p>
@@ -326,11 +321,90 @@ function editStatus(id,status){
         success: function(){
             console.log('Status updated successfully to :', status);
             fetchAllItems(); // Refresh the items after updating the status
+            fetchAllItemsPending();
         },
         error: function(xhr, status, error){
             console.error('Error updating status:', error);
         }
     });
 
+}
+
+
+function fetchAllItemsPending(){
+    $.ajax({
+        url: 'http://localhost:8080/pendingItems',
+        type: 'GET',
+        datatype: 'json',
+        success: function(data){
+            console.log('All items numbers fetched successfully:', data);
+            var tbdoy=$('#tbodyItemsPending');
+            tbdoy.empty(); // Clear existing rows
+            data.forEach(item => {
+                console.log("item :",item);
+                var row=document.createElement('tr');
+
+                    row.innerHTML=`
+                
+                      <td>
+                        <div class="d-flex px-2 py-1">
+                          <div>
+                            <img src="${item.image}" class="avatar avatar-sm me-3" alt="user1">
+                          </div>
+                          <div class="d-flex flex-column justify-content-center">
+                            <h6 class="mb-0 text-sm">${item.name}</h6>
+                          </div>
+                        </div>
+                      </td>
+                      <td>
+                        <p class="text-xs font-weight-bold mb-0">${item.description}</p>
+                     
+                      </td>
+                      <td class="align-middle text-center text-sm">
+                         <span class="text-xs font-weight-bold mb-0">${item.location}</span>
+                      </td>
+                        <td class="align-middle text-center text-sm">
+                         <span class="text-xs font-weight-bold mb-0">${item.datefound}</span>
+                      </td>
+                      <td class="align-middle text-center">
+                        <span class="badge badge-sm bg-gradient-warning">${item.status}</span>
+                      </td>
+                        <td class="align-middle text-center text-sm">
+                        <span class="text-xs font-weight-bold mb-0">${item.type}</span>
+                      </td>
+                        <td class="align-middle text-center text-sm">
+                         <span class="text-xs font-weight-bold mb-0">${item.
+                        matchedStatus}</span>
+                      </td>
+                      <td class="align-middle">
+                        <button onclick="editStatus(${item.id},'accepted')" class="btn btn-primary" >
+                          accept
+                        </button>
+                         <button onclick="editStatus(${item.id},'rejected')" class="btn btn-secondary" >
+                          reject
+                        </button>
+                      </td>
+                `;
+
+
+
+
+                tbdoy.append(row);
+
+
+            });
+        },
+        error: function(xhr, status, error){
+            console.error('Error fetching allItems');
+        }
+    });
+}
+function signout(){
+    fetch("logout", { method: "GET" })
+        .then(response => {
+            if (response.redirected) {
+                window.location.href = response.url; // Redirect to login page
+            }
+        });
 }
 
