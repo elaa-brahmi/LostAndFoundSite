@@ -46,7 +46,7 @@
       <i class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
       <a class="navbar-brand m-0" href="#" target="_blank">
         <img src="assets/img/logo-ct-dark.png" class="navbar-brand-img h-100" alt="main_logo">
-        <span class="ms-1 font-weight-bold">Lost & Found Admin Dashboard</span>
+        <span class="ms-1 font-weight-bold">Lost&Found Dashboard</span>
       </a>
     </div>
     <hr class="horizontal dark mt-0">
@@ -93,6 +93,28 @@
           </a>
         </li>
 
+
+        <li class="nav-item">
+          <a class="nav-link" onclick="signout()">
+            <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+              <svg width="16px" height="16px" viewBox="0 0 42 42" xmlns="http://www.w3.org/2000/svg" fill="currentColor">
+                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                  <g transform="translate(-1869.000000, -293.000000)" fill="#FFFFFF" fill-rule="nonzero">
+                    <g transform="translate(1716.000000, 291.000000)">
+                      <g id="office" transform="translate(153.000000, 2.000000)">
+                        <path d="M16 28L26 18L16 8" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path>
+                        <path d="M26 18H8" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path>
+                        <path d="M12 36H6C4.34315 36 3 34.6569 3 33V9C3 7.34315 4.34315 6 6 6H12" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path>
+
+                      </g></g></g></g>
+              </svg>
+            </div>
+            <span class="nav-link-text ms-1">Sign Out</span>
+          </a>
+        </li>
+
+
+
       </ul>
     </div>
 
@@ -109,22 +131,7 @@
           <h6 class="font-weight-bolder mb-0">Dashboard</h6>
         </nav>
 
-        <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
 
-          <ul class="navbar-nav  justify-content-end">
-
-            <li class="nav-item d-flex align-items-center">
-              <a href="javascript:;" class="nav-link text-body font-weight-bold px-0">
-                <i class="fa fa-user me-sm-1"></i>
-                <span class="d-sm-inline d-none" onclick="signout()">Sign out</span>
-              </a>
-
-            </li>
-
-              </ul>
-
-
-        </div>
       </div>
     </nav>
     <!-- End Navbar -->

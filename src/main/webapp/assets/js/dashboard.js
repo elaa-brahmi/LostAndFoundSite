@@ -23,7 +23,6 @@ function fetchAllUsers(){
                 console.log("user :",user);
                 var row=document.createElement('tr');
                 row.innerHTML=`
-                
                       <td>
                         <div class="d-flex px-2 py-1">
                           <div>
@@ -31,7 +30,6 @@ function fetchAllUsers(){
                           </div>
                           <div class="d-flex flex-column justify-content-center">
                             <h6 class="mb-0 text-sm">${user.name}</h6>
-                           
                           </div>
                         </div>
                       </td>
@@ -45,9 +43,9 @@ function fetchAllUsers(){
                       <td class="align-middle text-center">
                         <span class="text-secondary text-xs font-weight-bold">${user.role}</span>
                       </td>
-                      
-                    
-                 
+                      <td>
+                      <button  onclick="deleteUser(${user.id})" class="btn btn-danger" style="display:block !important;">delete</button>
+                        </td>
                 `;
 
                 tableBody.append(row);
@@ -406,5 +404,20 @@ function signout(){
                 window.location.href = response.url; // Redirect to login page
             }
         });
+}
+function deleteUser(id){
+    $.ajax({
+        url: 'http://localhost:8080/deleteUser',
+        type: 'POST',
+        data:{
+            userId: id
+        },
+        success: function(data){
+            console.log('User deleted successfully to :', data);
+        },
+        error: function(xhr, status, error){
+            console.error('Error deleting user');
+        }
+    });
 }
 
