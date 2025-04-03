@@ -410,10 +410,11 @@ function deleteUser(id){
         url: 'http://localhost:8080/deleteUser',
         type: 'POST',
         data:{
-            userId: id
+            id: id
         },
         success: function(data){
             console.log('User deleted successfully to :', data);
+            fetchAllUsers();
         },
         error: function(xhr, status, error){
             console.error('Error deleting user');

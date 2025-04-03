@@ -8,6 +8,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import model.User;
 import services.BDConnection;
+import services.UserDao;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -21,21 +22,11 @@ public class GetUser extends HttpServlet {
     User user=null;
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            con = BDConnection.getConnection();
+           
+          
             int userId = Integer.parseInt(request.getParameter("userId"));
-            //System.out.println("userId:" + userId);
-            PreparedStatement ps0 = con.prepareStatement("select * from users where id=?");
-            ps0.setInt(1, userId);
-            ResultSet rs0 = ps0.executeQuery();
-            while (rs0.next()) {
-                Integer Id = rs0.getInt("id");
-                String name = rs0.getString("name");
-                String email = rs0.getString("email");
-                String phone = rs0.getString("phone");
-                String image = rs0.getString("pictures");
-                 user = new User(Id, name, email, phone,image);
-                //System.out.println("user: " + user);
-            }
+            User user=UserDao.getUser(userId);
+         
             Gson gson = new Gson();
             String userDetails= gson.toJson(user);
             response.setContentType("application/json");

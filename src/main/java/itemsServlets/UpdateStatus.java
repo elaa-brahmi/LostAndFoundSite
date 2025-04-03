@@ -1,5 +1,4 @@
 package itemsServlets;
-
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -9,13 +8,13 @@ import model.Item;
 import model.ItemType;
 import services.ItemDao;
 import services.notificationDao.NotificationDao;
-
 import java.io.IOException;
 import java.util.List;
 
 @WebServlet(name="updateStatusItems",urlPatterns = "/updateStatusItems")
 public class UpdateStatus extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {}
+
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Integer itemid = Integer.parseInt(request.getParameter("itemid"));
         String status = request.getParameter("status");

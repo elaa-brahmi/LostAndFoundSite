@@ -27,7 +27,6 @@ import java.util.Map;
 @WebServlet(name="allItems",urlPatterns = "/allItems")
 public class GetAllItems extends HttpServlet {
 
-    Connection con;
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         int page = Integer.parseInt(request.getParameter("page") != null ? request.getParameter("page") : "1");
@@ -38,8 +37,8 @@ public class GetAllItems extends HttpServlet {
         System.out.println("location selected " +locationS);
 
 
-        try{
-            con = BDConnection.getConnection();
+        try( Connection con = BDConnection.getConnection()){
+          
         
         // Build the base query
         String baseQuery = "SELECT COUNT(*) AS total FROM item WHERE status = 'ACCEPTED'";
@@ -54,20 +53,21 @@ public class GetAllItems extends HttpServlet {
         }
         
         // Query to get the total number of items
-        PreparedStatement countPs = con.prepareStatement(baseQuery + filterQuery);
+        try (PreparedStatement countPs = con.prepareStatement(baseQuery + filterQuery)) {
         int paramIndex = 1;
         if (!categoryS.isEmpty()) {
             countPs.setString(paramIndex++, categoryS);}
             if (!locationS.isEmpty()) {
                 countPs.setString(paramIndex, locationS);
             }
-            ResultSet countRs = countPs.executeQuery();
+            try (ResultSet countRs = countPs.executeQuery()) {
             countRs.next();
             int totalItems = countRs.getInt("total");
             int totalPages = (int) Math.ceil((double) totalItems / pageSize);
             
-            // Query to get the items with pagination
-            PreparedStatement ps = con.prepareStatement("SELECT * FROM item WHERE status = 'ACCEPTED'" + filterQuery + " ORDER BY datefound LIMIT ? OFFSET ?");
+               // Query to get the items with pagination
+               String itemQuery = "SELECT * FROM item WHERE status = 'ACCEPTED'" + filterQuery + " ORDER BY datefound LIMIT ? OFFSET ?";
+               try (PreparedStatement ps = con.prepareStatement(itemQuery)) {
             paramIndex = 1;
             if (!categoryS.isEmpty()) {
                 ps.setString(paramIndex++, categoryS);
@@ -81,7 +81,7 @@ public class GetAllItems extends HttpServlet {
 
 
 
-            ResultSet rs=ps.executeQuery();
+            try (ResultSet rs = ps.executeQuery()) {
             ArrayList<Item> items=new ArrayList<>();
             while(rs.next()){
                 Integer id=rs.getInt("id");
@@ -119,7 +119,8 @@ public class GetAllItems extends HttpServlet {
             PrintWriter out = response.getWriter();
             out.print(json);
             out.flush();
-        } catch (SQLException e) {
+        }}}}}
+         catch (SQLException e) {
             e.printStackTrace();
             response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             response.getWriter().write("{\"error\": \"Database error\"}");

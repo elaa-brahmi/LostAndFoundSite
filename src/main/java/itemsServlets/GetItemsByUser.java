@@ -27,7 +27,6 @@ import java.util.List;
 import java.util.Map;
 @WebServlet(name="UserItems" ,urlPatterns = "/UserItems")
 public class GetItemsByUser extends HttpServlet {
-    Connection con;
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Map<String, List<Item>> AllItems = new HashMap<>();
         AllItems.put("pending", new ArrayList<>());
@@ -35,31 +34,14 @@ public class GetItemsByUser extends HttpServlet {
 
         System.out.println("GET ALL ITEMS by user");
         try {
-            con = BDConnection.getConnection();
             Integer userId = Integer.parseInt(request.getParameter("userId"));
             System.out.println("User ID: " + userId);
+ // Fetch items from the database
+ fetchItemsByStatus(userId, "ACCEPTED", AllItems.get("accepted"));
+ fetchItemsByStatus(userId, "PENDING", AllItems.get("pending"));
 
-            // Récupérer les éléments ACCEPTED
-            PreparedStatement ps = con.prepareStatement("SELECT * FROM item WHERE status = 'ACCEPTED' AND userid=?");
-            ps.setInt(1, userId);
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                AllItems.get("accepted").add(mapItem(rs));
-            }
-            System.out.println("Accepted items: " + AllItems.get("accepted"));
-
-            // Récupérer les éléments PENDING
-            PreparedStatement ps1 = con.prepareStatement("SELECT * FROM item WHERE status = 'PENDING' AND userid=?");
-            ps1.setInt(1, userId);
-            ResultSet rs1 = ps1.executeQuery();
-
-            boolean hasPendingItems = false;
-            while (rs1.next()) {
-                hasPendingItems = true;
-                AllItems.get("pending").add(mapItem(rs1));
-            }
-            System.out.println("Found pending items: " + hasPendingItems);
-            System.out.println("Pending items list: " + AllItems.get("pending"));
+ System.out.println("Accepted items: " + AllItems.get("accepted"));
+ System.out.println("Pending items: " + AllItems.get("pending"));
 
             // Convertir en JSON et envoyer la réponse
             Gson gson = new GsonBuilder()
@@ -77,7 +59,21 @@ public class GetItemsByUser extends HttpServlet {
             response.getWriter().write("{\"error\": \"Database error\"}");
         }
     }
+    private void fetchItemsByStatus(Integer userId, String status, List<Item> items) throws SQLException {
+        String query = "SELECT * FROM item WHERE status = ? AND userid = ?";
+        try (Connection con = BDConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(query)) {
 
+            ps.setString(1, status);
+            ps.setInt(2, userId);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    items.add(mapItem(rs));
+                }
+            }
+        }
+    }
     private Item mapItem(ResultSet rs) throws SQLException {
         Integer id = rs.getInt("id");
         String name = rs.getString("name");

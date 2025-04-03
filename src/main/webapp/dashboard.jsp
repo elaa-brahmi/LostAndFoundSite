@@ -182,7 +182,7 @@
                       <h5 class="text-white font-weight-bolder mb-0 mt-3" id="nbPendingItems">
 
                       </h5>
-                      <span class="text-white text-sm">Pending Items</span>
+                      <span class="text-white text-sm">not matched</span>
                     </div>
                     <div class="col-4">
                       <div class="dropstart text-end mb-6">

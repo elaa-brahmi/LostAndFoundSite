@@ -355,6 +355,8 @@
         <div style="display: flex; align-items: center; justify-content: center; column-gap: 15px; margin-top: 8%;">
             <button  class="btn btn-secondary hidden" onclick="updateNotif('accepted')">accept match</button>
             <button class="btn btn-danger hidden" onclick="updateNotif('rejected')">reject match</button>
+            <button class="btn btn-info" onclick="revealChatBox()" >chat with matcher</button>
+            <textarea id="chatBox"></textarea>
         </div>
     </div>
 <button class="btn btn-primary" onclick="redirectHome()">back</button>

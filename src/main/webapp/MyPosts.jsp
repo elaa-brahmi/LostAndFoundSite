@@ -824,6 +824,7 @@
 
 
     function renderUserInfos(user) {
+        console.log(user);
         var div = document.getElementById("userProfile");
         div.innerHTML = `
         <div class="cardUser">

@@ -13,11 +13,12 @@ import java.sql.SQLException;
 @WebServlet(name="deleteUser",urlPatterns = "/deleteUser")
 public class deleteUser extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        int id = Integer.parseInt(request.getParameter("id"));
+        Integer id = Integer.parseInt(request.getParameter("id"));
+        System.out.println("id user to delete: " + id);
         try {
             UserDao.deleteUser(id);
-            request.setAttribute("message_delete_user", "User deleted successfully");
-            getServletContext().getRequestDispatcher("tables.jsp").forward(request, response);
+           // request.setAttribute("message_delete_user", "User deleted successfully");
+          //  getServletContext().getRequestDispatcher("tables.jsp").forward(request, response);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

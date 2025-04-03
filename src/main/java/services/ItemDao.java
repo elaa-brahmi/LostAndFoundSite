@@ -15,11 +15,11 @@ public class ItemDao {
 
     private static final Logger logger =Logger.getLogger(UserDao.class.getName());
     public ItemDao() {}
-    public static Integer create(Item item) {
+    public static void create(Item item) {
         String query = "INSERT INTO item(name, description, category, location, image, datefound, status, type, userid, match_status) " +
                    "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     try (Connection con = BDConnection.getConnection();
-         PreparedStatement ps = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
+         PreparedStatement ps = con.prepareStatement(query)) {
 
         ps.setString(1, item.getName());
         ps.setString(2, item.getDescription());
@@ -34,16 +34,12 @@ public class ItemDao {
 
         int rows = ps.executeUpdate();
         if (rows > 0) {
-            try (ResultSet rs = ps.getGeneratedKeys()) {
-                if (rs.next()) {
-                    return rs.getInt(1);
-                }
-            }
+            System.out.println("Item created successfully");
         }
     } catch (SQLException e) {
         e.printStackTrace();
     }
-    return null;
+
 
     }
     public static Item getItem(int id) {
@@ -65,7 +61,7 @@ public class ItemDao {
                     i.setDatefound(rs.getDate("datefound").toLocalDate());
                     i.setImage(rs.getString("image"));
                     i.setUserId(rs.getInt("userid"));
-                    i.setMatchedStatus(MatchedStatus.valueOf(rs.getString("match_status")));
+                    i.setMatchedStatus(MatchedStatus.valueOf(rs.getString("match_status").toUpperCase()));
                     return i;
                 }
             }
@@ -212,7 +208,7 @@ public class ItemDao {
 
     public static void updateStatus(Integer idItem, String status) {
         String query = "UPDATE item SET status = ? WHERE id = ?";
-    String upperStatus = status.toUpperCase();
+        String upperStatus = status.toUpperCase();
 
     try (Connection con = BDConnection.getConnection();
          PreparedStatement ps = con.prepareStatement(query)) {

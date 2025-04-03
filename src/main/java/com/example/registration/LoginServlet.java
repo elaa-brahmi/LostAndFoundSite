@@ -22,7 +22,7 @@ public class LoginServlet extends HttpServlet {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
         try {
-            if(UserDao.authenticate(email, password)==null) {
+            if(UserDao.authenticate(email, password).isEmpty()) {
                 request.setAttribute("error","Invalid email or password");
                 System.out.println("Invalid email or password in loginServlet");
                 request.getRequestDispatcher("login.jsp").forward(request,response);

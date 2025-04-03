@@ -112,6 +112,7 @@ public class UserDao{
                     user.setName(rs.getString("name"));
                     user.setPhone(rs.getString("phone"));
                     user.setRole(Role.valueOf(rs.getString("role")));
+                    user.setPicture(rs.getString("pictures"));
                     return user;
                 }
             }
@@ -147,8 +148,10 @@ public class UserDao{
              PreparedStatement ps = connection.prepareStatement(query)) {
     
             ps.setInt(1, id);
-            ps.executeUpdate();
-            System.out.println("User Deleted");
+            int rows=ps.executeUpdate();
+            if (rows > 0) {
+                System.out.println("User Deleted");
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
