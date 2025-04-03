@@ -235,6 +235,9 @@
         padding: 0.5em 1em;
     }
         }
+        .hidden{
+            display: none;
+        }
 
 
 
@@ -321,7 +324,16 @@
     </div>
 
 </div>
-<div style="margin-top: 3rem;
+<script>
+    window.onload = function() {
+        <% if (session.getAttribute("userId") != null && "user".equals(session.getAttribute("role"))) { %>
+            document.getElementById("register").classList.toggle("hidden");
+        <% } %>
+    }
+</script>
+    </script>
+
+<div id="register" style="margin-top: 3rem;
     text-align: center;">
     <button class="styled-button" onclick="login()">
         Register Now

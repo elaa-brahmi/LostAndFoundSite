@@ -12,74 +12,73 @@ import java.util.List;
 import java.util.logging.Logger;
 
 public class ItemDao {
-    public static Connection con;
 
     private static final Logger logger =Logger.getLogger(UserDao.class.getName());
     public ItemDao() {}
     public static Integer create(Item item) {
-        try {
-            con = BDConnection.getConnection();
-            PreparedStatement ps = con.prepareStatement("insert into item(name,description,category,location,image,datefound,status,type,userid,match_status) values(?,?,?,?,?,?,?,?,?,?)",Statement.RETURN_GENERATED_KEYS);
-            ps.setString(1, item.getName());
-            ps.setString(2, item.getDescription());
-            ps.setString(3, item.getCategory());
-            ps.setString(4, item.getLocation());
-            ps.setString(5, item.getImage());
-            ps.setDate(6, Date.valueOf(item.getDatefound()));
-            ps.setString(7, "PENDING");// accepted status
-            ps.setString(8, item.getType().toString());// type
-            ps.setInt(9, item.getUserId());
-            ps.setString(10,item.getMatchedStatus().toString().toLowerCase());
-            int rows = ps.executeUpdate();
-            if (rows>0) {
-                System.out.println("item added");
-                try (ResultSet rs = ps.getGeneratedKeys()) {
-                    if (rs.next()) {
-                        System.out.println("the generated key is " + rs.getInt(1));
-                        return rs.getInt(1);  // Retrieve the generated ID
-                    }
-                }
+        String query = "INSERT INTO item(name, description, category, location, image, datefound, status, type, userid, match_status) " +
+                   "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    try (Connection con = BDConnection.getConnection();
+         PreparedStatement ps = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
 
+        ps.setString(1, item.getName());
+        ps.setString(2, item.getDescription());
+        ps.setString(3, item.getCategory());
+        ps.setString(4, item.getLocation());
+        ps.setString(5, item.getImage());
+        ps.setDate(6, Date.valueOf(item.getDatefound()));
+        ps.setString(7, "PENDING");
+        ps.setString(8, item.getType().toString());
+        ps.setInt(9, item.getUserId());
+        ps.setString(10, item.getMatchedStatus().toString().toLowerCase());
+
+        int rows = ps.executeUpdate();
+        if (rows > 0) {
+            try (ResultSet rs = ps.getGeneratedKeys()) {
+                if (rs.next()) {
+                    return rs.getInt(1);
+                }
             }
         }
-        catch(SQLException e){
-            e.printStackTrace();
-        }
-        return null;
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+    return null;
+
     }
     public static Item getItem(int id) {
-        try {
-            con = BDConnection.getConnection();
-            PreparedStatement ps = con.prepareStatement("select * from item where id=?");
+        String query = "SELECT * FROM item WHERE id=?";
+        try (Connection con = BDConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(query)) {
+    
             ps.setInt(1, id);
-            ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
-                Item i = new Item();
-                i.setId(rs.getInt("id"));
-                i.setName(rs.getString("name"));
-                i.setDescription(rs.getString("description"));
-                i.setCategory(rs.getString("category"));
-                i.setLocation(rs.getString("location"));
-                i.setStatus(ItemStatus.valueOf(rs.getString("status")));
-                i.setType(ItemType.valueOf(rs.getString("type")));
-                i.setDatefound(rs.getDate("datefound").toLocalDate());
-                i.setImage(rs.getString("image"));
-                i.setUserId(rs.getInt("userid"));
-                System.out.println(i);
-                return i;
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    Item i = new Item();
+                    i.setId(rs.getInt("id"));
+                    i.setName(rs.getString("name"));
+                    i.setDescription(rs.getString("description"));
+                    i.setCategory(rs.getString("category"));
+                    i.setLocation(rs.getString("location"));
+                    i.setStatus(ItemStatus.valueOf(rs.getString("status")));
+                    i.setType(ItemType.valueOf(rs.getString("type")));
+                    i.setDatefound(rs.getDate("datefound").toLocalDate());
+                    i.setImage(rs.getString("image"));
+                    i.setUserId(rs.getInt("userid"));
+                    i.setMatchedStatus(MatchedStatus.valueOf(rs.getString("match_status")));
+                    return i;
+                }
             }
-
         } catch (SQLException e) {
             e.printStackTrace();
-
         }
         return null;
     }
-
     public static void updateItem(Item item) {
-        try{
-            con = BDConnection.getConnection();
-            PreparedStatement ps = con.prepareStatement("UPDATE item  SET name = ?, description = ?, category = ?, location = ?, image = ?, datefound = ?, type = ?, userid = ?, status = ? WHERE id = ?");
+        String query = "UPDATE item SET name = ?, description = ?, category = ?, location = ?, image = ?, datefound = ?, type = ?, userid = ?, status = ? WHERE id = ?";
+        try (Connection con = BDConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(query)) {
+    
             ps.setString(1, item.getName());
             ps.setString(2, item.getDescription());
             ps.setString(3, item.getCategory());
@@ -90,6 +89,7 @@ public class ItemDao {
             ps.setInt(8, item.getUserId());
             ps.setString(9, item.getStatus().toString());
             ps.setInt(10, item.getId());
+    
             int rows=ps.executeUpdate();
             if(rows>0) {
                 System.out.println("Item updated successfully");
@@ -100,10 +100,11 @@ public class ItemDao {
         }
     }
     public static void deleteItem(int id) {
-        try{
-            con = BDConnection.getConnection();
-            PreparedStatement ps = con.prepareStatement("delete from item WHERE id = ?");
-            ps.setInt(1, id);
+        String query = "DELETE FROM item WHERE id = ?";
+    try (Connection con = BDConnection.getConnection();
+         PreparedStatement ps = con.prepareStatement(query)) {
+
+        ps.setInt(1, id);
             int rows=ps.executeUpdate();
             if(rows>0) {
                 System.out.println("Item deleted successfully");
@@ -116,237 +117,225 @@ public class ItemDao {
     }
 
     public static List<Item> getLostItems() {
-        try{
-            con = BDConnection.getConnection();
-            PreparedStatement ps = con.prepareStatement("SELECT * FROM item WHERE type = 'LOST' AND match_status IN ('pending', 'matched','MATCHED') AND status = 'ACCEPTED'");
-            ResultSet rs = ps.executeQuery();
-            List<Item> items = new ArrayList<Item>();
-            while(rs.next()) {
-                Item i = new Item();
-                i.setId(rs.getInt("id"));
-                i.setName(rs.getString("name"));
-                i.setDescription(rs.getString("description"));
-                i.setCategory(rs.getString("category"));
-                i.setLocation(rs.getString("location"));
-                i.setStatus(ItemStatus.valueOf(rs.getString("status")));
-                i.setType(ItemType.valueOf(rs.getString("type")));
-                i.setDatefound(rs.getDate("datefound").toLocalDate());
-                i.setUserId(rs.getInt("userid"));
-                System.out.println(i);
-                items.add(i);
+        String query = "SELECT * FROM item WHERE type = 'LOST' AND match_status IN ('pending', 'matched', 'MATCHED') AND status = 'ACCEPTED'";
+    List<Item> items = new ArrayList<>();
+    try (Connection con = BDConnection.getConnection();
+         PreparedStatement ps = con.prepareStatement(query);
+         ResultSet rs = ps.executeQuery()) {
 
-            }
-            return items;
-
-
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+        while (rs.next()) {
+            Item i = new Item();
+            i.setId(rs.getInt("id"));
+            i.setName(rs.getString("name"));
+            i.setDescription(rs.getString("description"));
+            i.setCategory(rs.getString("category"));
+            i.setLocation(rs.getString("location"));
+            i.setStatus(ItemStatus.valueOf(rs.getString("status")));
+            i.setType(ItemType.valueOf(rs.getString("type")));
+            i.setDatefound(rs.getDate("datefound").toLocalDate());
+            i.setUserId(rs.getInt("userid"));
+            items.add(i);
         }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+    return items;
 
     }
 
     public static List<Item> getFoundItems() {
-        try{
-            con = BDConnection.getConnection();
-            PreparedStatement ps = con.prepareStatement("select * from item WHERE type='FOUND' AND match_status IN ('pending', 'matched','MATCHED') AND status = 'ACCEPTED'");
-            ResultSet rs = ps.executeQuery();
-            List<Item> items = new ArrayList<>();
-            while(rs.next()) {
-                Item i = new Item();
-                i.setId(rs.getInt("id"));
-                i.setName(rs.getString("name"));
-                i.setDescription(rs.getString("description"));
-                i.setCategory(rs.getString("category"));
-                i.setLocation(rs.getString("location"));
-                i.setStatus(ItemStatus.valueOf(rs.getString("status")));
-                i.setType(ItemType.valueOf(rs.getString("type")));
-                i.setDatefound(rs.getDate("datefound").toLocalDate());
-                i.setUserId(rs.getInt("userid"));
-                System.out.println(i);
-                items.add(i);
+        String query = "SELECT * FROM item WHERE type='FOUND' AND match_status IN ('pending', 'matched', 'MATCHED') AND status = 'ACCEPTED'";
+    List<Item> items = new ArrayList<>();
 
-            }
-            return items;
+    try (Connection con = BDConnection.getConnection();
+         PreparedStatement ps = con.prepareStatement(query);
+         ResultSet rs = ps.executeQuery()) {
 
-
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+        while (rs.next()) {
+            Item i = new Item();
+            i.setId(rs.getInt("id"));
+            i.setName(rs.getString("name"));
+            i.setDescription(rs.getString("description"));
+            i.setCategory(rs.getString("category"));
+            i.setLocation(rs.getString("location"));
+            i.setStatus(ItemStatus.valueOf(rs.getString("status")));
+            i.setType(ItemType.valueOf(rs.getString("type")));
+            i.setDatefound(rs.getDate("datefound").toLocalDate());
+            i.setUserId(rs.getInt("userid"));
+            i.setImage(rs.getString("image"));
+            i.setMatchedStatus(MatchedStatus.valueOf(rs.getString("match_status").toUpperCase()));
+            items.add(i);
         }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+
+    return items;
 
     }
 
     public static String getUserEmail(Item item) {
-        try{
-            con = BDConnection.getConnection();
-            int userId = item.getUserId();
-            PreparedStatement ps = con.prepareStatement("select email from users WHERE id=?");
-            ps.setInt(1,userId);
-            ResultSet rs = ps.executeQuery();
-            if(rs.next()) {
+        String query = "SELECT email FROM users WHERE id = ?";
+    try (Connection con = BDConnection.getConnection();
+         PreparedStatement ps = con.prepareStatement(query)) {
+
+        ps.setInt(1, item.getUserId());
+        try (ResultSet rs = ps.executeQuery()) {
+            if (rs.next()) {
                 return rs.getString("email");
             }
-
         }
-        catch(SQLException e){
-            e.printStackTrace();
-        }
-        return null;
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+    return null;
     }
 
     public static void updateMatchStatus(Integer idItem, MatchedStatus matchedStatus) {
-        try{
-            con = BDConnection.getConnection();
-            String match_Status=MatchedStatus.MATCHED.toString();
-            PreparedStatement ps = con.prepareStatement("UPDATE item  SET match_status= ? WHERE id = ?");
-            ps.setString(1,match_Status);
-            ps.setInt(2,idItem);
-            int rows=ps.executeUpdate();
-            if(rows>0) {
-                System.out.println("Item updated matched status to"+ match_Status);
+        String query = "UPDATE item SET match_status = ? WHERE id = ?";
+        try (Connection con = BDConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(query)) {
+    
+            ps.setString(1, matchedStatus.toString());
+            ps.setInt(2, idItem);
+    
+            int rows = ps.executeUpdate();
+            if (rows > 0) {
+                System.out.println("Item updated match status to " + matchedStatus);
             }
-
-    }
-        catch(SQLException e){
-        e.printStackTrace();}
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
 
 
     public static void updateStatus(Integer idItem, String status) {
-        try{
-            con = BDConnection.getConnection();
-            String STATUS=status.toUpperCase();
-            if(STATUS.equals("ACCEPTED")) {
-                PreparedStatement ps = con.prepareStatement("UPDATE item  SET status= ? WHERE id = ?");
-                ps.setString(1,STATUS);
-                ps.setInt(2,idItem);
-                int rows=ps.executeUpdate();
-                if(rows>0) {
-                    System.out.println("Item updated status to"+ STATUS);
-                }
+        String query = "UPDATE item SET status = ? WHERE id = ?";
+    String upperStatus = status.toUpperCase();
 
+    try (Connection con = BDConnection.getConnection();
+         PreparedStatement ps = con.prepareStatement(query)) {
+
+        if (upperStatus.equals("ACCEPTED")) {
+            // Update the status to "ACCEPTED"
+            ps.setString(1, upperStatus);
+            ps.setInt(2, idItem);
+
+            int rows = ps.executeUpdate();
+            if (rows > 0) {
+                System.out.println("Item updated status to " + upperStatus);
             }
-            else {
-                deleteItem(
-                        idItem
-                );
-            }
-
-
+        } else {
+            // Delete the item if the status is not "ACCEPTED"
+            deleteItem(idItem);
         }
-        catch(SQLException e){
-            e.printStackTrace();}
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
     }
 
     public static List<Item> filterItems(String status) throws SQLException{
-        try{
-            con = BDConnection.getConnection();
-            PreparedStatement ps = con.prepareStatement("SELECT * FROM item WHERE status = ?");
-            ps.setString(1,status.toUpperCase());
-            ResultSet rs = ps.executeQuery();
-            List<Item> items = new ArrayList<>();
-            while(rs.next()) {
-                Item i = new Item();
-                i.setId(rs.getInt("id"));
-                i.setName(rs.getString("name"));
-                i.setDescription(rs.getString("description"));
-                i.setCategory(rs.getString("category"));
-                i.setLocation(rs.getString("location"));
-                i.setStatus(ItemStatus.valueOf(rs.getString("status")));
-                i.setType(ItemType.valueOf(rs.getString("type")));
-                i.setDatefound(rs.getDate("datefound").toLocalDate());
-                i.setUserId(rs.getInt("userid"));
-                i.setMatchedStatus(MatchedStatus.valueOf(rs.getString("match_status")));
-                System.out.println(i);
-                items.add(i);
+        String query = "SELECT * FROM item WHERE status = ?";
+        List<Item> items = new ArrayList<>();
+    
+        try (Connection con = BDConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(query)) {
+    
+            ps.setString(1, status.toUpperCase());
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    Item i = new Item();
+                    i.setId(rs.getInt("id"));
+                    i.setName(rs.getString("name"));
+                    i.setDescription(rs.getString("description"));
+                    i.setCategory(rs.getString("category"));
+                    i.setLocation(rs.getString("location"));
+                    i.setStatus(ItemStatus.valueOf(rs.getString("status")));
+                    i.setType(ItemType.valueOf(rs.getString("type")));
+                    i.setDatefound(rs.getDate("datefound").toLocalDate());
+                    i.setUserId(rs.getInt("userid"));
+                    i.setMatchedStatus(MatchedStatus.valueOf(rs.getString("match_status").toUpperCase()));
+                    i.setImage(rs.getString("image"));
+                    items.add(i);
+                }
             }
-            return items;
-
-        }
-        catch(SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
-        return new ArrayList<>();
+    
+        return items;
     }
     public static Integer GetNbPendingItems() throws SQLException{
-        int res=0;
-        try{
+        int res = 0;
+    String query = "SELECT COUNT(*) FROM item WHERE match_status='pending'";
+    try (Connection con = BDConnection.getConnection();
+         PreparedStatement ps = con.prepareStatement(query);
+         ResultSet rs = ps.executeQuery()) {
 
-            con = BDConnection.getConnection();
-            PreparedStatement ps = con.prepareStatement("select count(*) from item where match_status='pending'");
-            ResultSet rs = ps.executeQuery();
-            if(rs.next()) {
-                res = rs.getInt(1);
-
-            }
-
+        if (rs.next()) {
+            res = rs.getInt(1);
         }
-        catch(SQLException e){
-            e.printStackTrace();
-        }
-        return res;
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+    return res;
     }
     public static Integer GetNbMatchedItems() throws SQLException{
-        int res=0;
-        try{
-
-            con = BDConnection.getConnection();
-            PreparedStatement ps = con.prepareStatement("select count(*) from item where match_status='MATCHED'");
-            ResultSet rs = ps.executeQuery();
-            if(rs.next()) {
+        int res = 0;
+        String query = "SELECT COUNT(*) FROM item WHERE match_status='MATCHED'";
+        try (Connection con = BDConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(query);
+             ResultSet rs = ps.executeQuery()) {
+    
+            if (rs.next()) {
                 res = rs.getInt(1);
-
             }
-
-        }
-        catch(SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return res;
     }
 
-    public static Integer GetNbResolvedItems() throws SQLException{
-        int res=0;
-        try{
-
-            con = BDConnection.getConnection();
-            PreparedStatement ps = con.prepareStatement("select count(*) from item where match_status='RESOLVED'");
-            ResultSet rs = ps.executeQuery();
-            if(rs.next()) {
+    public static Integer GetNbResolvedItems() throws SQLException {
+        int res = 0;
+        try (Connection con = BDConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement("SELECT COUNT(*) FROM item WHERE match_status='RESOLVED'");
+             ResultSet rs = ps.executeQuery()) {
+    
+            if (rs.next()) {
                 res = rs.getInt(1);
-
             }
-
-        }
-        catch(SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return res;
     }
 
     public static Integer GetNbRejectedItems() throws SQLException{
-        int res=0;
-        try{
-            con = BDConnection.getConnection();
-            PreparedStatement ps = con.prepareStatement("select count(*) from item where match_status='REJECTED'");
-            ResultSet rs = ps.executeQuery();
-            if(rs.next()) {
-                res = rs.getInt(1);
-            }
+        int res = 0;
+    String query = "SELECT COUNT(*) FROM item WHERE match_status='REJECTED'";
+    try (Connection con = BDConnection.getConnection();
+         PreparedStatement ps = con.prepareStatement(query);
+         ResultSet rs = ps.executeQuery()) {
+
+        if (rs.next()) {
+            res = rs.getInt(1);
         }
-        catch(SQLException e){
-            e.printStackTrace();
-        }
-        return res;
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+    return res;
     }
 
     public static List<Item> getPendingItems() throws SQLException{
-        try{
-            con = BDConnection.getConnection();
-            PreparedStatement ps = con.prepareStatement("SELECT * FROM item where status='PENDING'");
-            ResultSet rs = ps.executeQuery();
-            List<Item> items = new ArrayList<>();
-            while(rs.next()) {
+        String query = "SELECT * FROM item WHERE status='PENDING'";
+        List<Item> items = new ArrayList<>();
+        try (Connection con = BDConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(query);
+             ResultSet rs = ps.executeQuery()) {
+    
+            while (rs.next()) {
                 Item i = new Item();
                 i.setId(rs.getInt("id"));
                 i.setName(rs.getString("name"));
@@ -361,43 +350,40 @@ public class ItemDao {
                 i.setMatchedStatus(MatchedStatus.valueOf(rs.getString("match_status").toUpperCase()));
                 items.add(i);
             }
-            return items;
-
-        }
-        catch(SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
-        return new ArrayList<>();
+        return items;
+        
+       
     }
 
     public static List<Item> getAllItems() throws SQLException{
-        try{
-            con = BDConnection.getConnection();
-            PreparedStatement ps = con.prepareStatement("SELECT * FROM item");
-            ResultSet rs = ps.executeQuery();
-            List<Item> items = new ArrayList<>();
-            while(rs.next()) {
-                Item i = new Item();
-                i.setId(rs.getInt("id"));
-                i.setName(rs.getString("name"));
-                i.setDescription(rs.getString("description"));
-                i.setCategory(rs.getString("category"));
-                i.setLocation(rs.getString("location"));
-i.setImage(rs.getString("image"));
-                i.setStatus(ItemStatus.valueOf(rs.getString("status")));
-                i.setType(ItemType.valueOf(rs.getString("type")));
-                i.setDatefound(rs.getDate("datefound").toLocalDate());
-                i.setUserId(rs.getInt("userid"));
-                i.setMatchedStatus(MatchedStatus.valueOf(rs.getString("match_status").toUpperCase()));
-                items.add(i);
-            }
-            return items;
+        String query = "SELECT * FROM item";
+    List<Item> items = new ArrayList<>();
+    try (Connection con = BDConnection.getConnection();
+         PreparedStatement ps = con.prepareStatement(query);
+         ResultSet rs = ps.executeQuery()) {
+
+        while (rs.next()) {
+            Item i = new Item();
+            i.setId(rs.getInt("id"));
+            i.setName(rs.getString("name"));
+            i.setDescription(rs.getString("description"));
+            i.setCategory(rs.getString("category"));
+            i.setLocation(rs.getString("location"));
+            i.setImage(rs.getString("image"));
+            i.setStatus(ItemStatus.valueOf(rs.getString("status")));
+            i.setType(ItemType.valueOf(rs.getString("type")));
+            i.setDatefound(rs.getDate("datefound").toLocalDate());
+            i.setUserId(rs.getInt("userid"));
+            i.setMatchedStatus(MatchedStatus.valueOf(rs.getString("match_status").toUpperCase()));
+            items.add(i);
         }
-        catch(SQLException e){
-            e.printStackTrace();
-        }
-        return new ArrayList<>();
+    } catch (SQLException e) {
+        e.printStackTrace();
     }
+    return items;}
 
 
 }

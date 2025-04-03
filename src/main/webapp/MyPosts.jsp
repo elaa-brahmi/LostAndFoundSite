@@ -517,26 +517,17 @@
         .accept-button:active {
             font-weight: 100;
         }
-
-        /*a {*/
-        /*    color: cornflowerblue;*/
-        /*    text-decoration: none;*/
-        /*}*/
-        /*a:hover {*/
-        /*    opacity: 0.8;*/
-        /*    cursor: pointer;*/
-        /*    text-decoration: underline;*/
-        /*}*/
-
         .notification-container {
             position: absolute;
             z-index: 999;
             top: 540px;
-            width: 350px;
+            height:auto;
+            width: 400px;
             background: white;
             border-radius: 0.5rem;
             box-shadow: 0.5rem 0.5rem 2rem rgba(0, 0, 0, 0.2);
             font-weight: 300;
+            margin-bottom: 20px;
         }
 
         .notification-container h3 {
@@ -575,7 +566,7 @@
         .notification-container i {
             color: #b5c4d2;
             font-size: 140%;
-            position: absolute;
+            /*position: absolute;*/
             right: 1.5rem;
         }
 
@@ -681,7 +672,7 @@
     $(document).ready(function () {
         fetchItems();
         fetchUserInfos();
-        fetchNotifsUser(<%=session.getAttribute("userId")%>);
+        <%--fetchNotifsUser(<%=session.getAttribute("userId")%>);--%>
     });
 
     function fetchUserInfos() {
@@ -831,34 +822,6 @@
         });
     }
 
-    function fetchNotifsUser(id){
-        console.log("user id fetching notifs for"+id);
-        $.ajax({
-            url: "http://localhost:8000/notifsUser",
-            method: "GET",
-            data:{
-                user_id: id
-            },
-            dataType: "json",
-            success: function(data){
-                console.log("ntoif"+data);
-                var notification_container=document.querySelector(".notification-container");
-                notification_container.innerHTML += ``;
-            },
-            error: function(data){
-                console.log(data);
-            }
-        });
-
-    }
-
-
-
-
-
-
-
-
 
     function renderUserInfos(user) {
         var div = document.getElementById("userProfile");
@@ -883,7 +846,7 @@
             </div>
         </div>
         <div class="tags" style="display: flex;column-gap: 9%;flex-direction: row;">
-<button class="notifbutton" onclick="fetchNotifs(` +user.id+ `)">
+<button class="notifbutton" onclick="fetchNotifss()">
    <svg viewBox="0 0 448 512" class="bell"><path d="M224 0c-17.7 0-32 14.3-32 32V49.9C119.5 61.4 64 124.2 64 200v33.4c0 45.4-15.5 89.5-43.8 124.9L5.3 377c-5.8 7.2-6.9 17.1-2.9 25.4S14.8 416 24 416H424c9.2 0 17.6-5.3 21.6-13.6s2.9-18.2-2.9-25.4l-14.9-18.6C399.5 322.9 384 278.8 384 233.4V200c0-75.8-55.5-138.6-128-150.1V32c0-17.7-14.3-32-32-32zm0 96h8c57.4 0 104 46.6 104 104v33.4c0 47.9 13.9 94.6 39.7 134.6H72.3C98.1 328 112 281.3 112 233.4V200c0-57.4 46.6-104 104-104h8zm64 352H224 160c0 17 6.7 33.3 18.7 45.3s28.3 18.7 45.3 18.7s33.3-6.7 45.3-18.7s18.7-28.3 18.7-45.3z"></path></svg>
 </button>
 <button class="notifbutton" onclick="editProfile(` +user.id+ `)">
@@ -938,26 +901,12 @@
 
 
 
-<div class="notification-container hiddenn">
+<div class="notification-container hiddenn" >
     <h3>Notifications
         <i class="material-icons dp48 right">settings</i>
     </h3>
-    <input class="checkbox" type="checkbox" id="size_1" value="small" checked />
-    <label class="notification new" >
-        <em>1</em> new <a href="">guest account(s)</a> have been created.
-        <i class="material-icons dp48 right">clear</i>
-    </label>
-
-    <input class="checkbox" type="checkbox" id="size_2" value="small" checked />
-    <label class="notification new" >
-        <em>3</em> new <a href="">lead(s)</a> are available in the system.
-        <i class="material-icons dp48 right">clear</i>
-    </label>
+    <div id="notificationContainerTexts" style="padding-bottom:9px;"></div>
 </div>
-
-<div id="messages"></div>
-
-
 
 
 <script>
@@ -969,8 +918,8 @@
         // Redirect to EditItem.jsp with itemId in the URL
         window.location.href = "EditItem.jsp?itemId=" + itemId;
     }
-    function fetchNotifs(id){
-        console.log(id);
+    function fetchNotifss(){
+
         var NotifContainer=document.querySelector(".notification-container");
         NotifContainer.classList.toggle('hiddenn');
     }
@@ -1049,7 +998,6 @@
         console.log(file);
             let formData = new FormData();
             formData.append("image", file);
-
             fetch("saveUserPic", {
                 method: "POST",
                 body: formData
@@ -1058,8 +1006,110 @@
                 .then(data => console.log("Upload successful: ", data))
                 .catch(error => console.error("Error:", error));
         }
+        function connectToWebsocket(){
+            console.log('Connected websocket');
+            let  socket = new WebSocket("ws://localhost:8080/WebsocketNotification");
+            console.log(socket);
+
+            socket.onopen = function () {
+                console.log("connected to WebSocket !");
+                fetchNotifs();
+            };
+
+            socket.onmessage = function (event) {
+                console.log(event);
+                console.log("Message received from the server : ", event.data);
+                fetchNotifs();
+            };
+
+            socket.onclose = function () {
+                console.log(" WebSocket closed.");
+
+            };
+
+            socket.onerror = function (error) {
+                console.log(" error WebSocket : ", error);
+            };
+
+
+        }
+    //todo fetch notifs by user
+    function fetchNotifs() {
+        $.ajax({
+            url: 'http://localhost:8080/notifsUser',
+            type: 'GET',
+            data: {
+                user_id:<%= session.getAttribute("userId")%>
+            },
+            dataType: 'json',
+            success: function (data) {
+                console.table(data);
+                var NotifContainerText = $("#notificationContainerTexts");
+                NotifContainerText.empty();
+                var i=0;
+                data.forEach(notif => {
+                    i++;
+                    console.log(notif);
+                    const timestamp=notif.dateSent;
+                    const dateObj = new Date(timestamp); // Convert to Date object
+                    const hours = dateObj.getHours().toString().padStart(2, '0'); // Extract hours
+                    const minutes = dateObj.getMinutes().toString().padStart(2, '0'); // Extract minutes
+                    console.log(`${hours}:${minutes}`);
+                    var div = document.createElement("div");
+                    div.setAttribute("data-notif-id", notif.id); // Add a unique identifier for each popped notif
+                    div.style="padding-bottom:9px;";
+                    div.innerHTML = ` <input class="checkbox" type="checkbox" value="small" checked />
+            <label class="notification new" >
+                <em>`+i+`</em> ` + notif.message + `.<br>
+                <a onclick="ItemDetails(`+notif.possibleId+`, ` + notif.id + `)" style="color:blue; cursor:pointer;"> view item details</a><br>`
+                 +hours+ `:`+minutes+ `
+                <i class="material-icons dp48 right" style="cursor:pointer; position: relative;
+    top: -25px;
+    right: -300px;" onclick="deleteNotif(` +notif.id+ `)">clear</i>
+            </label>
+                        `;
+                NotifContainerText.append(div);
+                });
+                
+            },
+            error: function () {
+                console.error(" error WebSocket : ", error);
+            }
+        });
+    }
+    function ItemDetails(id,notifId){
+        window.location.href="itemDetails.jsp?idItem=" + id+ "&notifId=" + notifId;
+    }
+    function deleteNotif(id){
+          // Find the notification element in the DOM
+    <%--const notifElement = document.querySelector(`[data-notif-id="${id}"]`);--%>
+    <%--if (notifElement) {--%>
+    <%--    notifElement.remove(); // Remove the notif element from the DOM--%>
+    <%--    console.log("notification deleted");--%>
+    <%--    fetchNotifs();--%>
+    <%--} else {--%>
+    <%--    console.error("Notification element not found for ID:", id);--%>
+    <%--}--%>
+
+        $.ajax({
+            url:"http://localhost:8080/deleteNotif",
+            type:"POST",
+            data:{
+                id:id
+            },
+            success:function(data){
+                console.log("notif deleted "+data);
+                fetchNotifs();
+            },
+            error:function(xhr,status,error){
+                console.log("error deleting notif "+error);
+            }
+
+        });
+    }
     // Check if the user has a picture when the page loads
     window.onload = function() {
+        connectToWebsocket();
         setTimeout(() => {
             const userPicture = document.getElementById('preview').src;
             console.log("userpicture "+ userPicture);
@@ -1076,6 +1126,6 @@
         }, 300); // Delay execution by 500ms
     }
 </script>
-<script src="webcoscketNotif.js"></script>
+
 </body>
 </html>

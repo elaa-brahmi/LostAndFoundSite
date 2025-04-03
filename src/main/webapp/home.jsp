@@ -765,10 +765,11 @@
         var cardItem = document.createElement("div");
         cardItem.classList.add("card");
         cardItem.setAttribute("data-aos","zoom-in-down");
+        var imageSrc = item.image === "no image is found" ? "assets/img/noPic.png" : item.image;
         cardItem.innerHTML = `
         <div class="card-img">
 
-           <img src="`+item.image+`" alt="no image was provided" width="250px" height="250px" style="height:100%; padding:3px; ">
+           <img src="`+imageSrc+`" alt="no image was provided" width="250px" height="250px" style="height:100%; padding:3px; ">
         </div>
         <div class="card-info" >
             <p class="text-title">`+item.name+` <br>`+item.category+`</p>

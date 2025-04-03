@@ -37,6 +37,8 @@ public class GetNotifsByUser extends HttpServlet {
                 notif.setMessage(rs.getString("message"));
                 notif.setStatus(NotifStatus.valueOf(rs.getString("status")));
                 notif.setItemId(rs.getInt("item_id"));
+                notif.setPossibleId(rs.getInt("possible_id"));
+                notif.setDateSent( rs.getTimestamp("created_at").toString());
                 list.add(notif);
             }
             Gson gson = new Gson();

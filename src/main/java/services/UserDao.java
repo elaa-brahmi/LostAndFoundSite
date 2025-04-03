@@ -9,49 +9,49 @@ import java.util.List;
 import java.util.Optional;
 import java.util.logging.Logger;
 public class UserDao{
-    private static Connection connection=null;
     private static final Logger logger =Logger.getLogger(UserDao.class.getName());
     public UserDao() {
     }
     public static Integer SaveUser(User user) throws SQLException{
-       try{
-           connection=BDConnection.getConnection();
-           PreparedStatement ps=connection.prepareStatement("insert into users(name,email,password,role,phone) values(?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
-           ps.setString(1,user.getName());
-           ps.setString(2,user.getEmail());
-           String password=user.getPassword();
-           String hashed=PasswordUtil.hashPassword(password);
-           ps.setString(3,hashed);
-           ps.setString(4, String.valueOf(Role.USER));
-           ps.setString(5,user.getPhone());
-           int rows=ps.executeUpdate();
-           if(rows>0){
-               System.out.println("User Saved");
-               try (ResultSet rs = ps.getGeneratedKeys()) {
-                   if (rs.next()) {
-                       System.out.println("the generated key is " + rs.getInt(1));
-                       return rs.getInt(1);  // Retrieve the generated ID
-                   }
-               }
-           }
-       }
-       catch(SQLException e){
-           e.printStackTrace();
-       }
-       return null;
+        String query = "INSERT INTO users(name, email, password, role, phone) VALUES(?, ?, ?, ?, ?)";
+        try (Connection connection = BDConnection.getConnection();
+             PreparedStatement ps = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
+    
+            ps.setString(1, user.getName());
+            ps.setString(2, user.getEmail());
+            String hashed = PasswordUtil.hashPassword(user.getPassword());
+            ps.setString(3, hashed);
+            ps.setString(4, String.valueOf(Role.USER));
+            ps.setString(5, user.getPhone());
+    
+            int rows = ps.executeUpdate();
+            if (rows > 0) {
+                System.out.println("User Saved");
+                try (ResultSet rs = ps.getGeneratedKeys()) {
+                    if (rs.next()) {
+                        System.out.println("The generated key is " + rs.getInt(1));
+                        return rs.getInt(1); // Retrieve the generated ID
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+       
     }
     public static Optional<User> authenticate(String email, String password) throws SQLException{
         //todo:return an object of the authenticated user
-        try{
-            connection = BDConnection.getConnection();
-            System.out.println("Connected to the database");
-            PreparedStatement ps=connection.prepareStatement("select * from users where email=?");
-            ps.setString(1,email);
-            ResultSet rs=ps.executeQuery();
-            if(rs.next()){
+        String query = "SELECT * FROM users WHERE email = ?";
+    try (Connection connection = BDConnection.getConnection();
+         PreparedStatement ps = connection.prepareStatement(query)) {
+
+        ps.setString(1, email);
+        try (ResultSet rs = ps.executeQuery()) {
+            if (rs.next()) {
                 String hashedPassword = rs.getString("password");
-                if(PasswordUtil.checkPassword(password,hashedPassword)) {
-                    System.out.println("user found");
+                if (PasswordUtil.checkPassword(password, hashedPassword)) {
+                    System.out.println("User found");
                     User user = new User();
                     user.setId(rs.getInt("id"));
                     user.setEmail(rs.getString("email"));
@@ -61,56 +61,139 @@ public class UserDao{
                     user.setRole(Role.valueOf(rs.getString("role")));
                     return Optional.of(user);
                 }
-            }
-            else{
-                System.out.println("user not found");
+            } else {
+                System.out.println("User not found");
             }
         }
-        catch(SQLException e){
-            e.printStackTrace();
-        }
-        return null;
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+    return Optional.empty();
     }
     public boolean registerUser(User user) throws SQLException{
-        try{
-            connection = BDConnection.getConnection();
-            System.out.println("Connected to the database");
-            PreparedStatement ps1=connection.prepareStatement("select user u from users where phone=?");
-            ps1.setString(1,user.getPhone());
-            ResultSet rs1=ps1.executeQuery();
-            if(rs1.next()){
-                System.out.println("user already exists");
-                return false;
+        String queryPhone = "SELECT * FROM users WHERE phone = ?";
+        String queryEmail = "SELECT * FROM users WHERE email = ?";
+        try (Connection connection = BDConnection.getConnection();
+             PreparedStatement psPhone = connection.prepareStatement(queryPhone);
+             PreparedStatement psEmail = connection.prepareStatement(queryEmail)) {
+    
+            psPhone.setString(1, user.getPhone());
+            try (ResultSet rsPhone = psPhone.executeQuery()) {
+                if (rsPhone.next()) {
+                    System.out.println("User already exists with this phone");
+                    return false;
+                }
             }
-            PreparedStatement ps0=connection.prepareStatement("select user u from users where email=?");
-
-            ps0.setString(1,user.getEmail());
-            ResultSet rs=ps0.executeQuery();
-            if(rs.next()){
-                System.out.println("user already exists");
-                return false;
+    
+            psEmail.setString(1, user.getEmail());
+            try (ResultSet rsEmail = psEmail.executeQuery()) {
+                if (rsEmail.next()) {
+                    System.out.println("User already exists with this email");
+                    return false;
+                }
             }
-
-
-        }
-        catch(SQLException e){
-
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return true;
     }
     public static User getUser(int id) throws SQLException{
-        try{
-            connection = BDConnection.getConnection();
-            PreparedStatement ps=connection.prepareStatement("select * from users where id=?");
-            ps.setInt(1,id);
-            ResultSet rs=ps.executeQuery();
-            if(rs.next()){
-                String hashedPassword = rs.getString("password");
-                String email = rs.getString("email");
-                String name = rs.getString("name");
-                String phone = rs.getString("phone");
-                String role = rs.getString("role");
+        String query = "SELECT * FROM users WHERE id = ?";
+        try (Connection connection = BDConnection.getConnection();
+             PreparedStatement ps = connection.prepareStatement(query)) {
+    
+            ps.setInt(1, id);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    User user = new User();
+                    user.setId(rs.getInt("id"));
+                    user.setEmail(rs.getString("email"));
+                    user.setPassword(rs.getString("password"));
+                    user.setName(rs.getString("name"));
+                    user.setPhone(rs.getString("phone"));
+                    user.setRole(Role.valueOf(rs.getString("role")));
+                    return user;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static void updateUser(User user) throws SQLException{
+        String query = "UPDATE users SET name = ?, email = ?, phone = ? WHERE id = ?";
+    try (Connection connection = BDConnection.getConnection();
+         PreparedStatement ps = connection.prepareStatement(query)) {
+
+        ps.setString(1, user.getName());
+        ps.setString(2, user.getEmail());
+        ps.setString(3, user.getPhone());
+        ps.setInt(4, user.getId());
+
+        int rows = ps.executeUpdate();
+        if (rows > 0) {
+            System.out.println("User Updated");
+        } else {
+            System.out.println("User Not Updated");
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+    }
+    public static void deleteUser(int id) throws SQLException{
+        String query = "DELETE FROM users WHERE id = ?";
+        try (Connection connection = BDConnection.getConnection();
+             PreparedStatement ps = connection.prepareStatement(query)) {
+    
+            ps.setInt(1, id);
+            ps.executeUpdate();
+            System.out.println("User Deleted");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void uploadPicture(String imageURL,Integer id) throws SQLException{
+        String query = "UPDATE users SET pictures = ? WHERE id = ?";
+        try (Connection connection = BDConnection.getConnection();
+             PreparedStatement ps = connection.prepareStatement(query)) {
+    
+            ps.setString(1, imageURL);
+            ps.setInt(2, id);
+    
+            int rows = ps.executeUpdate();
+            if (rows > 0) {
+                System.out.println("User Picture Updated");
+            } else {
+                System.out.println("User Picture Not Updated");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    public static Integer getNumberOfUsers() throws SQLException{
+        String query = "SELECT COUNT(*) FROM users";
+    try (Connection connection = BDConnection.getConnection();
+         PreparedStatement ps = connection.prepareStatement(query);
+         ResultSet rs = ps.executeQuery()) {
+
+        if (rs.next()) {
+            return rs.getInt(1);
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+    return 0;
+    }
+    public static List<User> getUsers() throws SQLException{
+        String query = "SELECT * FROM users WHERE role = 'USER'";
+        List<User> users = new ArrayList<>();
+        try (Connection connection = BDConnection.getConnection();
+             PreparedStatement ps = connection.prepareStatement(query);
+             ResultSet rs = ps.executeQuery()) {
+    
+            while (rs.next()) {
                 User user = new User();
                 user.setId(rs.getInt("id"));
                 user.setEmail(rs.getString("email"));
@@ -118,109 +201,13 @@ public class UserDao{
                 user.setName(rs.getString("name"));
                 user.setPhone(rs.getString("phone"));
                 user.setRole(Role.valueOf(rs.getString("role")));
-                return user;
-
-
-            }
-        }
-        catch(SQLException e){
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    public static void updateUser(User user) throws SQLException{
-        try{
-            connection = BDConnection.getConnection();
-            PreparedStatement ps= connection.prepareStatement("update users set name=?,email=?,phone=? where id=?");
-            ps.setString(1,user.getName());
-            ps.setString(2,user.getEmail());
-            ps.setString(3,user.getPhone());
-            ps.setInt(4,user.getId());
-            int rows=ps.executeUpdate();
-            if(rows>0){
-                System.out.println("User Updated");
-            }
-            else{
-                System.out.println("User Not Updated");
-            }
-        }
-        catch(SQLException e){
-            e.printStackTrace();
-        }
-    }
-    public static void deleteUser(int id) throws SQLException{
-        try{
-            connection = BDConnection.getConnection();
-            PreparedStatement ps=connection.prepareStatement("delete from users where id=?");
-            ps.setInt(1,id);
-            ps.executeUpdate();
-
-        }
-        catch(SQLException e){
-            e.printStackTrace();
-        }
-    }
-
-    public static void uploadPicture(String imageURL,Integer id) throws SQLException{
-        try{
-            connection = BDConnection.getConnection();
-            PreparedStatement ps= connection.prepareStatement("update users set pictures=? where id=?");
-            ps.setString(1,imageURL);
-            ps.setInt(2,id);
-
-            int rows=ps.executeUpdate();
-            if(rows>0){
-                System.out.println("User Updated");
-            }
-            else{
-                System.out.println("User Not Updated");
-            }
-        }
-        catch(SQLException e){
-            e.printStackTrace();
-        }
-    }
-    public static Integer getNumberOfUsers() throws SQLException{
-        int res=0;
-        try{
-
-            connection = BDConnection.getConnection();
-            PreparedStatement ps=connection.prepareStatement("select count(*) from users");
-            ResultSet rs=ps.executeQuery();
-            if(rs.next()){
-                res = rs.getInt(1);
-
-            }
-        }
-        catch(SQLException e){
-            e.printStackTrace();
-        }
-        return res;
-    }
-    public static List<User> getUsers() throws SQLException{
-        try{
-            List<User> res=new ArrayList<>();
-            connection = BDConnection.getConnection();
-            PreparedStatement ps=connection.prepareStatement("select * from users where role='USER'");
-            ResultSet rs=ps.executeQuery();
-            while(rs.next()){
-                User user=new User();
-                user.setId(rs.getInt("id"));
-                user.setEmail(rs.getString("email"));
-                user.setPassword(rs.getString("password"));
-                user.setName(rs.getString("name"));
-                user.setPhone(rs.getString("phone"));
-                user.setRole(Role.valueOf(rs.getString("role")));
                 user.setPicture(rs.getString("pictures"));
-                res.add(user);
+                users.add(user);
             }
-            return res;
-        }
-        catch(SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
-        return new ArrayList<>();
+        return users;
     }
 
 

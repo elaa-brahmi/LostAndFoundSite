@@ -43,8 +43,8 @@ function fetchAllUsers(){
                       <td class="align-middle text-center">
                         <span class="text-secondary text-xs font-weight-bold">${user.role}</span>
                       </td>
-                      <td>
-                      <button  onclick="deleteUser(${user.id})" class="btn btn-danger" style="display:block !important;">delete</button>
+                      <td class="align-middle text-center">
+                      <button  onclick="deleteUser(${user.id})" class="btn btn-danger" >delete</button>
                         </td>
                 `;
 

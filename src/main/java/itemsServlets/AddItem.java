@@ -41,18 +41,19 @@ public class AddItem extends HttpServlet {
         Integer userId= (Integer) session.getAttribute("userId");
         Item item=new Item(name,description,category,location,imageUrl, ItemType.valueOf(type.toUpperCase()),LocalDate.parse(date), ItemStatus.PENDING,userId, MatchedStatus.PENDING);
         int id=ItemDao.create(item);
-        item.setId(id);
-            if(type.equals("found")){
-                System.out.println("new item added of type found");
-                List<Item> lostItems = ItemDao.getLostItems();
-                NotificationDao.checkMatches(lostItems,item);
-            }
-            else{
-                System.out.println("new item added of type not found");
-                List<Item> foundItems=ItemDao.getFoundItems();
-                NotificationDao.checkMatches(foundItems,item);
-
-            }
+        System.out.println("id item created "+id);
+//        item.setId(id);
+//            if(type.equals("found")){
+//                System.out.println("new item added of type found");
+//                List<Item> lostItems = ItemDao.getLostItems();
+//                NotificationDao.checkMatches(lostItems,item);
+//            }
+//            else{
+//                System.out.println("new item added of type not found");
+//                List<Item> foundItems=ItemDao.getFoundItems();
+//                NotificationDao.checkMatches(foundItems,item);
+//
+//            }
                 request.setAttribute("alert_add","item added successfully");
                 getServletContext().getRequestDispatcher("/MyPosts.jsp").forward(request,response);
             }

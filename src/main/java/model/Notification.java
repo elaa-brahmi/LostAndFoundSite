@@ -13,13 +13,32 @@ public class Notification {
     @Enumerated(EnumType.STRING)
     private NotifStatus status ;
     private int itemId;
+    private int possibleId;
+    private String dateSent;
 
-    public Notification(Integer userIdPossible, String messagePossible, NotifStatus notifStatus,Integer itemId) {
+    public String getDateSent() {
+        return dateSent;
+    }
+
+    public void setDateSent(String dateSent) {
+        this.dateSent = dateSent;
+    }
+
+    public Notification(Integer userIdPossible, String messagePossible, NotifStatus notifStatus, Integer itemId, Integer possibleId) {
         this.userId = userIdPossible;
         this.message = messagePossible;
         this.status = notifStatus;
         this.itemId = itemId;
+        this.possibleId = possibleId;
 
+    }
+
+    public int getPossibleId() {
+        return possibleId;
+    }
+
+    public void setPossibleId(int possibleId) {
+        this.possibleId = possibleId;
     }
 
     public int getItemId() {

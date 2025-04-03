@@ -18,7 +18,6 @@ import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 public class NotificationDao {
-    public static Connection con;
 
     public static void checkMatches(List<Item> items,Item item) {
         System.out.println("🔄 Checking for lost & found matches for item  ");
@@ -37,8 +36,8 @@ public class NotificationDao {
                             "📌 Title: " + possible.getName() + "\n" +
                             "📍 Location: " + possible.getLocation() +
                             "\n"+ "visit the website for verification.";
-                    Notification notificationUser = new Notification(userId,messageUser, NotifStatus.PENDING,item.getId());
-                    Notification notificationPossible=new Notification(userIdPossible,messagePossible,NotifStatus.PENDING,possible.getId());
+                    Notification notificationUser = new Notification(userId,messageUser, NotifStatus.PENDING,item.getId(), possible.getId());
+                    Notification notificationPossible=new Notification(userIdPossible,messagePossible,NotifStatus.PENDING,possible.getId(),item.getId());
                     storeNotification(notificationUser);
                     storeNotification(notificationPossible);
                     // 1️⃣ Send WebSocket notification if user is online
@@ -49,8 +48,11 @@ public class NotificationDao {
                     EmailSender.sendNotifEmail(emailFound, possible,messagePossible);
                     ItemDao.updateMatchStatus(item.getId(), MatchedStatus.MATCHED);
                     ItemDao.updateMatchStatus(possible.getId(), MatchedStatus.MATCHED);
+                    return;
                 }
+
         }
+        System.out.println("no matches found");
     }
      static boolean isPotentialMatch(Item lost, Item found) {
         return lost.getCategory().equals(found.getCategory()) &&
@@ -70,143 +72,138 @@ public class NotificationDao {
         }
     }
     static void storeNotification(Notification notification) {
-        try{
-            con = BDConnection.getConnection();
-            PreparedStatement ps = con.prepareStatement("insert into notification (message,user_id,status,item_id) values(?,?,?,?)");
+        String query = "INSERT INTO notification (message, user_id, status, item_id, possible_id) VALUES (?, ?, ?, ?, ?)";
+        try (Connection con = BDConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(query)) {
+    
             ps.setString(1, notification.getMessage());
             ps.setInt(2, notification.getUserId());
             ps.setString(3, notification.getStatus().toString());
             ps.setInt(4, notification.getItemId());
-            int row=ps.executeUpdate();
-            if(row>0){
-                System.out.println("a notification has been stored to user "+notification.getUserId());
+            ps.setInt(5, notification.getPossibleId());
+    
+            int rows = ps.executeUpdate();
+            if (rows > 0) {
+                System.out.println("A notification has been stored for user " + notification.getUserId());
             }
-        }
-        catch(SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
     public static void updateNotifStatus(NotifStatus status,Integer notificationId) {
-        try{
-            con=BDConnection.getConnection();
-            PreparedStatement ps = con.prepareStatement("update notification set status=? where id=?");
+        String query = "UPDATE notification SET status = ? WHERE id = ?";
+        try (Connection con = BDConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(query)) {
+    
             ps.setString(1, status.toString());
             ps.setInt(2, notificationId);
-            ps.executeUpdate();
-            int rows=ps.executeUpdate();
-            if(rows>0){
-                System.out.println("a notification has been updated to "+status.toString());
+    
+            int rows = ps.executeUpdate();
+            if (rows > 0) {
+                System.out.println("Notification with ID " + notificationId + " has been updated to " + status);
             }
-        }
-        catch(SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
 
     }
 
     public static Notification getNotificationById(Integer notificationId) {
-        try{
-            con=BDConnection.getConnection();
-            PreparedStatement ps = con.prepareStatement("select * from notification where id=?");
+        String query = "SELECT * FROM notification WHERE id = ?";
+        try (Connection con = BDConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(query)) {
+    
             ps.setInt(1, notificationId);
-            ResultSet rs = ps.executeQuery();
-            Notification notif=new Notification();
-
-            while(rs.next()){
-                notif.setId(rs.getInt("id"));
-                notif.setMessage(rs.getString("message"));
-                notif.setUserId(rs.getInt("user_id"));
-                notif.setStatus(NotifStatus.valueOf(rs.getString("status")));
-                notif.setItemId(rs.getInt("item_id"));
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    Notification notif = new Notification();
+                    notif.setId(rs.getInt("id"));
+                    notif.setMessage(rs.getString("message"));
+                    notif.setUserId(rs.getInt("user_id"));
+                    notif.setStatus(NotifStatus.valueOf(rs.getString("status")));
+                    notif.setItemId(rs.getInt("item_id"));
+                    notif.setPossibleId(rs.getInt("possible_id"));
+                    notif.setDateSent(rs.getTimestamp("created_at").toString());
+                    return notif;
+                }
             }
-            return notif;
-        }
-        catch(SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return null;
     }
     public static void deleteNotificationById(Integer notificationId) {
-        try{
-            con=BDConnection.getConnection();
-            PreparedStatement ps = con.prepareStatement("delete from notification where id=?");
+        String query = "DELETE FROM notification WHERE id = ?";
+        try (Connection con = BDConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(query)) {
+    
             ps.setInt(1, notificationId);
-            ps.executeUpdate();
-            int rows=ps.executeUpdate();
-            if(rows>0){
-                System.out.println("a notification has been deleted to "+notificationId);
+    
+            int rows = ps.executeUpdate();
+            if (rows > 0) {
+                System.out.println("Notification with ID " + notificationId + " has been deleted.");
             }
-        }
-        catch(SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
     public static float getPercentageOfAcceptedNotifications() throws SQLException {
-        float acceptedNotifs=0;
-        try {
-            con = BDConnection.getConnection();
-            PreparedStatement ps = con.prepareStatement("select count(*) from notification where status='ACCEPTED'");
-            ResultSet rs = ps.executeQuery();
-          while  (rs.next()){
-            return (float) (rs.getInt(1) * 100) /getNbNotifs();
-          }
-
-        }
-        catch(SQLException e) {
+        String query = "SELECT COUNT(*) FROM notification WHERE status = 'ACCEPTED'";
+        try (Connection con = BDConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(query);
+             ResultSet rs = ps.executeQuery()) {
+    
+            if (rs.next()) {
+                return (float) (rs.getInt(1) * 100) / getNbNotifs();
+            }
+        } catch (SQLException e) {
             e.printStackTrace();
         }
-        return acceptedNotifs;
+        return 0;
 
     }
     public static float getPercentageOfRejectedNotifications() throws SQLException {
-        int rejectedNotifs=0;
-        try {
-            con = BDConnection.getConnection();
-            PreparedStatement ps = con.prepareStatement("select count(*) from notification where status='REJECTED'");
-            ResultSet rs = ps.executeQuery();
-            while  (rs.next()){
-                return (float) (rs.getInt(1)*100)/getNbNotifs();}
+        String query = "SELECT COUNT(*) FROM notification WHERE status = 'REJECTED'";
+    try (Connection con = BDConnection.getConnection();
+         PreparedStatement ps = con.prepareStatement(query);
+         ResultSet rs = ps.executeQuery()) {
 
+        if (rs.next()) {
+            return (float) (rs.getInt(1) * 100) / getNbNotifs();
         }
-        catch(SQLException e) {
-            e.printStackTrace();
-        }
-        return rejectedNotifs;
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+    return 0;
 
     }
     public static Integer getNbNotifs() throws SQLException {
-        int notifs=0;
-        try{
-            con = BDConnection.getConnection();
-            PreparedStatement ps = con.prepareStatement("select count(*) from notification");
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()){
+        String query = "SELECT COUNT(*) FROM notification";
+        try (Connection con = BDConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(query);
+             ResultSet rs = ps.executeQuery()) {
+    
+            if (rs.next()) {
                 return rs.getInt(1);
-
             }
-
-        }
-        catch(SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
-        return notifs;
+        return 0;
     }
 
 
     public static float getPercentageOfPendingNotifications() throws SQLException {
-        int rejectedNotifs=0;
-        try {
-            con = BDConnection.getConnection();
-            PreparedStatement ps = con.prepareStatement("select count(*) from notification where status='PENDING'");
-            ResultSet rs = ps.executeQuery();
-            while  (rs.next()){
-                return (float) (rs.getInt(1)*100)/getNbNotifs();}
+        String query = "SELECT COUNT(*) FROM notification WHERE status = 'PENDING'";
+    try (Connection con = BDConnection.getConnection();
+         PreparedStatement ps = con.prepareStatement(query);
+         ResultSet rs = ps.executeQuery()) {
 
+        if (rs.next()) {
+            return (float) (rs.getInt(1) * 100) / getNbNotifs();
         }
-        catch(SQLException e) {
-            e.printStackTrace();
-        }
-        return rejectedNotifs;
-
+    } catch (SQLException e) {
+        e.printStackTrace();
     }
+    return 0;
 }

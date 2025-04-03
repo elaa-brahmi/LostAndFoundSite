@@ -5,11 +5,12 @@ import jakarta.websocket.*;
 import java.io.IOException;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-@ServerEndpoint(value = "/notification", configurator = MyEndpointConfigurator.class)
-public class WebsocketNotification {
+@ServerEndpoint(value = "/WebsocketNotification", configurator = MyEndpointConfigurator.class)
+public class WebsocketNotification{
     private static final Map<String, Session> userSessions = new ConcurrentHashMap<>();
     @OnOpen
     public void onOpen(Session session, EndpointConfig config) {
+        System.out.println("here 1");
         HttpSession httpSession = (HttpSession) config.getUserProperties().get(HttpSession.class.getName());
         if (httpSession == null) {
             System.out.println("HttpSession is null in websocket endpoint");
@@ -22,6 +23,8 @@ public class WebsocketNotification {
         }
 
         Object userIdObj = httpSession.getAttribute("userId");
+        System.out.println("here 1" + userIdObj);
+
         if (userIdObj == null) {
             System.out.println("userId is null in websocket endpoint");
             try {
