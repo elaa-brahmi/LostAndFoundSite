@@ -8,6 +8,7 @@ function connectWebSocket() {
     socket.onopen = function () {
         console.log("connected to WebSocket !");
         //todo fetch notifs ajax
+
     };
 
     socket.onmessage = function (event) {

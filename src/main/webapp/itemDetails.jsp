@@ -314,6 +314,98 @@
         .warning__close path {
             fill: #755118;
         }
+        .msg-container {
+            position:relative;
+            right:0;
+            bottom:0;
+            background-color: #fff;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 20px;
+            display: flex;
+            flex-direction: column;
+            width: 280px;
+        }
+
+        .msg-header {
+            display: flex;
+            align-items: center;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #ccc;
+        }
+
+        .msg-header .img-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-right: 20px;
+            background-color: #333;
+        }
+
+        .msg-header .text-chat {
+            color: black;
+            margin: 0;
+            font-size: 20px;
+        }
+
+        .msg-body {
+            flex: 1;
+            overflow-y: auto;
+        }
+
+        .messages-container {
+            padding: 15px;
+        }
+
+        .message-box {
+            padding: 10px;
+            margin-bottom: 5px;
+            border-radius: 10px;
+        }
+
+        .message-box.left {
+            background-color: #f1f1f1;
+            color: black;
+            font-size: 13px;
+            left: 0;
+        }
+
+        .message-box.right {
+            background-color: #333;
+            color: #fff;
+            font-size: 13px;
+            right: 0;
+        }
+
+        .message-input {
+            padding: 5px;
+            border-top: 1px solid #ccc;
+        }
+
+        .message-input .message-send {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 10px;
+            resize: none;
+        }
+
+        .message-input .button-send {
+            background-color: #333;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            margin-left: 10px;
+            border-radius: 10px;
+            font-size: 13px;
+        }
+
+        .message-input .button-send:hover {
+            background-color: #f1f1f1;
+            color: #333;
+        }
+
     </style>
 </head>
 <body>
@@ -356,12 +448,41 @@
             <button  class="btn btn-secondary hidden" onclick="updateNotif('accepted')">accept match</button>
             <button class="btn btn-danger hidden" onclick="updateNotif('rejected')">reject match</button>
             <button class="btn btn-info" onclick="revealChatBox()" >chat with matcher</button>
-            <textarea id="chatBox"></textarea>
+
         </div>
     </div>
 <button class="btn btn-primary" onclick="redirectHome()">back</button>
     </div>
-<script>
+
+
+    <div class="msg-container hidden" id="chat">
+        <div class="msg-header">
+            <div class="img-avatar"></div>
+            <div class="text-chat">Chat</div>
+        </div>
+        <div class="msg-body">
+            <div class="messages-container">
+                <div class="message-box left">
+                    <p>Hello, How are you?</p>
+                </div>
+                <div class="message-box right">
+                    <p>I'm good, thanks for asking! How about you?</p>
+                </div>
+            </div>
+            <div class="message-input">
+                <form>
+                    <textarea placeholder="Type your message here" class="message-send"></textarea>
+                    <button type="submit" class="button-send">Send</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    function revealChatBox(){
+        document.getElementById("chat").classList.remove("hidden");
+
+    }
     function redirectHome(){
         window.location.href = "MyPosts.jsp";
     }

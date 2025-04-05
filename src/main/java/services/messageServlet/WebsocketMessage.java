@@ -1,16 +1,21 @@
-package services.notificationDao;
+package services.messageServlet;
+
 import jakarta.servlet.http.HttpSession;
-import jakarta.websocket.server.ServerEndpoint;
 import jakarta.websocket.*;
+import jakarta.websocket.server.ServerEndpoint;
+import org.cloudinary.json.JSONObject;
+import services.notificationDao.MyEndpointConfigurator;
+
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-@ServerEndpoint(value = "/WebsocketNotification", configurator = MyEndpointConfigurator.class)
-public class WebsocketNotification{
+
+@ServerEndpoint(value = "/WebsocketMessage", configurator = MyEndpointConfigurator.class)
+public class WebsocketMessage {
     private static final Map<String, Session> userSessions = new ConcurrentHashMap<>();
     @OnOpen
     public void onOpen(Session session, EndpointConfig config) {
-        System.out.println("here 1");
         HttpSession httpSession = (HttpSession) config.getUserProperties().get(HttpSession.class.getName());
         if (httpSession == null) {
             System.out.println("HttpSession is null in websocket endpoint");
@@ -21,7 +26,6 @@ public class WebsocketNotification{
             }
             return;
         }
-
         Object userIdObj = httpSession.getAttribute("userId");
         System.out.println("here 1" + userIdObj);
 
@@ -34,7 +38,6 @@ public class WebsocketNotification{
             }
             return;
         }
-
         String userId = userIdObj.toString();
         System.out.println("Attempting to open WebSocket for userId: " + userId);
 
@@ -56,10 +59,12 @@ public class WebsocketNotification{
         userSessions.put(userId, session);
         System.out.println("WebSocket opened for userId: " + userId);
     }
+
+
     @OnClose
     public void onClose(Session session) {
 
-     String userId = (String) session.getUserProperties().get("userId");
+        String userId = (String) session.getUserProperties().get("userId");
         if (userId != null) {
             userSessions.remove(userId);
             System.out.println("WebSocket closed for userId: " + userId);
@@ -72,35 +77,47 @@ public class WebsocketNotification{
         System.out.println("WebSocket error: " + throwable.getMessage());
         throwable.printStackTrace();
     }
+    @OnMessage
+    public void onMessage(String message,Session session) { // the message is formatted as json
+        try{
+            String SenderId=session.getUserProperties().get("userId").toString();
+            JSONObject json = new JSONObject(message);
+            String receiverId = json.getString("receiverId");
+            String messageContent = json.getString("message");
+            JSONObject jsonResponse = new JSONObject();
+            jsonResponse.put("from", SenderId);
+            jsonResponse.put("to", receiverId);
+            jsonResponse.put("message", messageContent);
+            jsonResponse.put("timestamp", java.time.Instant.now().toString());
+            sendMessageToUser(SenderId, jsonResponse.toString());// send to the sender
+            System.out.println("Received message from " + SenderId + " to " + receiverId + ": " + messageContent);
 
-    public static void sendNotificationToUser(String userId, String message) {  // Use String type for userId
-        Session session = userSessions.get(userId);
-        if (session == null) {
-            System.out.println("Cannot send notification. Session is null or closed for userId: " + userId);
-            return;
-        }
-        System.out.println("send notif session id"+session.getId());
-        for (Map.Entry<String, Session> entry : userSessions.entrySet()) {
-            String Id = entry.getKey();
-            Session sessionn = entry.getValue();
-            System.out.println("Session of the map: " + sessionn);
-            System.out.println("Id user in map: " + Id);
-
-        }
-
-        if (session != null ) {
-            try {
-                session.getBasicRemote().sendText(message);
-                System.out.println(" WebSocket notification sent to user: " + userId);
-            } catch (IOException e) {
-                System.out.println("Error sending notification to client : "+userId+" " + e.getMessage());
-                e.printStackTrace();
-            }
-        }
-        else {
-            System.out.println("Cannot send notification. Session is null or closed for userId:  " + userId);
+            if (userSessions.containsKey(receiverId)) {
+                Session receiverSession = userSessions.get(receiverId);
+                if (receiverSession != null && receiverSession.isOpen()) {
+                    sendMessageToUser(receiverId, jsonResponse.toString()); //send to the receiver
+                } else {
+                    System.out.println("User " + receiverId + " is offline.");
+                    // Optionally: store message in DB for later delivery
+                }
+            } else {
+                System.out.println("Receiver not connected.");
+            }}
+        catch(Exception e){
+            e.printStackTrace();
         }
     }
 
+    private void sendMessageToUser(String userId, String jsonMessage) {
+        Session session = userSessions.get(userId);
+        if (session != null && session.isOpen()) {
+            try {
+                session.getBasicRemote().sendText(jsonMessage);
+            } catch (IOException e) {
+                System.out.println("Error sending message to user " + userId + ": " + e.getMessage());
+                e.printStackTrace();
+            }
+        }
+    }
 
 }
