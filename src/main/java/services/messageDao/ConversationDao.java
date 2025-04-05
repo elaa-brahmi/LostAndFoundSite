@@ -8,6 +8,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -65,16 +66,23 @@ public class ConversationDao {
     return conversations;
     }
 
-    public static void addConversationToUser(Integer userId1,Integer userId2) {
+    public static int addConversationToUser(Integer userId1,Integer userId2) {
         String sql = "INSERT INTO conversations (user1_id, user2_id) VALUES (?, ?)";
         try (Connection con = BDConnection.getConnection();
-             PreparedStatement ps = con.prepareStatement(sql)) {
+             PreparedStatement ps = con.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS)) {
             ps.setInt(1, userId1);
             ps.setInt(2, userId2);
             ps.executeUpdate();
+            try (ResultSet rs = ps.getGeneratedKeys()) {
+                if (rs.next()) {
+                    return rs.getInt(1); // Return the generated conversation ID
+                }
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return -1;
+        
     }
 
     public static void delete(Integer id) {

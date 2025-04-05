@@ -1,13 +1,13 @@
-package services.messageServlet;
+package services.messageDao;
 
 import jakarta.servlet.http.HttpSession;
 import jakarta.websocket.*;
 import jakarta.websocket.server.ServerEndpoint;
+import model.Conversation;
 import org.cloudinary.json.JSONObject;
 import services.notificationDao.MyEndpointConfigurator;
 
 import java.io.IOException;
-import java.time.LocalDateTime;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -83,13 +83,14 @@ public class WebsocketMessage {
             String SenderId=session.getUserProperties().get("userId").toString();
             JSONObject json = new JSONObject(message);
             String receiverId = json.getString("receiverId");
-            String messageContent = json.getString("message");
+            String messageContent = json.getString("content");
+            System.out.println("message sent to receiverId: " + receiverId + " messageContent: " + messageContent + " senderId: " + SenderId);
             JSONObject jsonResponse = new JSONObject();
             jsonResponse.put("from", SenderId);
             jsonResponse.put("to", receiverId);
-            jsonResponse.put("message", messageContent);
+            jsonResponse.put("messageForwarded", messageContent);
             jsonResponse.put("timestamp", java.time.Instant.now().toString());
-            sendMessageToUser(SenderId, jsonResponse.toString());// send to the sender
+          //  sendMessageToUser(SenderId, jsonResponse.toString());// send to the sender
             System.out.println("Received message from " + SenderId + " to " + receiverId + ": " + messageContent);
 
             if (userSessions.containsKey(receiverId)) {

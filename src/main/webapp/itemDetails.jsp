@@ -1,4 +1,4 @@
-<%--
+<%@ page import="model.Conversation" %><%--
   Created by IntelliJ IDEA.
   User: DELL
   Date: 2025-04-01
@@ -315,16 +315,18 @@
             fill: #755118;
         }
         .msg-container {
-            position:relative;
+            position:absolute;
             right:0;
             bottom:0;
+            height:300px;
+            overflow-y: scroll;
             background-color: #fff;
             border-radius: 10px;
             padding: 15px;
             margin: 20px;
             display: flex;
             flex-direction: column;
-            width: 280px;
+            width: 300px;
         }
 
         .msg-header {
@@ -447,7 +449,7 @@
         <div style="display: flex; align-items: center; justify-content: center; column-gap: 15px; margin-top: 8%;">
             <button  class="btn btn-secondary hidden" onclick="updateNotif('accepted')">accept match</button>
             <button class="btn btn-danger hidden" onclick="updateNotif('rejected')">reject match</button>
-            <button class="btn btn-info" onclick="revealChatBox()" >chat with matcher</button>
+            <button class="btn btn-info hidden" id="message" onclick="revealChatBox()" >chat with matcher</button>
 
         </div>
     </div>
@@ -462,16 +464,11 @@
         </div>
         <div class="msg-body">
             <div class="messages-container">
-                <div class="message-box left">
-                    <p>Hello, How are you?</p>
-                </div>
-                <div class="message-box right">
-                    <p>I'm good, thanks for asking! How about you?</p>
-                </div>
+
             </div>
             <div class="message-input">
-                <form>
-                    <textarea placeholder="Type your message here" class="message-send"></textarea>
+                <form onsubmit="sendMessage(event)">
+                    <textarea placeholder="Type your message here" class="message-send" id="contentMsg"></textarea>
                     <button type="submit" class="button-send">Send</button>
                 </form>
             </div>
@@ -479,8 +476,27 @@
     </div>
 
     <script>
+    let ConversationId;
     function revealChatBox(){
         document.getElementById("chat").classList.remove("hidden");
+           $.ajax({
+               url: 'http://localhost:8080/addConvo',
+               type: 'POST',
+               data: {
+                   receiverId:sessionStorage.getItem('receiverId'),
+                   senderId:<%= session.getAttribute("userId")%>
+
+               },
+               success: function(data){
+                   console.log("conversation creation :"+data);
+                   const response=JSON.parse(data);
+                    ConversationId=data.conversationId;
+                   console.log("conversation id created  "+ConversationId);
+               },
+               error: function(data){
+                   console.log(data);
+               }
+           });
 
     }
     function redirectHome(){
@@ -491,13 +507,12 @@
     }
 
 
-    //todo warning should be hiddent if item.type=lost
 
 
 window.onload = function () {
     const urlParams = new URLSearchParams(window.location.search);
     const itemId = urlParams.get('idItem');
-    const notifId=urlParams.get('notifId');
+    //const notifId=urlParams.get('notifId');
     console.log(itemId);
     $.ajax({
         url: 'http://localhost:8080/ItemById',
@@ -508,22 +523,28 @@ window.onload = function () {
         dataType: 'json',
         success: function (data) {
             console.log(data);
-            if(data.type=="FOUND" && data.matchedStatus!=="RESOLVED"){
+            sessionStorage.setItem('receiverId', data.UserId);
+            if(data.type==="FOUND" && data.matchedStatus==="RESOLVED"){
+                document.getElementById("message").classList.remove("hidden");
+            }
+            if(data.type==="FOUND" && data.matchedStatus!=="RESOLVED"){
                 console.info("this is a found item");
                 document.querySelector(".btn.btn-secondary").classList.remove("hidden");
                 document.querySelector(".btn.btn-danger").classList.remove("hidden");
                 document.querySelector(".warning").classList.remove("hidden");
             }
-            if(data.image=="no image is found"){
+            if(data.image==="no image is found"){
                 document.getElementById('itemImage').src = "assets/img/noPic.png";
             }else{
                 document.getElementById('itemImage').src = data.image;
             }
             document.getElementById("name").innerHTML = `<em>Item Name:&nbsp;</em> ` + data.name;
-    document.getElementById("description").innerHTML = `<em>Description:&nbsp;</em> ` + data.description;
-    document.getElementById("location").innerHTML = `<em>Location:&nbsp;</em> ` + data.location;
-    document.getElementById("datefound").innerHTML = `<em>Date Found/lost:&nbsp;</em> ` + data.datefound;
-    document.getElementById("type").innerHTML = `<em>Type:&nbsp;</em> ` + data.type.toLowerCase();
+            document.getElementById("description").innerHTML = `<em>Description:&nbsp;</em> ` + data.description;
+            document.getElementById("location").innerHTML = `<em>Location:&nbsp;</em> ` + data.location;
+            document.getElementById("datefound").innerHTML = `<em>Date Found/lost:&nbsp;</em> ` + data.datefound;
+            document.getElementById("type").innerHTML = `<em>Type:&nbsp;</em> ` + data.type.toLowerCase();
+            connectToWebsocket();
+
 
         },
         error: function (data) {
@@ -547,8 +568,8 @@ function deleteNotif(id){
     });
 }
 function updateNotif(status){
-    document.querySelector(".btn.btn-secondary").classList.add("hidden");
-    document.querySelector(".btn.btn-danger").classList.add("hidden");
+    document.querySelector(".btn .btn-secondary").classList.add("hidden");
+    document.querySelector(".btn .btn-danger").classList.add("hidden");
     const urlParams = new URLSearchParams(window.location.search);
     const notifId=urlParams.get('notifId');
     console.info("notif id ",notifId);
@@ -562,38 +583,121 @@ function updateNotif(status){
         success: function (data) {
             console.log(data);
 if(data.type!=="LOST"){
-            //todo the toastr is not working
+
             if(status === "accepted"){
-                toastr.info('you item is matched,you will not receive any further notification about it' , 'success');
+                document.getElementById("message").classList.remove("hidden");
+//todo toastr not working
+               // toastr.info('you item is matched,you will not receive any further notification about it' , 'success');
                 
             }
             else{
-                toastr.info("you item is still pending ,you will be notified if there's a new potential match" , 'success');
-
+               // toastr.info("you item is still pending ,you will be notified if there's a new potential match" , 'success');
+                console.log("you item is still pending ,you will be notified if there's a new potential match");
             }
 }
-
-
-
         },
         error: function (data) {
             console.log(data);
         }
     });
 }
-var swiper = new Swiper('.blog-slider', {
-    spaceBetween: 30,
-    effect: 'fade',
-    loop: true,
-    mousewheel: {
-        invert: false,
-    },
-    // autoHeight: true,
-    pagination: {
-        el: '.blog-slider__pagination',
-        clickable: true,
+document.getElementById("contentMsg").addEventListener("keydown", function (event) {
+    if (event.key === "Enter" && !event.shiftKey) {
+        event.preventDefault(); // Prevent newline
+        sendMessage();
     }
 });
+let socket;
+
+    function connectToWebsocket(){
+        socket = new WebSocket("ws://localhost:8080/WebsocketMessage");
+
+        console.log('Connected websocket');
+        console.log(socket);
+        socket.onopen = function () {
+            console.log("connected to WebSocket !");
+        };
+
+        socket.onmessage = function (event) {
+            const message = JSON.parse(event.data);
+            console.log("Message received from the server: ", message);
+            try{
+                
+                const messagesContainer = document.querySelector(".messages-container");
+                const messageBox = document.createElement("div");
+                messageBox.className = "message-box left";
+                messageBox.innerHTML = `<p>`+message.messageForwarded+`</p>`;
+                messagesContainer.appendChild(messageBox);
+            } catch (error) {
+                console.error("Error parsing WebSocket message:", error);
+            }
+        };
+        socket.onclose = function () {
+            console.log(" WebSocket closed.");
+
+        };
+        socket.onerror = function (error) {
+            console.log(" error WebSocket : ", error);
+        };
+    }
+    function sendMessage(event) {
+        if(event) event.preventDefault(); // Prevent form submission
+            var msg=document.getElementById("contentMsg").value;
+            if(msg.trim().length === 0){
+                console.log("you can't send an empty message");
+                return;
+            }
+            else{
+
+                console.log("msg sent :"+msg);
+                console.log(sessionStorage.getItem('receiverId'));
+
+                const message = {
+                    receiverId: sessionStorage.getItem("receiverId"),
+                    content: msg
+                };
+
+                //todo ajax create message
+                $.ajax({
+                    url: 'http://localhost:8080/addMsg',
+                    type: 'POST',
+                    data:{
+                        receiverId: sessionStorage.getItem("receiverId"),
+                        content: msg,
+                        senderId:<%= session.getAttribute("userId")%>,
+                        conversationId:ConversationId
+                    },
+                    success: function (data) {
+                        console.log(data);
+                    },
+
+                    error: function (data) {
+                        console.log(data);
+                    }
+
+                });
+
+                console.log("message sent by user "+message);
+                if (socket && socket.readyState === WebSocket.OPEN) {
+                socket.send(JSON.stringify(message));
+               
+                const MsgContainer=document.querySelector(".messages-container");
+                    const messageBox = document.createElement("div");
+                    messageBox.className = "message-box right";
+                    messageBox.innerHTML = `<p>`+msg+`</p>`;
+                    MsgContainer.appendChild(messageBox);
+                    document.getElementById("contentMsg").value = "";
+
+
+        } else {
+            console.log("WebSocket is not open. Unable to send message.");
+        }
+            }
+        
+    }
+
+
+
 </script>
 </body>
 </html>

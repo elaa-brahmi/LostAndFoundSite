@@ -9,6 +9,11 @@ public class Conversation {
     private String Created_At;
     private List<Message> messages;
 
+    public Conversation(int i, int i1) {
+        user1_id = i;
+        user2_id = i1;
+    }
+
     public List<Message> getMessages() {
         return messages;
     }

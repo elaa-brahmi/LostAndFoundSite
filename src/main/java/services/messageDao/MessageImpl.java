@@ -5,7 +5,6 @@ import java.util.List;
 import model.Message;
 
 public class MessageImpl implements MessageInter{
-
     @Override
     public void addMessage(Message msg) {
         MessageDao.createMessage(msg);

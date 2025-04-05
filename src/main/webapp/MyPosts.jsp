@@ -457,6 +457,7 @@
 .hiddenn{
     display:none !important;
 }
+
 #notFound{
     margin-left: 5% !important;
 }
@@ -522,6 +523,8 @@
             z-index: 999;
             top: 540px;
             height:auto;
+            max-height:350px;
+            overflow-y: scroll;
             width: 400px;
             background: white;
             border-radius: 0.5rem;
@@ -610,6 +613,100 @@
             font-size: 12px;
             padding: 2px 6px;
             border-radius: 50%;
+        }
+        .msg-container {
+            position:absolute;
+            right:0;
+            bottom:0;
+            height:300px;
+            overflow-y: scroll;
+            background-color: #fff;
+            border:1px solid black;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 20px;
+            display: flex;
+            flex-direction: column;
+            width: 300px;
+        }
+
+        .msg-header {
+            display: flex;
+            align-items: center;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #ccc;
+        }
+
+        .msg-header .img-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-right: 20px;
+            background-color: #333;
+        }
+
+        .msg-header .text-chat {
+            color: black;
+            margin: 0;
+            font-size: 20px;
+        }
+
+        .msg-body {
+            flex: 1;
+            overflow-y: auto;
+        }
+
+        .messages-container {
+            padding: 15px;
+        }
+
+        .message-box {
+            padding: 10px;
+            margin-bottom: 5px;
+            border-radius: 10px;
+        }
+
+        .message-box.left {
+            background-color: #f1f1f1;
+            color: black;
+            font-size: 13px;
+            left: 0;
+        }
+
+        .message-box.right {
+            background-color: #333;
+            color: #fff;
+            font-size: 13px;
+            right: 0;
+        }
+
+        .message-input {
+            padding: 5px;
+            border-top: 1px solid #ccc;
+        }
+
+        .message-input .message-send {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 10px;
+            resize: none;
+        }
+
+        .message-input .button-send {
+            background-color: #333;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            margin-left: 10px;
+            border-radius: 10px;
+            font-size: 13px;
+        }
+
+        .message-input .button-send:hover {
+            background-color: #f1f1f1;
+            color: #333;
         }
 
 
@@ -856,11 +953,20 @@
 <button class="notifbutton" onclick="logout()">
    <svg viewBox="0 0 448 512" class="bell"><path d="M377.9 105.9L500.7 228.7c7.2 7.2 11.3 17.1 11.3 27.3s-4.1 20.1-11.3 27.3L377.9 406.1c-6.4 6.4-15 9.9-24 9.9c-18.7 0-33.9-15.2-33.9-33.9l0-62.1-128 0c-17.7 0-32-14.3-32-32l0-64c0-17.7 14.3-32 32-32l128 0 0-62.1c0-18.7 15.2-33.9 33.9-33.9c9 0 17.6 3.6 24 9.9zM160 96L96 96c-17.7 0-32 14.3-32 32l0 256c0 17.7 14.3 32 32 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-64 0c-53 0-96-43-96-96L0 128C0 75 43 32 96 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32z"></path></svg>
 </button>
+
+<button class="notifbutton" onclick="revealChatBox()">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+</button>
         </div>
     </div>
 
         `;
     }
+    function revealChatBox(){
+        document.getElementById("chat").classList.toggle("hiddenn");
+
+    }
+
 
 
 </script>
@@ -902,15 +1008,43 @@
 
 
 
-<div class="notification-container hiddenn" >
+<div class="notification-container hidden" >
     <h3>Notifications
         <i class="material-icons dp48 right">settings</i>
     </h3>
     <div id="notificationContainerTexts" style="padding-bottom:9px;"></div>
 </div>
 
+<div class="msg-container hiddenn" id="chat">
+    <div class="msg-header">
+        <div class="img-avatar"></div>
+        <div class="text-chat">Chat</div>
+    </div>
+    <div class="msg-body">
+        <div class="messages-container">
+
+        </div>
+        <div class="message-input">
+            <form onsubmit="sendMessage(event)">
+                <textarea placeholder="Type your message here" class="message-send" id="contentMsg"></textarea>
+                <button type="submit" class="button-send">Send</button>
+            </form>
+        </div>
+    </div>
+</div>
+
 
 <script>
+    function revealChatBox(){
+        document.getElementById("chat").classList.toggle("hiddenn");
+
+    }
+    document.getElementById("contentMsg").addEventListener("keydown", function (event) {
+        if (event.key === "Enter" && !event.shiftKey) {
+            event.preventDefault(); // Prevent newline
+            sendMessage();
+        }
+    });
     function redirect(){
         window.location.href="addItem.jsp";
     }
@@ -922,7 +1056,7 @@
     function fetchNotifss(){
 
         var NotifContainer=document.querySelector(".notification-container");
-        NotifContainer.classList.toggle('hiddenn');
+        NotifContainer.classList.toggle('hidden');
     }
     function editProfile(id){
         console.log(id);
@@ -1007,6 +1141,7 @@
                 .then(data => console.log("Upload successful: ", data))
                 .catch(error => console.error("Error:", error));
         }
+
         function connectToWebsocket(){
             console.log('Connected websocket');
             let  socket = new WebSocket("ws://localhost:8080/WebsocketNotification");
@@ -1082,15 +1217,7 @@
         window.location.href="itemDetails.jsp?idItem=" + id+ "&notifId=" + notifId;
     }
     function deleteNotif(id){
-          // Find the notification element in the DOM
-    <%--const notifElement = document.querySelector(`[data-notif-id="${id}"]`);--%>
-    <%--if (notifElement) {--%>
-    <%--    notifElement.remove(); // Remove the notif element from the DOM--%>
-    <%--    console.log("notification deleted");--%>
-    <%--    fetchNotifs();--%>
-    <%--} else {--%>
-    <%--    console.error("Notification element not found for ID:", id);--%>
-    <%--}--%>
+
 
         $.ajax({
             url:"http://localhost:8080/deleteNotif",
@@ -1111,6 +1238,7 @@
     // Check if the user has a picture when the page loads
     window.onload = function() {
         connectToWebsocket();
+        connectToWebsocketChat();
         setTimeout(() => {
             const userPicture = document.getElementById('preview').src;
             console.log("userpicture "+ userPicture);
@@ -1126,6 +1254,78 @@
             }
         }, 300); // Delay execution by 500ms
     }
+
+
+
+    let socketChat;
+    let newReceiver;
+
+    function connectToWebsocketChat(){
+        socketChat = new WebSocket("ws://localhost:8080/WebsocketMessage");
+
+        console.log('Connected websocket');
+        console.log(socketChat);
+        socketChat.onopen = function () {
+            console.log("connected to WebSocket !");
+        };
+
+        socketChat.onmessage = function (event) {
+            const message = JSON.parse(event.data);
+            console.log("you received a message from :"+message.from);
+            newReceiver=message.from;
+            console.log("Message received from the server: ", message);
+            try{
+                const messagesContainer = document.querySelector(".messages-container");
+                const messageBox = document.createElement("div");
+                messageBox.className = "message-box left";
+                messageBox.innerHTML = `<p>`+message.messageForwarded+`</p>`;
+                messagesContainer.appendChild(messageBox);
+            } catch (error) {
+                console.error("Error parsing WebSocket message:", error);
+            }
+        };
+        socketChat.onclose = function () {
+            console.log(" WebSocket closed.");
+
+        };
+        socketChat.onerror = function (error) {
+            console.log(" error WebSocket : ", error);
+        };
+    }
+    function sendMessage(event) {
+        if(event) event.preventDefault(); // Prevent form submission
+        var msg=document.getElementById("contentMsg").value;
+        if(msg.trim().length === 0){
+            console.log("you can't send an empty message");
+            return;
+        }
+        else{
+            console.log("msg sent :"+msg);
+            //console.log(sessionStorage.getItem('receiverId'));
+
+            const message = {
+                receiverId: newReceiver,
+                content: msg
+            };
+            console.log("message sent by user "+message);
+            if (socketChat && socketChat.readyState === WebSocket.OPEN) {
+                socketChat.send(JSON.stringify(message));
+
+                const MsgContainer=document.querySelector(".messages-container");
+                const messageBox = document.createElement("div");
+                messageBox.className = "message-box right";
+                messageBox.innerHTML = `<p>`+msg+`</p>`;
+                MsgContainer.appendChild(messageBox);
+                document.getElementById("contentMsg").value = "";
+
+
+            } else {
+                console.log("WebSocket is not open. Unable to send message.");
+            }
+        }
+
+    }
+
 </script>
 
 </body>

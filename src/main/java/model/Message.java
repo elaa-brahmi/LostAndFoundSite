@@ -18,6 +18,12 @@ private boolean isRead ;
         this.isRead = isRead;
     }
 
+    public Message(String content, int i, int i1) {
+        this.content = content;
+        this.conversationId = i;
+        this.senderId = i1;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;

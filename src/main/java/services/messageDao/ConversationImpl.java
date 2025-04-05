@@ -18,8 +18,8 @@ public class ConversationImpl implements ConversationInter{
     }
 
     @Override
-    public void addConversationToUser( Integer userId1, Integer userId2) {
-        ConversationDao.addConversationToUser(userId1,userId2);
+    public int addConversationToUser( Integer userId1, Integer userId2) {
+        return ConversationDao.addConversationToUser(userId1,userId2);
 
     }
 
