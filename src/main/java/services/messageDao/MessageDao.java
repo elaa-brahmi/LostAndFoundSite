@@ -14,14 +14,13 @@ import services.BDConnection;
 public class MessageDao {
 
     public static void createMessage(Message msg) {
-        String sql = "INSERT INTO messages (content, sender_id, conversation_id, sent_at,is_read) VALUES (?, ?, ?, ?,?)";
+        String sql = "INSERT INTO messages (content, sender_id, conversation_id, sent_at) VALUES (?, ?, ?, ?)";
         try (Connection con = BDConnection.getConnection();
              PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setString(1, msg.getContact());
             ps.setInt(2, msg.getSenderId());
             ps.setInt(3, msg.getConversationId());
             ps.setTimestamp(4, Timestamp.valueOf(msg.getSendAt()));
-            ps.setBoolean(5, msg.isRead());
            int rows= ps.executeUpdate();
             if (rows > 0) {
                 System.out.println("Message added successfully.");
@@ -114,7 +113,7 @@ public class MessageDao {
         return null;
     }
 
-    public static Message getLastMessagesByConversationId(int conversationId) {
+    public static Message getLastMessageByConversationId(int conversationId) {
         String sql = "SELECT * FROM messages WHERE conversation_id = ? ORDER BY sent_at DESC LIMIT 1";
         try (Connection con = BDConnection.getConnection();
              PreparedStatement ps = con.prepareStatement(sql)) {
@@ -138,7 +137,7 @@ public class MessageDao {
     }
 
     public static void markMessageAsRead(int messageId) {
-        String sql = "UPDATE messages SET is_read = true WHERE id = ?";
+        String sql = "UPDATE messages SET is_read = TRUE WHERE id = ?";
         try (Connection con = BDConnection.getConnection();
              PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, messageId);
@@ -154,7 +153,7 @@ public class MessageDao {
     }
 
     public static List<Message> getUnreadMessagesByConversationId(int conversationId) {
-        String sql = "SELECT * FROM messages WHERE conversation_id = ? AND is_read = false";
+        String sql = "SELECT * FROM messages WHERE conversation_id = ? AND is_read = FALSE";
         List<Message> messages = new ArrayList<>();
         try (Connection con = BDConnection.getConnection();
              PreparedStatement ps = con.prepareStatement(sql)) {

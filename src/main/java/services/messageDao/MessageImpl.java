@@ -33,7 +33,7 @@ public class MessageImpl implements MessageInter{
 
     @Override
     public Message getLastMessageByConversationId(int conversationId) {
-        Message message = MessageDao.getLastMessagesByConversationId(conversationId);
+        Message message = MessageDao.getLastMessageByConversationId(conversationId);
         return message;}
 
     @Override
