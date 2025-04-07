@@ -11,5 +11,5 @@ public interface MessageInter {
     public void markMessageAsRead(int messageId);
     public List<Message> getUnreadMessagesByConversationId(int conversationId);
     public void deleteMessagesByConversationId(int conversationId);
-
+    public  void MarkAllMessagesAsRead(int conversationId);
 }

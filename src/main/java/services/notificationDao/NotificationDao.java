@@ -111,6 +111,37 @@ public class NotificationDao {
         }
 
     }
+    public static int getNumberOfUnreadNotifications(Integer userId) {
+        String query = "SELECT COUNT(*) FROM notification WHERE user_id = ? AND read = 'false'";
+        try (Connection con = BDConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(query)) {
+
+            ps.setInt(1, userId);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt(1);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+    public static void updateUnreadNotifs(Integer userId) {
+        String query = "UPDATE notification SET read = 'true' WHERE user_id = ? AND read = 'false'";
+        try (Connection con = BDConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(query)) {
+
+            ps.setInt(1, userId);
+
+            int rows = ps.executeUpdate();
+            if (rows > 0) {
+                System.out.println("All unread notifications for user " + userId + " have been marked as read.");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
     public static Notification getNotificationById(Integer notificationId) {
         String query = "SELECT * FROM notification WHERE id = ?";

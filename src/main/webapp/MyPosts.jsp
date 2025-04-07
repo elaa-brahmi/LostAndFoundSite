@@ -16,6 +16,7 @@
 %>
 <html>
 <head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-V5r6eMclcfOo3qNnUw9MvEQuuVZMKWRWy4R4aRIhIG8rypYcszK4G+HdJ6ZfQByTZFn5DkEYq0IHk9s9DBQ1Eg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Material+Icons">
     <!-- Inclure Toastr CSS -->
@@ -616,15 +617,15 @@
         }
         .msg-container {
             position:absolute;
-            right:0;
+            right:400px;
             bottom:0;
-            height:300px;
-            overflow-y: scroll;
+            height:350px;
+
             background-color: #fff;
             border:1px solid black;
             border-radius: 10px;
             padding: 15px;
-            margin: 20px;
+            margin-right: 20px;
             display: flex;
             flex-direction: column;
             width: 300px;
@@ -632,9 +633,10 @@
 
         .msg-header {
             display: flex;
-            align-items: center;
+
             padding-bottom: 10px;
             border-bottom: 1px solid #ccc;
+            justify-content: space-between;
         }
 
         .msg-header .img-avatar {
@@ -653,11 +655,15 @@
 
         .msg-body {
             flex: 1;
-            overflow-y: auto;
+            height:500px;
+
         }
 
         .messages-container {
             padding: 15px;
+
+            height: 35%;
+            overflow-y: scroll;
         }
 
         .message-box {
@@ -772,13 +778,157 @@
             cursor:pointer;
         }
 
+        .containerC .inner-container {
+            overflow-y: scroll;
+            overflow-x: hidden;
+            width: calc(100% + 20px);
+            margin: 0 -10px;
+            padding: 0 10px;
+        }
 
+        .containerC.conversations {
+            width: 400px;
+            height: 78vh;
+            background-color: white;
+            position: absolute;
+            top: 120px;
+            right: 0;
 
+        }
 
+        .containerC.conversations .inner-container {
+            max-height: calc(100vh - 60px - 57px);
+        }
+        .containerC header {
+            background-color: white;
+            padding: 20px;
+            margin: -10px 0;
+            border-bottom: solid 1px #D4D4D1;
+            display: flex;
+            justify-content: space-between;
+        }
 
+        .containerC header h2 {
+            font-weight: 500;
+            font-size: 16px;
+            margin: 0;
+        }
 
+        article.conversation {
+            width: calc(100% + 20px);
+            clear: both;
+            padding: 20px 10px;
+            border-bottom: solid 1px #D4D4D1;
+            margin: 0 -10px;
+            cursor: pointer;
+        }
 
+        article.conversation.active {
+            background-color: #E5E5E5;
+        }
 
+        article.conversation .avatar {
+            width: 40px;
+            float: left;
+            margin-right: 20px;
+            position: relative;
+        }
+
+        article.conversation .avatar img {
+            border-radius: 50%;
+            width: 100%;
+            height: 10%;
+            padding-left: 5px;
+        }
+
+        article.conversation .avatar .unread {
+            background-color: #E7A54E;
+            border-radius: 10px;
+            text-align: center;
+            color: white;
+            position: absolute;
+            vertical-align: middle;
+            line-height: 12px;
+            font-size: 12px;
+            top: -6px;
+            right: -8px;
+            padding: 2px 4px;
+            border: solid 2px #F5F5F5;
+        }
+
+        article.conversation author {
+            font-weight: 500;
+            font-size: 16px;
+            max-width: 75%;
+        }
+
+        article.conversation p {
+            max-width: 75%;
+            font-size: 15px;
+            margin: 5px 0 0;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        article.conversation time {
+            float: right;
+
+            color: #555555;
+            font-size: 13px;
+            padding-right: 30px;
+        }
+        form.search {
+            margin: 0 -10px;
+            padding: 10px;
+            border-bottom: solid 1px #D4D4D1;
+            position: relative;
+        }
+
+        form.search .fas {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            color: #555555;
+        }
+
+        form.search input[type=search] {
+            background-color: #E5E5E5;
+            border: 0;
+            width: 100%;
+            padding: 10px 10px 10px 30px;
+            border-radius: 5px;
+            font-size: 14px;
+            outline: none;
+        }
+
+        form.search input[type=search]::placeholder {
+            color: #555555;}
+        .dot {
+            position: absolute;
+            left: 0;
+            top: 0;
+            transform: translate(-50%, -50%);
+            width: 12px;
+            height: 12px;
+            background-color: rgb(194, 3, 3);
+            border-radius: 100%;
+        }
+        .dotnotif{
+            position: absolute;
+            top: 6px;
+            left: 5px;
+        }
+        .dotConvo{
+            position: absolute;
+            top: 6px;
+            left: 5px;
+        }
+        .dotrequest{
+            position: absolute;
+            top: 6px;
+            left: 5px;
+        }
     </style>
 </head>
 
@@ -835,7 +985,6 @@
     $(document).ready(function () {
         fetchItems();
         fetchUserInfos();
-        <%--fetchNotifsUser(<%=session.getAttribute("userId")%>);--%>
     });
 
     function fetchUserInfos() {
@@ -1013,6 +1162,7 @@
         </div>
         <div class="tags" style="display: flex;column-gap: 9%;flex-direction: row;">
 <button class="notifbutton" onclick="fetchNotifss()">
+ <div class="dotnotif dot hidden"></div>
    <svg viewBox="0 0 448 512" class="bell"><path d="M224 0c-17.7 0-32 14.3-32 32V49.9C119.5 61.4 64 124.2 64 200v33.4c0 45.4-15.5 89.5-43.8 124.9L5.3 377c-5.8 7.2-6.9 17.1-2.9 25.4S14.8 416 24 416H424c9.2 0 17.6-5.3 21.6-13.6s2.9-18.2-2.9-25.4l-14.9-18.6C399.5 322.9 384 278.8 384 233.4V200c0-75.8-55.5-138.6-128-150.1V32c0-17.7-14.3-32-32-32zm0 96h8c57.4 0 104 46.6 104 104v33.4c0 47.9 13.9 94.6 39.7 134.6H72.3C98.1 328 112 281.3 112 233.4V200c0-57.4 46.6-104 104-104h8zm64 352H224 160c0 17 6.7 33.3 18.7 45.3s28.3 18.7 45.3 18.7s33.3-6.7 45.3-18.7s18.7-28.3 18.7-45.3z"></path></svg>
 </button>
 <button class="notifbutton" onclick="editProfile(` +user.id+ `)">
@@ -1023,9 +1173,13 @@
 </button>
 
 <button class="notifbutton" onclick="fetchConversations()">
+ <div class="dotConvo dot"></div>
+
   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
 </button>
 <button class="notifbutton" onclick="seeFriendRequests()">
+ <div class="dotrequest dot hidden"></div>
+
   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <path d="M2 21a8 8 0 0 1 13.292-6"></path>
    <circle r="5" cy="8" cx="10"></circle>
         <path d="M19 16v6"></path>
@@ -1038,7 +1192,9 @@
         `;
     }
     function seeFriendRequests(){
+        document.querySelector('.dotrequest').classList.add('hidden');
         document.getElementById("friendRequestsContainer").classList.toggle("hiddenn");
+        updatefrToRead();
         $.ajax({
             url:"http://localhost:8080/getPendingFriendRequests",
             type:'GET',
@@ -1078,6 +1234,22 @@
             }
         });
     }
+    function updatefrToRead(){
+        $.ajax({
+            url:"http://localhost:8080/updateReadabilityFriendRequests",
+            type:'POST',
+            data:{
+                user_id:"<%= session.getAttribute("userId")%>"
+            },
+            success:function(data){
+                console.log("update friends requests "+data);
+            },
+            error:function(data){
+                console.log("update friends requests "+data);
+            }
+
+        });
+    }
 function updateFriendRequestStatus(status,requestId) {
         console.log(status);
         console.log(requestId);
@@ -1106,15 +1278,48 @@ function updateFriendRequestStatus(status,requestId) {
         })
 }
 function fetchConversations(){
+        document.getElementById("conversationsHolder").classList.toggle("hiddenn");
         $.ajax({
             url:"http://localhost:8080/getConversations",
             type:'GET',
             data:{
-                user_id:"<%=session.getAttribute("userId")%>"
+                user_id:"<%= session.getAttribute("userId")%>"
+
             },
             success:function(data){
                 console.log(data);
                 //todo create the conversations box and display conversations
+                var holder=document.getElementById("holder");
+                holder.innerHTML="";
+                data.forEach(function(conversation){
+                    console.log(conversation);
+                    var article=document.createElement("article");
+                    article.className="conversation";
+                   // article.setAttribute("conversationId",conversation.conversationId);
+                    article.addEventListener("click",function () {
+                    openConversation(conversation.conversationId,conversation.otherMemberId);
+                }) ;
+                    const timestamp=conversation.lastMessageTime;
+                    const dateObj = new Date(timestamp); // Convert to Date object
+                    const hours = dateObj.getHours().toString().padStart(2, '0'); // Extract hours
+                    const minutes = dateObj.getMinutes().toString().padStart(2, '0'); // Extract minutes
+                    var memeberImg=conversation.otherMemberPicture==="no image is found" ? "../assets/img/noUser.png": conversation.otherMemberPicture;
+                    article.innerHTML=`
+            <div class="avatar">
+                <img src="`+memeberImg+`" />
+                <span class="unread">`+conversation.unreadMsg+`</span>
+            </div>
+            <author>`+conversation.otherMemberName+`</author>
+            <time>`+hours+`:`+minutes+`</time>
+            <p>`+conversation.lastMessage+`</p>
+<span><svg style="cursor:pointer;position: relative;right: -75%;top: -10px;width: 20px;" onclick="deleteConvo(`+conversation.conversationId+`)" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg></span>
+
+                    `
+                    holder.appendChild(article);
+
+
+
+                });
             },
             error:function(data){
                 console.log(data);
@@ -1132,8 +1337,6 @@ function fetchConversations(){
     margin-left: 5%;
  transition: transform 0.1s ease-out;">
     </div>
-
-
     <div id="notFound" class="hiddenn">
         <div class="cookie-card">
             <span class="cookie-title">No posts yet</span>
@@ -1175,41 +1378,39 @@ function fetchConversations(){
 
 
 
-<div class="conversations container">
+<div class="conversations containerC hiddenn" id="conversationsHolder">
     <header>
         <h2>Conversations</h2>
+        <span><svg style="cursor: pointer;" onclick="closeConversation()" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></span>
     </header>
     <form class="search">
         <input type="search" placeholder="Search conversations" />
         <span class="fas fa-search"></span>
     </form>
-    <div class="inner-container">
-        <article class="conversation">
-            <div class="avatar">
-                <img src="https://ui-avatars.com/api/?background=0D8ABC&color=fff" />
-                <span class="unread">2</span>
-            </div>
-            <author>John Doe</author>
-            <time>2m</time>
-            <p>This is the last message that should be cropped because it's too wide. At least, that's what I think.</p>
-        </article></div></div>
+    <div class="inner-container" id="holder">
+
+    </div>
+</div>
 
 
 
 
 <div class="msg-container hiddenn" id="chat">
     <div class="msg-header">
+<span style="display: flex; justify-content: center;">
         <div class="img-avatar"></div>
-        <div class="text-chat">Chat</div>
+        <div class="text-chat">Chat</div></span>
+        <span><svg style="cursor: pointer;" onclick="closeChat()" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></span>
+
     </div>
     <div class="msg-body">
         <div class="messages-container">
 
         </div>
         <div class="message-input">
-            <form onsubmit="sendMessage(event)">
+            <form id="sendMsg" >
                 <textarea placeholder="Type your message here" class="message-send" id="contentMsg"></textarea>
-                <button type="submit" class="button-send">Send</button>
+                <button type="submit" class="button-send" style="margin-top:4px;">Send</button>
             </form>
         </div>
     </div>
@@ -1217,8 +1418,89 @@ function fetchConversations(){
 
 
 <script>
-    function revealChatBox(){
+    function deleteConvo(id){
+        $.ajax({
+            url:"http://localhost:8080/deleteConvo",
+            type:"POST",
+            data:{
+                id:id
+            },
+            success:function(data){
+                console.log(data);
+                fetchConversations();
+            },
+            error:function(data){
+                console.log(data);
+            }
+
+        });
+    }
+    function closeConversation(){
+        document.getElementById('conversationsHolder').classList.add('hiddenn');
+
+    }
+    function closeChat(){
+        document.getElementById('chat').classList.add('hiddenn');
+    }
+    function openConversation(idConvo,idRecei){
+        updateMgStatus(idConvo);
+        console.log("open conversation with id "+idConvo);
+        console.log("open conversation with id receiver "+idRecei);
+
         document.getElementById("chat").classList.toggle("hiddenn");
+        //todo fetch messages of conversation having this id
+        document.getElementById("sendMsg").addEventListener('submit', function(){
+            sendMessage(idConvo,idRecei,event);
+
+        });
+        $.ajax({
+            url:"http://localhost:8080/fetchMessagesByConversationId",
+            type:"GET",
+            data:{
+                conversation_id:idConvo
+            },
+            success:function(data){
+                console.log(data);
+                var messagescontainer=document.querySelector('.messages-container');
+                messagescontainer.innerHTML='';
+                data.forEach(function(message){
+                    console.log(message);
+                    if(message.senderId.toString()==="<%= session.getAttribute("userId")%>"){
+                        const messageBox1 = document.createElement("div");
+                        messageBox1.className = "message-box right";
+                        messageBox1.innerHTML = `<p>`+message.content+`</p>`;
+                        messagescontainer.appendChild(messageBox1);
+                    }
+                    else{
+                        const messageBox2 = document.createElement("div");
+                        messageBox2.className = "message-box left";
+                        messageBox2.innerHTML = `<p>`+message.content+`</p>`;
+                        messagescontainer.appendChild(messageBox2);
+                    }
+                });
+            },
+            error:function(data){
+                console.log(data);
+            }
+        });
+        //todo update all messages statues of that conversation to read
+
+
+    }
+    function updateMgStatus(idConvo){
+        $.ajax({
+            url:"http://localhost:8080/updateMsgStatus",
+            type:"POST",
+            data:{
+                conversation_id:idConvo
+            },
+            success:function(data){
+                console.log(data);
+            },
+            error:function(data){
+                console.log(data);
+            }
+        });
 
     }
     document.getElementById("contentMsg").addEventListener("keydown", function (event) {
@@ -1236,6 +1518,9 @@ function fetchConversations(){
         window.location.href = "EditItem.jsp?itemId=" + itemId;
     }
     function fetchNotifss(){
+        document.querySelector('.dotnotif').classList.add('hidden');
+        //todo update  unread notif statueses
+        updateUnreadNotifs();
 
         var NotifContainer=document.querySelector(".notification-container");
         NotifContainer.classList.toggle('hidden');
@@ -1243,6 +1528,22 @@ function fetchConversations(){
     function editProfile(id){
         console.log(id);
         window.location.href = "editProfile.jsp?idUser=" + id;
+
+    }
+    function updateUnreadNotifs(){
+        $.ajax({
+            url:"http://localhost:8080/updateUnreadNotifs",
+            type:"POST",
+            data:{
+                user_id:"<%= session.getAttribute("userId")%>"
+            },
+            success:function(data){
+                console.log(data);
+            },
+            error:function(data){
+                console.log(data);
+            }
+        });
 
     }
     function deleteItem(idItem){
@@ -1417,11 +1718,50 @@ function fetchConversations(){
 
         });
     }
+    function fetchUnreadNotifs(idUser){
+        $.ajax({
+            url:'http://localhost:8080/unreadNotifs',
+            type:'GET',
+            data:{
+                userId:idUser
+            },
+            success:function(data){
+                console.log("unread notifs "+data);
+                if(data>0){
+                    document.querySelector(".dotnotif").classList.remove("hidden");
+                }
+            },
+            error:function(xhr,status,error){
+                console.log(data);
+            }
+        });
+    }
+    function fetchNumberOfPendingFriendRequests(idUser){
+        $.ajax({
+            url:'http://localhost:8080/frPending',
+            type:'GET',
+            data:{
+                userId:idUser
+            },
+            success:function(data){
+                console.log("pending friend requests "+data);
+                if(data>0){
+                    document.querySelector(".dotrequest").classList.remove("hidden");
+                }
+            },
+            error:function(data){
+                console.log(data);
+            }
+
+        });
+    }
     // Check if the user has a picture when the page loads
     window.onload = function() {
         // todo check wether you have friendrequests
         connectToWebsocket();
         connectToWebsocketChat();
+        fetchUnreadNotifs("<%=session.getAttribute("userId")%>");
+        fetchNumberOfPendingFriendRequests("<%=session.getAttribute("userId")%>");
 
 
 
@@ -1430,12 +1770,7 @@ function fetchConversations(){
             console.log("userpicture "+ userPicture);
             const previewImage = document.getElementById('preview');
 
-            // if (userPicture) {
-            //     previewImage.classList.remove("hidden");
-            // } else {
-            //     previewImage.classList.add("hidden");
-            //     svg.classList.remove('hidden');
-            // }
+
         }, 300); // Delay execution by 500ms
     }
 
@@ -1447,7 +1782,6 @@ function fetchConversations(){
 
     function connectToWebsocketChat(){
         socketChat = new WebSocket("ws://localhost:8080/WebsocketMessage");
-
         console.log('Connected websocket');
         console.log(socketChat);
         socketChat.onopen = function () {
@@ -1457,7 +1791,6 @@ function fetchConversations(){
         socketChat.onmessage = function (event) {
             const message = JSON.parse(event.data);
             console.log("you received a message from :"+message.from);
-            newReceiver=message.from;
             console.log("Message received from the server: ", message);
             try{
                 const messagesContainer = document.querySelector(".messages-container");
@@ -1477,7 +1810,10 @@ function fetchConversations(){
             console.log(" error WebSocket : ", error);
         };
     }
-    function sendMessage(event) {
+    function sendMessage(idConvo,idRecei,event) {
+        console.log("conversation id click send msg "+idConvo);
+        console.log("receiver id click send msg "+idRecei);
+
         if(event) event.preventDefault(); // Prevent form submission
         var msg=document.getElementById("contentMsg").value;
         if(msg.trim().length === 0){
@@ -1487,9 +1823,8 @@ function fetchConversations(){
         else{
             console.log("msg sent :"+msg);
             //console.log(sessionStorage.getItem('receiverId'));
-
             const message = {
-                receiverId: newReceiver,
+                receiverId: idRecei.toString(),
                 content: msg
             };
             console.log("message sent by user "+message);
@@ -1502,6 +1837,22 @@ function fetchConversations(){
                 messageBox.innerHTML = `<p>`+msg+`</p>`;
                 MsgContainer.appendChild(messageBox);
                 document.getElementById("contentMsg").value = "";
+                //todo save message to conversation id
+                $.ajax({
+                    url:"http://localhost:8080/addMsg",
+                    type:"POST",    
+                    data:{
+                        conversationId:idConvo,
+                        message:msg,
+                        sender_id:"<%= session.getAttribute("userId")%>"
+                    },
+                    success:function(data){
+                        console.log("message saved "+data);
+                    },
+                    error:function(data){
+                        console.log("error saving message "+data);
+                    }
+                });
 
 
             } else {

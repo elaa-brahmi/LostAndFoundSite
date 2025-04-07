@@ -457,48 +457,8 @@
     </div>
 
 
-<%--    <div class="msg-container hidden" id="chat">--%>
-<%--        <div class="msg-header">--%>
-<%--            <div class="img-avatar"></div>--%>
-<%--            <div class="text-chat">Chat</div>--%>
-<%--        </div>--%>
-<%--        <div class="msg-body">--%>
-<%--            <div class="messages-container">--%>
-
-<%--            </div>--%>
-<%--            <div class="message-input">--%>
-<%--                <form onsubmit="sendMessage(event)">--%>
-<%--                    <textarea placeholder="Type your message here" class="message-send" id="contentMsg"></textarea>--%>
-<%--                    <button type="submit" class="button-send">Send</button>--%>
-<%--                </form>--%>
-<%--            </div>--%>
-<%--        </div>--%>
-<%--    </div>--%>
 
     <script>
-    <%--var ConversationId;--%>
-    <%--function sendFriendRequest(){--%>
-    <%--  //  document.getElementById("chat").classList.remove("hidden");--%>
-    <%--       $.ajax({--%>
-    <%--           url: 'http://localhost:8080/addConvo',--%>
-    <%--           type: 'POST',--%>
-    <%--           data: {--%>
-    <%--               receiverId:sessionStorage.getItem('receiverId'),--%>
-    <%--               senderId:<%= session.getAttribute("userId")%>--%>
-
-    <%--           },--%>
-    <%--           success: function(data){--%>
-    <%--               console.log("conversation creation :"+data);--%>
-    <%--               const response=JSON.parse(data);--%>
-    <%--               ConversationId=response.conversationId;--%>
-    <%--               console.log("conversation id created  "+ConversationId);--%>
-    <%--           },--%>
-    <%--           error: function(data){--%>
-    <%--               console.log(data);--%>
-    <%--           }--%>
-    <%--       });--%>
-
-    <%--}--%>
 
     function sendFriendRequest(){
         $.ajax({
@@ -591,8 +551,8 @@ function deleteNotif(id){
     });
 }
 function updateNotif(status){
-    document.querySelector(".btn .btn-secondary").classList.add("hidden");
-    document.querySelector(".btn .btn-danger").classList.add("hidden");
+    document.querySelector(".btn.btn-secondary").classList.add("hidden");
+    document.querySelector(".btn.btn-danger").classList.add("hidden");
     const urlParams = new URLSearchParams(window.location.search);
     const notifId=urlParams.get('notifId');
     console.info("notif id ",notifId);

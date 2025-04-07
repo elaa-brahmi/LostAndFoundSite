@@ -4,6 +4,7 @@ import model.Conversation;
 import model.Message;
 
 import java.util.List;
+import java.util.Map;
 
 public class ConversationImpl implements ConversationInter{
 
@@ -13,7 +14,7 @@ public class ConversationImpl implements ConversationInter{
     }
 
     @Override
-    public List<Conversation> getAllConversationsByUser(Integer userId) {
+    public List<Map<String, Object>> getAllConversationsByUser(Integer userId) {
         return ConversationDao.getAllConversationsByUser(userId) ;
     }
 
@@ -28,14 +29,16 @@ public class ConversationImpl implements ConversationInter{
         ConversationDao.delete(conversationid);
     }
 
-    @Override
-    public List<Message> getAllMessagesByConversation(Integer conversationId) {
-        return ConversationDao.getAllMessagesByConversation(conversationId);
-    }
+
 
     @Override
     public void updateConvoStatus(Integer conversationId, String convoStatus) {
         ConversationDao.updateConvoStatus( conversationId,  convoStatus);
 
+    }
+
+    @Override
+    public Message getLastMessageByConversationId(int conversationId) {
+        return ConversationDao.getLastMessageByConversationId(conversationId);
     }
 }

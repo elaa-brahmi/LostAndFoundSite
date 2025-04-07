@@ -46,4 +46,9 @@ public class MessageImpl implements MessageInter{
     @Override
     public void deleteMessagesByConversationId(int conversationId) {
         MessageDao.deleteMessagesByConversationId(conversationId);}
+
+    @Override
+    public void MarkAllMessagesAsRead(int conversationId) {
+        MessageDao.MarkAllMessagesAsRead(conversationId);
+    }
 }

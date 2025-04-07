@@ -20,8 +20,9 @@ private boolean isRead ;
 
     public Message(String content, int i, int i1) {
         this.content = content;
-        this.conversationId = i1;
         this.senderId = i;
+        this.conversationId = i1;
+
     }
 
     @Override

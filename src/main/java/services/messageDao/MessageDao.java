@@ -21,7 +21,7 @@ public class MessageDao {
             ps.setInt(2, msg.getSenderId());
             ps.setInt(3, msg.getConversationId());
 
-           int rows= ps.executeUpdate();
+            int rows = ps.executeUpdate();
             if (rows > 0) {
                 System.out.println("Message added successfully.");
             } else {
@@ -37,7 +37,7 @@ public class MessageDao {
         try (Connection con = BDConnection.getConnection();
              PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, messageId);
-            int rows=ps.executeUpdate();
+            int rows = ps.executeUpdate();
             if (rows > 0) {
                 System.out.println("Message deleted successfully.");
             } else {
@@ -54,7 +54,7 @@ public class MessageDao {
              PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setString(1, newContent);
             ps.setInt(2, messageId);
-            int rows=ps.executeUpdate();
+            int rows = ps.executeUpdate();
             if (rows > 0) {
                 System.out.println("Message updated successfully.");
             } else {
@@ -65,13 +65,29 @@ public class MessageDao {
         }
     }
 
+    public static int getNumberOfUnreadMessages(int conversationId) {
+        String sql = "SELECT COUNT(*) FROM messages WHERE conversation_id = ? AND is_read = false";
+        try (Connection con = BDConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setInt(1, conversationId);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt(1);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
     public static List<Message> getMessagesByConversationId(int conversationId) {
-        String sql = "SELECT * FROM messages WHERE conversation_id = ?  ORDER BY sent_at DESC";
+        String sql = "SELECT * FROM messages WHERE conversation_id = ?  ORDER BY sent_at ASC ";
         List<Message> messages = new ArrayList<>();
         try (Connection con = BDConnection.getConnection();
              PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, conversationId);
-            try(ResultSet rs = ps.executeQuery()) {
+            try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
                     Message message = new Message();
                     message.setId(rs.getInt("id"));
@@ -87,7 +103,7 @@ public class MessageDao {
             e.printStackTrace();
         }
         return messages;
-           
+
     }
 
     public static Message getMessageById(int messageId) {
@@ -95,7 +111,7 @@ public class MessageDao {
         try (Connection con = BDConnection.getConnection();
              PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, messageId);
-            try(ResultSet rs = ps.executeQuery()) {
+            try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
                     Message message = new Message();
                     message.setId(rs.getInt("id"));
@@ -118,7 +134,7 @@ public class MessageDao {
         try (Connection con = BDConnection.getConnection();
              PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, conversationId);
-            try(ResultSet rs = ps.executeQuery()) {
+            try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
                     Message message = new Message();
                     message.setId(rs.getInt("id"));
@@ -135,13 +151,14 @@ public class MessageDao {
         }
         return null;
     }
+   
 
     public static void markMessageAsRead(int messageId) {
-        String sql = "UPDATE messages SET is_read = TRUE WHERE id = ?";
+        String sql = "UPDATE messages SET is_read = true WHERE id = ?";
         try (Connection con = BDConnection.getConnection();
              PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, messageId);
-            int rows=ps.executeUpdate();
+            int rows = ps.executeUpdate();
             if (rows > 0) {
                 System.out.println("Message marked as read successfully.");
             } else {
@@ -153,12 +170,12 @@ public class MessageDao {
     }
 
     public static List<Message> getUnreadMessagesByConversationId(int conversationId) {
-        String sql = "SELECT * FROM messages WHERE conversation_id = ? AND is_read = FALSE";
+        String sql = "SELECT * FROM messages WHERE conversation_id = ? AND is_read = false";
         List<Message> messages = new ArrayList<>();
         try (Connection con = BDConnection.getConnection();
              PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, conversationId);
-            try(ResultSet rs = ps.executeQuery()) {
+            try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
                     Message message = new Message();
                     message.setId(rs.getInt("id"));
@@ -181,11 +198,27 @@ public class MessageDao {
         try (Connection con = BDConnection.getConnection();
              PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, conversationId);
-            int rows=ps.executeUpdate();
+            int rows = ps.executeUpdate();
             if (rows > 0) {
                 System.out.println("Messages deleted successfully.");
             } else {
                 System.out.println("Failed to delete messages.");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void MarkAllMessagesAsRead(int conversationId) {
+        String sql = "UPDATE messages SET is_read = true WHERE conversation_id = ? AND is_read = false";
+        try (Connection con = BDConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setInt(1, conversationId);
+            int rows = ps.executeUpdate();
+            if (rows > 0) {
+                System.out.println("All messages marked as read successfully.");
+            } else {
+                System.out.println("Failed to mark all messages as read.");
             }
         } catch (SQLException e) {
             e.printStackTrace();
