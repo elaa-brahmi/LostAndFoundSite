@@ -211,7 +211,7 @@ function fetchAllItems(){
             data.forEach(item => {
                 console.log("item :",item);
                 var row=document.createElement('tr');
-                if(item.status=="PENDING"){
+                if(item.status==="PENDING"){
                     row.innerHTML=`
                 
                       <td>

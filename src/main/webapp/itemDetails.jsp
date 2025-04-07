@@ -449,7 +449,7 @@
         <div style="display: flex; align-items: center; justify-content: center; column-gap: 15px; margin-top: 8%;">
             <button  class="btn btn-secondary hidden" onclick="updateNotif('accepted')">accept match</button>
             <button class="btn btn-danger hidden" onclick="updateNotif('rejected')">reject match</button>
-            <button class="btn btn-info hidden" id="message" onclick="revealChatBox()" >chat with matcher</button>
+            <button class="btn btn-info hidden" id="request" onclick="sendFriendRequest()" >send matcher a friend request</button>
 
         </div>
     </div>
@@ -457,47 +457,75 @@
     </div>
 
 
-    <div class="msg-container hidden" id="chat">
-        <div class="msg-header">
-            <div class="img-avatar"></div>
-            <div class="text-chat">Chat</div>
-        </div>
-        <div class="msg-body">
-            <div class="messages-container">
+<%--    <div class="msg-container hidden" id="chat">--%>
+<%--        <div class="msg-header">--%>
+<%--            <div class="img-avatar"></div>--%>
+<%--            <div class="text-chat">Chat</div>--%>
+<%--        </div>--%>
+<%--        <div class="msg-body">--%>
+<%--            <div class="messages-container">--%>
 
-            </div>
-            <div class="message-input">
-                <form onsubmit="sendMessage(event)">
-                    <textarea placeholder="Type your message here" class="message-send" id="contentMsg"></textarea>
-                    <button type="submit" class="button-send">Send</button>
-                </form>
-            </div>
-        </div>
-    </div>
+<%--            </div>--%>
+<%--            <div class="message-input">--%>
+<%--                <form onsubmit="sendMessage(event)">--%>
+<%--                    <textarea placeholder="Type your message here" class="message-send" id="contentMsg"></textarea>--%>
+<%--                    <button type="submit" class="button-send">Send</button>--%>
+<%--                </form>--%>
+<%--            </div>--%>
+<%--        </div>--%>
+<%--    </div>--%>
 
     <script>
-    let ConversationId;
-    function revealChatBox(){
-        document.getElementById("chat").classList.remove("hidden");
-           $.ajax({
-               url: 'http://localhost:8080/addConvo',
-               type: 'POST',
-               data: {
-                   receiverId:sessionStorage.getItem('receiverId'),
-                   senderId:<%= session.getAttribute("userId")%>
+    <%--var ConversationId;--%>
+    <%--function sendFriendRequest(){--%>
+    <%--  //  document.getElementById("chat").classList.remove("hidden");--%>
+    <%--       $.ajax({--%>
+    <%--           url: 'http://localhost:8080/addConvo',--%>
+    <%--           type: 'POST',--%>
+    <%--           data: {--%>
+    <%--               receiverId:sessionStorage.getItem('receiverId'),--%>
+    <%--               senderId:<%= session.getAttribute("userId")%>--%>
 
-               },
-               success: function(data){
-                   console.log("conversation creation :"+data);
-                   const response=JSON.parse(data);
-                    ConversationId=data.conversationId;
-                   console.log("conversation id created  "+ConversationId);
-               },
-               error: function(data){
-                   console.log(data);
-               }
-           });
+    <%--           },--%>
+    <%--           success: function(data){--%>
+    <%--               console.log("conversation creation :"+data);--%>
+    <%--               const response=JSON.parse(data);--%>
+    <%--               ConversationId=response.conversationId;--%>
+    <%--               console.log("conversation id created  "+ConversationId);--%>
+    <%--           },--%>
+    <%--           error: function(data){--%>
+    <%--               console.log(data);--%>
+    <%--           }--%>
+    <%--       });--%>
 
+    <%--}--%>
+
+    function sendFriendRequest(){
+        $.ajax({
+            url: 'http://localhost:8080/sendFriendRequest',
+            type: 'POST',
+            data: {
+                senderId:<%= session.getAttribute("userId")%>,
+                receiverId:sessionStorage.getItem('receiverId')
+            },
+            success: function(data){
+                toastr.success("Friend request sent successfully!");
+                console.log(data);
+                //todo friend request sent successfully
+                const urlParams = new URLSearchParams(window.location.search);
+
+                const notifId=urlParams.get('notifId');
+                document.getElementById("request").value = "request sent";
+                document.getElementById("request").disabled = true;
+
+                //todo delete notif to not show this page again
+                deleteNotif(notifId);
+            },
+            error: function(data){
+                console.log(data);
+            }
+
+        });
     }
     function redirectHome(){
         window.location.href = "MyPosts.jsp";
@@ -505,14 +533,9 @@
     function closeWarning(){
         document.querySelector(".warning").classList.add('hidden');
     }
-
-
-
-
 window.onload = function () {
     const urlParams = new URLSearchParams(window.location.search);
     const itemId = urlParams.get('idItem');
-    //const notifId=urlParams.get('notifId');
     console.log(itemId);
     $.ajax({
         url: 'http://localhost:8080/ItemById',
@@ -525,7 +548,7 @@ window.onload = function () {
             console.log(data);
             sessionStorage.setItem('receiverId', data.UserId);
             if(data.type==="FOUND" && data.matchedStatus==="RESOLVED"){
-                document.getElementById("message").classList.remove("hidden");
+                document.getElementById("request").classList.remove("hidden");
             }
             if(data.type==="FOUND" && data.matchedStatus!=="RESOLVED"){
                 console.info("this is a found item");
@@ -543,7 +566,7 @@ window.onload = function () {
             document.getElementById("location").innerHTML = `<em>Location:&nbsp;</em> ` + data.location;
             document.getElementById("datefound").innerHTML = `<em>Date Found/lost:&nbsp;</em> ` + data.datefound;
             document.getElementById("type").innerHTML = `<em>Type:&nbsp;</em> ` + data.type.toLowerCase();
-            connectToWebsocket();
+
 
 
         },
@@ -558,10 +581,10 @@ function deleteNotif(id){
         type: 'POST',
         data: {
             id:id
-
         }
         ,success: function (data) {
             console.log(data);
+            window.location.href = "MyPosts.jsp";
         },error: function (data) {
             console.log(data);
         }
@@ -582,119 +605,121 @@ function updateNotif(status){
         },
         success: function (data) {
             console.log(data);
-if(data.type!=="LOST"){
+            if(data.type!=="LOST"){
 
-            if(status === "accepted"){
-                document.getElementById("message").classList.remove("hidden");
-//todo toastr not working
-               // toastr.info('you item is matched,you will not receive any further notification about it' , 'success');
-                
+                if(status === "accepted"){
+                    document.getElementById("request").classList.remove("hidden");
+                    //todo toastr not working
+                   // toastr.info('you item is matched,you will not receive any further notification about it' , 'success');
+
+                }
+                else{
+                   // toastr.info("you item is still pending ,you will be notified if there's a new potential match" , 'success');
+                    console.log("you item is still pending ,you will be notified if there's a new potential match");
+                }
             }
-            else{
-               // toastr.info("you item is still pending ,you will be notified if there's a new potential match" , 'success');
-                console.log("you item is still pending ,you will be notified if there's a new potential match");
-            }
-}
         },
         error: function (data) {
             console.log(data);
         }
     });
 }
-document.getElementById("contentMsg").addEventListener("keydown", function (event) {
-    if (event.key === "Enter" && !event.shiftKey) {
-        event.preventDefault(); // Prevent newline
-        sendMessage();
-    }
-});
-let socket;
+// document.getElementById("contentMsg").addEventListener("keydown", function (event) {
+//     if (event.key === "Enter" && !event.shiftKey) {
+//         event.preventDefault(); // Prevent newline
+//         sendMessage();
+//     }
+// });
+<%--let socket;--%>
 
-    function connectToWebsocket(){
-        socket = new WebSocket("ws://localhost:8080/WebsocketMessage");
+<%--    function connectToWebsocket(){--%>
+<%--        socket = new WebSocket("ws://localhost:8080/WebsocketMessage");--%>
 
-        console.log('Connected websocket');
-        console.log(socket);
-        socket.onopen = function () {
-            console.log("connected to WebSocket !");
-        };
+<%--        console.log('Connected websocket');--%>
+<%--        console.log(socket);--%>
+<%--        socket.onopen = function () {--%>
+<%--            console.log("connected to WebSocket !");--%>
+<%--        };--%>
 
-        socket.onmessage = function (event) {
-            const message = JSON.parse(event.data);
-            console.log("Message received from the server: ", message);
-            try{
-                
-                const messagesContainer = document.querySelector(".messages-container");
-                const messageBox = document.createElement("div");
-                messageBox.className = "message-box left";
-                messageBox.innerHTML = `<p>`+message.messageForwarded+`</p>`;
-                messagesContainer.appendChild(messageBox);
-            } catch (error) {
-                console.error("Error parsing WebSocket message:", error);
-            }
-        };
-        socket.onclose = function () {
-            console.log(" WebSocket closed.");
+<%--        socket.onmessage = function (event) {--%>
+<%--            const message = JSON.parse(event.data);--%>
+<%--            console.log("Message received from the server: ", message);--%>
+<%--            try{--%>
+<%--                --%>
+<%--                const messagesContainer = document.querySelector(".messages-container");--%>
+<%--                const messageBox = document.createElement("div");--%>
+<%--                messageBox.className = "message-box left";--%>
+<%--                messageBox.innerHTML = `<p>`+message.messageForwarded+`</p>`;--%>
+<%--                messagesContainer.appendChild(messageBox);--%>
+<%--            } catch (error) {--%>
+<%--                console.error("Error parsing WebSocket message:", error);--%>
+<%--            }--%>
+<%--        };--%>
+<%--        socket.onclose = function () {--%>
+<%--            console.log(" WebSocket closed.");--%>
 
-        };
-        socket.onerror = function (error) {
-            console.log(" error WebSocket : ", error);
-        };
-    }
-    function sendMessage(event) {
-        if(event) event.preventDefault(); // Prevent form submission
-            var msg=document.getElementById("contentMsg").value;
-            if(msg.trim().length === 0){
-                console.log("you can't send an empty message");
-                return;
-            }
-            else{
+<%--        };--%>
+<%--        socket.onerror = function (error) {--%>
+<%--            console.log(" error WebSocket : ", error);--%>
+<%--        };--%>
+<%--    }--%>
+<%--    function sendMessage(event) {--%>
+<%--        if(event) event.preventDefault(); // Prevent form submission--%>
+<%--            var msg=document.getElementById("contentMsg").value;--%>
+<%--            if(msg.trim().length === 0){--%>
+<%--                console.log("you can't send an empty message");--%>
+<%--                return;--%>
+<%--            }--%>
+<%--            else{--%>
+<%--                console.log("msg sent :"+msg);--%>
+<%--                console.log(sessionStorage.getItem('receiverId'));--%>
 
-                console.log("msg sent :"+msg);
-                console.log(sessionStorage.getItem('receiverId'));
+<%--                const message = {--%>
+<%--                    receiverId: sessionStorage.getItem("receiverId"),--%>
+<%--                    content: msg--%>
+<%--                };--%>
+<%--                const messageData={--%>
+<%--                    receiverId: sessionStorage.getItem("receiverId"),--%>
+<%--                    content: msg,--%>
+<%--                    senderId:"<%= session.getAttribute("userId")%>",--%>
+<%--                    conversationId:ConversationId--%>
+<%--                };--%>
+<%--                console.log(messageData);--%>
+<%--                //todo ajax create message--%>
+<%--                $.ajax({--%>
+<%--                    url: 'http://localhost:8080/addMsg',--%>
+<%--                    type: 'POST',--%>
+<%--                    data:{--%>
+<%--                        receiverId: sessionStorage.getItem("receiverId"),--%>
+<%--                        content: msg,--%>
+<%--                        senderId:<%= session.getAttribute("userId")%>,--%>
+<%--                        conversationId:ConversationId,--%>
+<%--                    },--%>
+<%--                    success: function (data) {--%>
+<%--                        console.log(data);--%>
+<%--                    },--%>
+<%--                    error: function (data) {--%>
+<%--                        console.log(data);--%>
+<%--                    }--%>
+<%--                });--%>
+<%--                console.log("message sent by user "+message);--%>
+<%--                if (socket && socket.readyState === WebSocket.OPEN) {--%>
+<%--                socket.send(JSON.stringify(message));--%>
+<%--               --%>
+<%--                const MsgContainer=document.querySelector(".messages-container");--%>
+<%--                    const messageBox = document.createElement("div");--%>
+<%--                    messageBox.className = "message-box right";--%>
+<%--                    messageBox.innerHTML = `<p>`+msg+`</p>`;--%>
+<%--                    MsgContainer.appendChild(messageBox);--%>
+<%--                    document.getElementById("contentMsg").value = "";--%>
 
-                const message = {
-                    receiverId: sessionStorage.getItem("receiverId"),
-                    content: msg
-                };
 
-                //todo ajax create message
-                $.ajax({
-                    url: 'http://localhost:8080/addMsg',
-                    type: 'POST',
-                    data:{
-                        receiverId: sessionStorage.getItem("receiverId"),
-                        content: msg,
-                        senderId:<%= session.getAttribute("userId")%>,
-                        conversationId:ConversationId
-                    },
-                    success: function (data) {
-                        console.log(data);
-                    },
-
-                    error: function (data) {
-                        console.log(data);
-                    }
-
-                });
-
-                console.log("message sent by user "+message);
-                if (socket && socket.readyState === WebSocket.OPEN) {
-                socket.send(JSON.stringify(message));
-               
-                const MsgContainer=document.querySelector(".messages-container");
-                    const messageBox = document.createElement("div");
-                    messageBox.className = "message-box right";
-                    messageBox.innerHTML = `<p>`+msg+`</p>`;
-                    MsgContainer.appendChild(messageBox);
-                    document.getElementById("contentMsg").value = "";
-
-
-        } else {
-            console.log("WebSocket is not open. Unable to send message.");
-        }
-            }
-        
-    }
+<%--        } else {--%>
+<%--            console.log("WebSocket is not open. Unable to send message.");--%>
+<%--        }--%>
+<%--            }--%>
+<%--        --%>
+<%--    }--%>
 
 
 

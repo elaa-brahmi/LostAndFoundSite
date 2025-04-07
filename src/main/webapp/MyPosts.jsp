@@ -708,6 +708,72 @@
             background-color: #f1f1f1;
             color: #333;
         }
+        #requestContainerDiv{
+            width:300px;
+            border:1px solid gray;
+            border-radius:5px;
+            position:relative;
+            height:auto;
+        }
+        .request{ width:100%;
+            border-bottom:1px solid black;
+            border-radius:5px;
+            position:relative;
+            height:100px;}
+        #requestContainerDiv p{
+            font-family:sans-serif;
+            margin: 0 0 0 10px;
+
+        }
+        #info{
+            position:relative;
+            text-align:center;
+            top:20px;
+        }
+
+        #info {
+            text-align:center;
+            color:#4267B2;
+
+            font-size:18px;
+        }
+
+
+
+        #button-block{
+            position:relative;
+            top:30px;
+            left:40px;
+        }
+
+        #button-block div{
+            display:inline-block;
+        }
+
+        #confirm, #delete{
+            background-color:#4267B2;
+            color:white;
+            padding:7px;
+            border-radius:2px;
+            margin-right:10px;
+            font-family:sans-serif;
+        }
+
+        #delete{
+            color:#222;
+            background-color:#bbb;
+            border:1px solid #999;
+            padding:6px;
+            margin-right:0;
+        }
+
+        #button-block div:hover{
+            opacity:.8;
+            cursor:pointer;
+        }
+
+
+
 
 
 
@@ -923,6 +989,8 @@
     function renderUserInfos(user) {
         console.log(user);
         var div = document.getElementById("userProfile");
+        var userPicture=user.picture==="no image is found" ? "../assets/img/noUser.png": user.picture;
+        console.log("userpictureee"+userPicture);
         div.innerHTML = `
         <div class="cardUser">
         <header class="card-header">
@@ -935,8 +1003,8 @@
 <form id="uploadForm" action="saveUserPic" type="post" enctype="multipart/form-data">
         <div class="profileimage" onclick="document.getElementById('upload').click()">
         <input type="file" id="upload" accept="image/*" style="display: none" onchange="previewImage(event)">
-    <img id="preview" class="hidden" src="` + user.picture + `">
-    <svg id="svg" class="pfp" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 122.88 122.88"><g><path d="M61.44,0c8.32,0,16.25,1.66,23.5,4.66l0.11,0.05c7.47,3.11,14.2,7.66,19.83,13.3l0,0c5.66,5.65,10.22,12.42,13.34,19.95 c3.01,7.24,4.66,15.18,4.66,23.49c0,8.32-1.66,16.25-4.66,23.5l-0.05,0.11c-3.12,7.47-7.66,14.2-13.3,19.83l0,0 c-5.65,5.66-12.42,10.22-19.95,13.34c-7.24,3.01-15.18,4.66-23.49,4.66c-8.31,0-16.25-1.66-23.5-4.66l-0.11-0.05 c-7.47-3.11-14.2-7.66-19.83-13.29L18,104.87C12.34,99.21,7.78,92.45,4.66,84.94C1.66,77.69,0,69.76,0,61.44s1.66-16.25,4.66-23.5 l0.05-0.11c3.11-7.47,7.66-14.2,13.29-19.83L18.01,18c5.66-5.66,12.42-10.22,19.94-13.34C45.19,1.66,53.12,0,61.44,0L61.44,0z M16.99,94.47l0.24-0.14c5.9-3.29,21.26-4.38,27.64-8.83c0.47-0.7,0.97-1.72,1.46-2.83c0.73-1.67,1.4-3.5,1.82-4.74 c-1.78-2.1-3.31-4.47-4.77-6.8l-4.83-7.69c-1.76-2.64-2.68-5.04-2.74-7.02c-0.03-0.93,0.13-1.77,0.48-2.52 c0.36-0.78,0.91-1.43,1.66-1.93c0.35-0.24,0.74-0.44,1.17-0.59c-0.32-4.17-0.43-9.42-0.23-13.82c0.1-1.04,0.31-2.09,0.59-3.13 c1.24-4.41,4.33-7.96,8.16-10.4c2.11-1.35,4.43-2.36,6.84-3.04c1.54-0.44-1.31-5.34,0.28-5.51c7.67-0.79,20.08,6.22,25.44,12.01 c2.68,2.9,4.37,6.75,4.73,11.84l-0.3,12.54l0,0c1.34,0.41,2.2,1.26,2.54,2.63c0.39,1.53-0.03,3.67-1.33,6.6l0,0 c-0.02,0.05-0.05,0.11-0.08,0.16l-5.51,9.07c-2.02,3.33-4.08,6.68-6.75,9.31C73.75,80,74,80.35,74.24,80.7 c1.09,1.6,2.19,3.2,3.6,4.63c0.05,0.05,0.09,0.1,0.12,0.15c6.34,4.48,21.77,5.57,27.69,8.87l0.24,0.14 c6.87-9.22,10.93-20.65,10.93-33.03c0-15.29-6.2-29.14-16.22-39.15c-10-10.03-23.85-16.23-39.14-16.23 c-15.29,0-29.14,6.2-39.15,16.22C12.27,32.3,6.07,46.15,6.07,61.44C6.07,73.82,10.13,85.25,16.99,94.47L16.99,94.47L16.99,94.47z"></path></g></svg>
+    <img id="preview"  src="` + userPicture+ `">
+
   </div>
   </form>
             <div class="author-name">
@@ -954,26 +1022,111 @@
    <svg viewBox="0 0 448 512" class="bell"><path d="M377.9 105.9L500.7 228.7c7.2 7.2 11.3 17.1 11.3 27.3s-4.1 20.1-11.3 27.3L377.9 406.1c-6.4 6.4-15 9.9-24 9.9c-18.7 0-33.9-15.2-33.9-33.9l0-62.1-128 0c-17.7 0-32-14.3-32-32l0-64c0-17.7 14.3-32 32-32l128 0 0-62.1c0-18.7 15.2-33.9 33.9-33.9c9 0 17.6 3.6 24 9.9zM160 96L96 96c-17.7 0-32 14.3-32 32l0 256c0 17.7 14.3 32 32 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-64 0c-53 0-96-43-96-96L0 128C0 75 43 32 96 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32z"></path></svg>
 </button>
 
-<button class="notifbutton" onclick="revealChatBox()">
+<button class="notifbutton" onclick="fetchConversations()">
   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+</button>
+<button class="notifbutton" onclick="seeFriendRequests()">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <path d="M2 21a8 8 0 0 1 13.292-6"></path>
+   <circle r="5" cy="8" cx="10"></circle>
+        <path d="M19 16v6"></path>
+        <path d="M22 19h-6"></path>
+  </svg>
 </button>
         </div>
     </div>
 
         `;
     }
-    function revealChatBox(){
-        document.getElementById("chat").classList.toggle("hiddenn");
+    function seeFriendRequests(){
+        document.getElementById("friendRequestsContainer").classList.toggle("hiddenn");
+        $.ajax({
+            url:"http://localhost:8080/getPendingFriendRequests",
+            type:'GET',
+            data:{
+                user_id:"<%= session.getAttribute("userId")%>"
+            },
+            success:function(data){
+                console.log("friend requests "+data);
+                var container=document.getElementById("requestContainerDiv");
+                container.innerHTML="";
+                if(data.length===0){
+                    container.innerHTML=`<p style="color: #000000;">No friend requests</p>`;
+                }
+                else{
+                    data.forEach(function(request){
+                        console.log("request"+request);
 
+                        var div=document.createElement("div");
+                        div.className="request";
+                        var userPicture=request.senderPicture==="no image is found" ? "../assets/img/noUser.png": request.senderPicture;
+                        console.log("userPicture"+userPicture);
+
+                        div.innerHTML=`
+                        <p id="info" style="display:flex;"> <b> <img src="`+userPicture+`" width="30px" height="30px" alt="userPicture" style="border-radius: 50%; object-fit: cover; margin-right:8px"></b> <b>`+request.senderName+`</b> <br></p>
+                      <div id="button-block">
+                        <div id="confirm" onclick="updateFriendRequestStatus('ACCEPTED',`+request.requestId+`)">Confirm</div>
+                        <div id="delete" onclick="updateFriendRequestStatus('REJECTED',`+request.requestId+`)">Delete Request</div>
+
+                        </div>
+                        `;
+                        container.appendChild(div);
+                    });
+                }
+            },
+            error:function(data){
+                console.log(data);
+            }
+        });
     }
+function updateFriendRequestStatus(status,requestId) {
+        console.log(status);
+        console.log(requestId);
+        $.ajax({
+            url:"http://localhost:8080/updateFriendRequestStatus",
+            type:'POST',
+            data:{
+                requestId:requestId,
+                status:status
+            },
+            success:function(data){
+                console.log("status updated"+data);
+             if(status==="ACCEPTED"){
+                 toastr.success(data.message, "friend request accepted");
+                 //todo start a conversation
+                 }
+             else{
+                 toastr.success(data.message, "friend request rejected");
+             }
+                    seeFriendRequests();
+            },
+            error:function(data){
+                console.log(data);
+                toastr.error("An error occurred", "Error");
+            }
+        })
+}
+function fetchConversations(){
+        $.ajax({
+            url:"http://localhost:8080/getConversations",
+            type:'GET',
+            data:{
+                user_id:"<%=session.getAttribute("userId")%>"
+            },
+            success:function(data){
+                console.log(data);
+                //todo create the conversations box and display conversations
+            },
+            error:function(data){
+                console.log(data);
+            }
+        });
 
-
-
+}
 </script>
 <div style="margin-top: 5%;
     display: flex;
     flex-direction: row;">
-    <div id="userProfile" style="width: 35%;
+    <div id="userProfile" style="width: 41%;
     position: relative;
     top: 7%;
     margin-left: 5%;
@@ -1006,6 +1159,11 @@
     </div>
 </div>
 
+<div id="friendRequestsContainer" class="hiddenn">
+    <h3>friend requests</h3>
+    <div id="requestContainerDiv">
+    </div>
+</div>
 
 
 <div class="notification-container hidden" >
@@ -1014,6 +1172,30 @@
     </h3>
     <div id="notificationContainerTexts" style="padding-bottom:9px;"></div>
 </div>
+
+
+
+<div class="conversations container">
+    <header>
+        <h2>Conversations</h2>
+    </header>
+    <form class="search">
+        <input type="search" placeholder="Search conversations" />
+        <span class="fas fa-search"></span>
+    </form>
+    <div class="inner-container">
+        <article class="conversation">
+            <div class="avatar">
+                <img src="https://ui-avatars.com/api/?background=0D8ABC&color=fff" />
+                <span class="unread">2</span>
+            </div>
+            <author>John Doe</author>
+            <time>2m</time>
+            <p>This is the last message that should be cropped because it's too wide. At least, that's what I think.</p>
+        </article></div></div>
+
+
+
 
 <div class="msg-container hiddenn" id="chat">
     <div class="msg-header">
@@ -1123,8 +1305,8 @@
             uploadImage(file);
         }
             else{
-            preview.classList.add("hidden");
-            defaultSvg.style.display = "block";
+            //preview.classList.add("hidden");
+            //defaultSvg.style.display = "block";
 
             }
         }
@@ -1237,23 +1419,26 @@
     }
     // Check if the user has a picture when the page loads
     window.onload = function() {
+        // todo check wether you have friendrequests
         connectToWebsocket();
         connectToWebsocketChat();
+
+
+
         setTimeout(() => {
             const userPicture = document.getElementById('preview').src;
             console.log("userpicture "+ userPicture);
             const previewImage = document.getElementById('preview');
-            const svg = document.getElementById('svg');
 
-            if (userPicture) {
-                previewImage.classList.remove("hidden");
-                svg.classList.add('hidden');
-            } else {
-                previewImage.classList.add("hidden");
-                svg.classList.remove('hidden');
-            }
+            // if (userPicture) {
+            //     previewImage.classList.remove("hidden");
+            // } else {
+            //     previewImage.classList.add("hidden");
+            //     svg.classList.remove('hidden');
+            // }
         }, 300); // Delay execution by 500ms
     }
+
 
 
 

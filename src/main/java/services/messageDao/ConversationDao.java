@@ -1,6 +1,7 @@
 package services.messageDao;
 
 import model.Conversation;
+import model.FriendRequest;
 import model.Message;
 import services.BDConnection;
 
@@ -99,4 +100,24 @@ public class ConversationDao {
     public static List<Message> getAllMessagesByConversation(Integer conversationId) {
         return null;
     }
+
+    public static void updateConvoStatus(Integer conversationId, String convoStatus) {
+        String sql = "UPDATE conversations SET status = ? WHERE id = ?";
+        try (Connection con = BDConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+                if(convoStatus=="accepted"){
+                    ps.setString(1, convoStatus);
+                    ps.setInt(2, conversationId);
+                    ps.executeUpdate();
+                }
+                else{
+                    delete(conversationId);
+                }
+           
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        
+    }
+   
 }

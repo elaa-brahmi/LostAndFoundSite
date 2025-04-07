@@ -14,13 +14,13 @@ import services.BDConnection;
 public class MessageDao {
 
     public static void createMessage(Message msg) {
-        String sql = "INSERT INTO messages (content, sender_id, conversation_id, sent_at) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO messages (content, sender_id, conversation_id) VALUES (?, ?, ?)";
         try (Connection con = BDConnection.getConnection();
              PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setString(1, msg.getContact());
             ps.setInt(2, msg.getSenderId());
             ps.setInt(3, msg.getConversationId());
-            ps.setTimestamp(4, Timestamp.valueOf(msg.getSendAt()));
+
            int rows= ps.executeUpdate();
             if (rows > 0) {
                 System.out.println("Message added successfully.");

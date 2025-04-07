@@ -11,5 +11,6 @@ public interface ConversationInter {
     public int addConversationToUser(Integer userId1,Integer userId2);
     public void removeConversation(Integer conversationId);
     public List<Message> getAllMessagesByConversation(Integer conversationId);
+    public void updateConvoStatus(Integer conversationId, String convoStatus);
 
 }

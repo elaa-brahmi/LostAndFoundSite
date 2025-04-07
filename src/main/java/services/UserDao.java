@@ -13,16 +13,17 @@ public class UserDao{
     public UserDao() {
     }
     public static Integer SaveUser(User user) throws SQLException{
-        String query = "INSERT INTO users(name, email, password, role, phone) VALUES(?, ?, ?, ?, ?)";
+        String query = "INSERT INTO users(name, email, password, role, phone,pictures) VALUES(?, ?, ?, ?, ?,?)";
         try (Connection connection = BDConnection.getConnection();
              PreparedStatement ps = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
-    
             ps.setString(1, user.getName());
             ps.setString(2, user.getEmail());
             String hashed = PasswordUtil.hashPassword(user.getPassword());
             ps.setString(3, hashed);
             ps.setString(4, String.valueOf(Role.USER));
             ps.setString(5, user.getPhone());
+            ps.setString(6,"no image is found");
+
     
             int rows = ps.executeUpdate();
             if (rows > 0) {

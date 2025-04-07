@@ -32,4 +32,10 @@ public class ConversationImpl implements ConversationInter{
     public List<Message> getAllMessagesByConversation(Integer conversationId) {
         return ConversationDao.getAllMessagesByConversation(conversationId);
     }
+
+    @Override
+    public void updateConvoStatus(Integer conversationId, String convoStatus) {
+        ConversationDao.updateConvoStatus( conversationId,  convoStatus);
+
+    }
 }

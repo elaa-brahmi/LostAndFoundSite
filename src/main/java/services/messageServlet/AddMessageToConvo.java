@@ -17,6 +17,7 @@ public class AddMessageToConvo extends HttpServlet {
         String content=request.getParameter("content");
         String senderId=request.getParameter("senderId");
         String conversationId=request.getParameter("conversationId");
+        System.out.println(" creating a message servlet , receiverId= "+receiverId+" senderId= "+senderId+" content= "+content+" conversationId= "+conversationId);
         Message message=new Message(content,Integer.parseInt(senderId),Integer.parseInt(conversationId));
         MessageImpl messageImpl=new MessageImpl();
         messageImpl.addMessage(message);
