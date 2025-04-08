@@ -41,7 +41,7 @@ public class AddItem extends HttpServlet {
         Integer userId= (Integer) session.getAttribute("userId");
         Item item=new Item(name,description,category,location,imageUrl, ItemType.valueOf(type.toUpperCase()),LocalDate.parse(date), ItemStatus.PENDING,userId, MatchedStatus.PENDING);
         ItemDao.create(item);
-        request.setAttribute("alert_add","item added successfully");
+        request.setAttribute("alert_add","item added successfully, wait for admin approval");
         getServletContext().getRequestDispatcher("/MyPosts.jsp").forward(request,response);
             }
 

@@ -65,11 +65,12 @@ public class MessageDao {
         }
     }
 
-    public static int getNumberOfUnreadMessages(int conversationId) {
-        String sql = "SELECT COUNT(*) FROM messages WHERE conversation_id = ? AND is_read = false";
+    public static int getNumberOfUnreadMessages(int conversationId,int userId) {
+        String sql = "SELECT COUNT(*) FROM messages WHERE conversation_id = ? AND sender_id!= ? AND is_read = false";
         try (Connection con = BDConnection.getConnection();
              PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, conversationId);
+            ps.setInt(2, userId);
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
                     return rs.getInt(1);
@@ -169,12 +170,13 @@ public class MessageDao {
         }
     }
 
-    public static List<Message> getUnreadMessagesByConversationId(int conversationId) {
-        String sql = "SELECT * FROM messages WHERE conversation_id = ? AND is_read = false";
+    public static List<Message> getUnreadMessagesByConversationId(int conversationId,int userId) {
+        String sql = "SELECT * FROM messages WHERE conversation_id = ?  AND sender_id!= ? AND is_read = false";
         List<Message> messages = new ArrayList<>();
         try (Connection con = BDConnection.getConnection();
              PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, conversationId);
+            ps.setInt(2, userId);
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
                     Message message = new Message();
@@ -209,11 +211,12 @@ public class MessageDao {
         }
     }
 
-    public static void MarkAllMessagesAsRead(int conversationId) {
-        String sql = "UPDATE messages SET is_read = true WHERE conversation_id = ? AND is_read = false";
+    public static void MarkAllMessagesAsRead(int conversationId,int userId) {
+        String sql = "UPDATE messages SET is_read = true WHERE conversation_id = ? AND  sender_id!= ? AND is_read = false";
         try (Connection con = BDConnection.getConnection();
              PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, conversationId);
+            ps.setInt(2, userId);
             int rows = ps.executeUpdate();
             if (rows > 0) {
                 System.out.println("All messages marked as read successfully.");

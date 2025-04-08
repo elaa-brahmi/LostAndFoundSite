@@ -40,15 +40,15 @@ public class MessageImpl implements MessageInter{
         MessageDao.markMessageAsRead(messageId);}
 
     @Override
-    public List<Message> getUnreadMessagesByConversationId(int conversationId) {
-        List<Message> messages = MessageDao.getUnreadMessagesByConversationId(conversationId);
+    public List<Message> getUnreadMessagesByConversationId(int conversationId,int userId) {
+        List<Message> messages = MessageDao.getUnreadMessagesByConversationId(conversationId,userId);
         return messages;}
     @Override
     public void deleteMessagesByConversationId(int conversationId) {
         MessageDao.deleteMessagesByConversationId(conversationId);}
 
     @Override
-    public void MarkAllMessagesAsRead(int conversationId) {
-        MessageDao.MarkAllMessagesAsRead(conversationId);
+    public void MarkAllMessagesAsRead(int conversationId,int UserId) {
+        MessageDao.MarkAllMessagesAsRead(conversationId,UserId);
     }
 }

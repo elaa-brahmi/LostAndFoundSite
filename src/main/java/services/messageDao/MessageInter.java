@@ -9,7 +9,7 @@ public interface MessageInter {
     public Message getMessageById(int messageId);
     public Message getLastMessageByConversationId(int conversationId);
     public void markMessageAsRead(int messageId);
-    public List<Message> getUnreadMessagesByConversationId(int conversationId);
+    public List<Message> getUnreadMessagesByConversationId(int conversationId,int UserId);
     public void deleteMessagesByConversationId(int conversationId);
-    public  void MarkAllMessagesAsRead(int conversationId);
+    public  void MarkAllMessagesAsRead(int conversationId,int userId);
 }

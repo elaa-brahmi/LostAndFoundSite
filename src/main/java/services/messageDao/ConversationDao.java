@@ -84,7 +84,7 @@ public static List<Map<String, Object>> getAllConversationsByUser(Integer userId
 
                 // Fetch the last message using the existing method
                 Message lastMessage = getLastMessageByConversationId(conversationId);
-                int unreadMsg=MessageDao.getNumberOfUnreadMessages(conversationId);
+                int unreadMsg=MessageDao.getNumberOfUnreadMessages(conversationId,userId);
                 conversation.put("unreadMsg", unreadMsg);
                 conversation.put("conversationId", conversationId);
                 conversation.put("otherMemberId", rs.getInt("otherMemberId"));

@@ -451,6 +451,5 @@
     <button class="submit">Submit</button></div></label>
 
 </form>
-<script src="/webcoscketNotif.js"></script>
 </body>
 </html>

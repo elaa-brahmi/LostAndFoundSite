@@ -716,7 +716,7 @@
         }
         #requestContainerDiv{
             width:300px;
-            border:1px solid gray;
+            border-bottom:2px solid black;
             border-radius:5px;
             position:relative;
             height:auto;
@@ -787,10 +787,12 @@
         }
 
         .containerC.conversations {
+            box-shadow: 0 2px 8px rgb(0 0 0 / 87%);
             width: 400px;
             height: 78vh;
             background-color: white;
             position: absolute;
+            border-radius: 10px;
             top: 120px;
             right: 0;
 
@@ -809,6 +811,11 @@
         }
 
         .containerC header h2 {
+            color: #333;
+
+            text-transform: capitalize;
+            letter-spacing: 0.5px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             font-weight: 500;
             font-size: 16px;
             margin: 0;
@@ -857,9 +864,15 @@
         }
 
         article.conversation author {
-            font-weight: 500;
+            color: #333;
+            text-transform: capitalize;
+            letter-spacing: 0.5px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             font-size: 16px;
             max-width: 75%;
+            font-weight: 500;
+
+
         }
 
         article.conversation p {
@@ -879,18 +892,19 @@
             padding-right: 30px;
         }
         form.search {
-            margin: 0 -10px;
+
+            display: flex;
+            justify-content: center;
+            background-color: #E5E5E5;
+            margin: 0;
             padding: 10px;
             border-bottom: solid 1px #D4D4D1;
             position: relative;
+            border-bottom: solid 1px #D4D4D1;
+
         }
 
-        form.search .fas {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            color: #555555;
-        }
+
 
         form.search input[type=search] {
             background-color: #E5E5E5;
@@ -1362,8 +1376,12 @@ function fetchConversations(){
     </div>
 </div>
 
-<div id="friendRequestsContainer" class="hiddenn">
-    <h3>friend requests</h3>
+<div id="friendRequestsContainer" style="box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    background-color: white;
+    border-radius: 10px;
+    top: 90%;
+    position: absolute;" class="hiddenn">
+    <h3 style="padding-left: 10px;">friend requests</h3>
     <div id="requestContainerDiv">
     </div>
 </div>
@@ -1385,7 +1403,7 @@ function fetchConversations(){
     </header>
     <form class="search">
         <input type="search" placeholder="Search conversations" />
-        <span class="fas fa-search"></span>
+        <span style="position: relative;top: 8px;width: 50px;"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></span>
     </form>
     <div class="inner-container" id="holder">
 
@@ -1492,7 +1510,8 @@ function fetchConversations(){
             url:"http://localhost:8080/updateMsgStatus",
             type:"POST",
             data:{
-                conversation_id:idConvo
+                conversation_id:idConvo,
+                userId:"<%= session.getAttribute("userId")%>"
             },
             success:function(data){
                 console.log(data);
