@@ -1,4 +1,4 @@
-package services.messageServlet;
+package messageServlet;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;

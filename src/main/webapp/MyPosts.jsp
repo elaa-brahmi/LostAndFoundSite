@@ -631,6 +631,7 @@
             border-radius: 50%;
         }
         .msg-container {
+            z-index: 2;
             position:fixed;
             right:400px;
             bottom:0;
@@ -802,6 +803,7 @@
         }
 
         .containerC.conversations {
+            z-index:2;
             box-shadow: 0 2px 8px rgb(0 0 0 / 87%);
             width: 400px;
             height: 79vh;

@@ -1,4 +1,4 @@
-package services.messageServlet;
+package messageServlet;
 
 import com.google.gson.Gson;
 import jakarta.servlet.ServletException;
