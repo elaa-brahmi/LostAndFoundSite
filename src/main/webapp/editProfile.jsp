@@ -17,6 +17,10 @@ int idUser=Integer.parseInt(request.getParameter("idUser"));
 %>
 <html>
 <head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
     <link href="https://fonts.googleapis.com/css2?family=Jost:wght@500&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
@@ -54,7 +58,7 @@ int idUser=Integer.parseInt(request.getParameter("idUser"));
             width: 99%;
             position: absolute;
             inset: 0;
-            background: grey;
+            background-color: #3a3a3a;
             display: flex;
             flex-direction: row;
             justify-content: space-around;
@@ -69,10 +73,13 @@ int idUser=Integer.parseInt(request.getParameter("idUser"));
             text-decoration: none;
             cursor: pointer;
             transition: 0.1s;
+            border-radius: 5px;
         }
 
         .btn:hover {
-            background: #fff3;
+
+            background-color: rgb(123, 36, 28);
+           /* background: #fff3;*/
         }
 
         .btn:nth-child(1):hover ~ svg .rect {
@@ -192,7 +199,77 @@ int idUser=Integer.parseInt(request.getParameter("idUser"));
         .submit-btn:hover {
             opacity: 0.8;
         }
+        .poppins-semibold {
+            font-family: "Poppins", sans-serif;
+            font-weight: 500;
+            font-style: normal;
+        }
+        .poppins-light-italic {
+            font-family: "Poppins", sans-serif;
+            font-weight: 300;
+            font-style: italic;
+        }
+        .poppins-semibold-italic {
+            font-family: "Poppins", sans-serif;
+            font-weight: 600;
+            font-style: italic;
+        }
+        .poppins-medium-italic {
+            font-family: "Poppins", sans-serif;
+            font-weight: 500;
+            font-style: italic;
+        }
+        div.containerr
+        {
+            position: relative;
+            top: 300px;
+            font-size: 20px;
+            display: flex;
+            justify-content: space-evenly;
+            font-family: Raleway;
+            margin: 0 auto;
+            padding: 6em 3em;
+            text-align: center;
+        }
 
+
+
+
+        div.containerr button {
+            background: none;
+            border: none;
+            color: #3a3a3a;
+            font: 20px Raleway, sans-serif;
+            margin: 0 10px;
+            padding: 10px 10px;
+            position: relative;
+            z-index: 0;
+            cursor: pointer;
+        }
+
+        /* Gray background */
+        .gray {
+            background: #9e9e9e;
+        }
+
+        /* Highlight text in */
+        div.highlightTextIn button:before {
+            position: absolute;
+            color: #FFF;
+            top: 0;
+            left: 0;
+            padding: 10px;
+            overflow: hidden;
+            content: attr(alt);
+            transition: all 0.3s;
+            transform: scale(1.2);
+            opacity: 0;
+        }
+
+        div.highlightTextIn button:hover:before {
+            transform: scale(1);
+            opacity: 1;
+        }
     </style>
 </head>
 
@@ -203,29 +280,11 @@ int idUser=Integer.parseInt(request.getParameter("idUser"));
 <div class="nav">
     <div class="container">
         <div><img src="assets/logo.png" alt="logo" width="100px" height="90px"></div>
-        <a href="home.jsp" class="btn">Home</a>
-        <a href="MyPosts.jsp" class="btn">profile</a>
-        <a href="addItem.jsp" class="btn" >report lost/found item </a>
-        <a href="index.jsp" class="btn">about</a>
-        <svg
-                class="outline"
-                overflow="visible"
-                width="100%"
-                height="100px"
-                viewBox="0 0 100% 100px"
-                xmlns="http://www.w3.org/2000/svg"
-        >
-            <rect
-                    class="rect"
-                    pathLength="100"
-                    x="0"
-                    y="0"
-                    width="100%"
-                    height="100px"
-                    fill="transparent"
-                    stroke-width="5"
-            ></rect>
-        </svg>
+        <a href="home.jsp" class="btn poppins-semibold">Home</a>
+        <a href="MyPosts.jsp" class="btn poppins-semibold">profile</a>
+        <a href="addItem.jsp" class="btn poppins-semibold" >report lost/found item </a>
+        <a href="index.jsp" class="btn poppins-semibold">about</a>
+
     </div>
 </div>
 <div class="profile-container">
@@ -266,52 +325,14 @@ int idUser=Integer.parseInt(request.getParameter("idUser"));
     </form>
 </div>
 
+<div class="containerr gray highlightTextIn">
+    <button alt="HOME"  onclick="window.location.href='home.jsp';">HOME</button>
+    <button alt="MY POSTS"  onclick="window.location.href='MyPosts.jsp';">MY POSTS</button>
+    <button alt="REPORT ITEM"  onclick="window.location.href='addItem.jsp';">REPORT ITEM</button>
+    <button alt="ABOUT"  onclick="window.location.href='index.jsp';">ABOUT</button>
+    <button alt="REGISTER"  onclick="window.location.href='login.jsp';">REGISTER</button>
+</div>
 
-<%--<div--%>
-<%--        style="margin-top:4%;"--%>
-<%--        class="max-w-md mx-auto relative overflow-hidden z-10 bg-gray-800 p-8 rounded-lg shadow-md before:w-24 before:h-24 before:absolute before:bg-gray-600 before:rounded-full before:-z-10 before:blur-2xl after:w-32 after:h-32 after:absolute after:bg-sky-400 after:rounded-full after:-z-10 after:blur-xl after:top-24 after:-right-12"--%>
-<%-->--%>
-<%--    <h2 class="text-2xl font-bold text-white mb-6">Update Your Profile</h2>--%>
-
-<%--    <form method="post" action="UpdateUser">--%>
-<%--        <input type="hidden" name="idUser" value="<%= idUser %>">--%>
-<%--        <div class="mb-4">--%>
-<%--            <label class="block text-sm font-medium text-gray-300" >Full Name</label>--%>
-<%--            <input--%>
-<%--                    class="mt-1 p-2 w-full bg-gray-700 border border-gray-600 rounded-md text-white"--%>
-<%--                    type="text" name="name" value="<%= user.getName() %>"/>--%>
-<%--        </div>--%>
-<%--        <div class="mb-4">--%>
-<%--            <label class="block text-sm font-medium text-gray-300" for="email">Email Address</label>--%>
-<%--            <input--%>
-<%--                    class="mt-1 p-2 w-full bg-gray-700 border border-gray-600 rounded-md text-white"--%>
-<%--                    name="email"--%>
-<%--                    value="<%= user.getEmail() %>"--%>
-<%--                    id="email"--%>
-<%--                    type="email"--%>
-<%--            />--%>
-<%--        </div>--%>
-
-<%--        <div class="mb-4">--%>
-<%--            <label class="block text-sm font-medium text-gray-300" for="phone">phone</label>--%>
-<%--            <input--%>
-<%--                    class="mt-1 p-2 w-full bg-gray-700 border border-gray-600 rounded-md text-white"--%>
-<%--                   value="<%= user.getPhone() %>"--%>
-<%--                    name="phone"--%>
-<%--                    id="phone"--%>
-<%--            ></input>--%>
-<%--        </div>--%>
-
-<%--        <div class="flex justify-end">--%>
-<%--            <button--%>
-<%--                    class="bg-gradient-to-r from-gray-600 via-purple-400 to-blue-500 text-white px-4 py-2 font-bold rounded-md hover:opacity-80"--%>
-<%--                    type="submit"--%>
-<%--            >--%>
-<%--                Update Profile--%>
-<%--            </button>--%>
-<%--        </div>--%>
-<%--    </form>--%>
-<%--</div>--%>
 <script type="text/javascript">
     let errorMessage = document.getElementById('error');
     var error=errorMessage? errorMessage.value :"";

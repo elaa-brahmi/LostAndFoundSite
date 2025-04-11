@@ -8,8 +8,12 @@
 %>
 <html>
 <head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-    <title>Title</title>
+    <title>add item</title>
     
     <style>
 
@@ -18,7 +22,7 @@
             width: 300px;
             display: flex;
             flex-direction: column;
-            align-items: space-between;
+
             gap: 20px;
             cursor: pointer;
             align-items: center;
@@ -73,7 +77,7 @@
             flex-direction: column;
             gap: 10px;
             width:100%;
-            max-width: 350px;
+            max-width: 550px;
             background-color: #fff;
             padding: 20px;
             border-radius: 20px;
@@ -82,8 +86,7 @@
 
         .title {
             font-size: 28px;
-            color: royalblue;
-            font-weight: 600;
+           color: rgb(123, 36, 28);
             letter-spacing: -1px;
             position: relative;
             display: flex;
@@ -97,14 +100,14 @@
             height: 16px;
             width: 16px;
             border-radius: 50%;
-            left: 0px;
-            background-color: royalblue;
+            left: 0;
+            background-color: rgb(123, 36, 28);
         }
 
         .title::before {
             width: 18px;
             height: 18px;
-            background-color: royalblue;
+
         }
 
         .title::after {
@@ -113,10 +116,10 @@
             animation: pulse 1s linear infinite;
         }
         .signin a {
-            color: royalblue;
+            color: rgb(123, 36, 28);
         }
         .signin a:hover {
-            text-decoration: underline royalblue;
+            text-decoration: underline  rgb(123, 36, 28);
         }
 
         .flex {
@@ -165,7 +168,7 @@
         .submit {
             border: none;
             outline: none;
-            background-color: royalblue;
+            background-color: rgb(123, 36, 28);
             padding: 10px;
             border-radius: 10px;
             color: #fff;
@@ -174,7 +177,7 @@
         }
 
         .submit:hover {
-            background-color: rgb(56, 90, 194);
+            background-color: rgb(123, 36, 28);
         }
 
         @keyframes pulse {
@@ -189,7 +192,7 @@
             }
         }
         .filter-switch {
-            border: 2px solid #ffc000;
+            border: 2px solid #3a3a3a;
             border-radius: 30px;
             position: relative;
             display: flex;
@@ -218,7 +221,7 @@
             position: absolute;
             width: 49%;
             height: 38px;
-            background-color: #ffc000;
+            background-color: #3a3a3a;
             top: 4px;
             left: 4px;
             border-radius: 30px;
@@ -228,29 +231,18 @@
             left: 50%;
         }
         #option1:checked + label[for="option1"] {
-            color: #212121;
+            color: #FFFFFF;
             font-weight: bold;
         }
         #option2:checked + label[for="option2"] {
-            color: #212121;
+            color: #FFFFFF;
             font-weight: bold;
         }
         #option1:not(:checked) + label[for="option1"],
         #option2:not(:checked) + label[for="option2"] {
-            color: #7d7d7d;
-        }
-        .outline {
-            position: absolute;
-            inset: 0;
-            pointer-events: none;
+            color: #3a3a3a;
         }
 
-        .rect {
-            stroke-dashoffset: 5;
-            stroke-dasharray: 0 0 10 40 10 40;
-            transition: 0.5s;
-            stroke: #fff;
-        }
 
         .nav {
             margin-top:0.5%;
@@ -269,7 +261,7 @@
             max-width:99%;
             position: absolute;
             inset: 0;
-            background: grey;
+            background-color: #3a3a3a;
             display: flex;
             flex-direction: row;
             justify-content: space-around;
@@ -278,6 +270,7 @@
         }
 
         .btn {
+            border-radius: 5px;
             padding: 0.5em 1.5em;
             color: #fff;
             font-size: 2em;
@@ -288,7 +281,9 @@
         }
 
         .btn:hover {
-            background: #fff3;
+         /*   background: #fff3;*/
+
+            background-color: rgb(123, 36, 28);
             color: #fff;
         }
         .btn-check:checked+.btn, .btn.active, .btn.show, .btn:first-child:active, :not(.btn-check)+.btn:active {);
@@ -329,7 +324,77 @@
             stroke-dasharray: 0 0 10 40 10 40;
             transition: 0.5s !important;
         }
+        .poppins-semibold {
+            font-family: "Poppins", sans-serif;
+            font-weight: 500;
+            font-style: normal;
+        }
+        .poppins-light-italic {
+            font-family: "Poppins", sans-serif;
+            font-weight: 300;
+            font-style: italic;
+        }
+        .poppins-semibold-italic {
+            font-family: "Poppins", sans-serif;
+            font-weight: 600;
+            font-style: italic;
+        }
+        .poppins-medium-italic {
+            font-family: "Poppins", sans-serif;
+            font-weight: 500;
+            font-style: italic;
+        }
+        div.containerr
+        {
+            position: relative;
+            top: 300px;
+            font-size: 20px;
+            display: flex;
+            justify-content: space-evenly;
+            font-family: Raleway;
+            margin: 0 auto;
+            padding: 6em 3em;
+            text-align: center;
+        }
 
+
+
+
+        div.containerr button {
+            background: none;
+            border: none;
+            color: #3a3a3a;
+            font: 20px Raleway, sans-serif;
+            margin: 0 10px;
+            padding: 10px 10px;
+            position: relative;
+            z-index: 0;
+            cursor: pointer;
+        }
+
+        /* Gray background */
+        .gray {
+            background: #9e9e9e;
+        }
+
+        /* Highlight text in */
+        div.highlightTextIn button:before {
+            position: absolute;
+            color: #FFF;
+            top: 0;
+            left: 0;
+            padding: 10px;
+            overflow: hidden;
+            content: attr(alt);
+            transition: all 0.3s;
+            transform: scale(1.2);
+            opacity: 0;
+        }
+
+        div.highlightTextIn button:hover:before {
+            transform: scale(1);
+            opacity: 1;
+        }
     </style>
 </head>
 <body class="vh-100" style="overflow-x: hidden;padding:0;"><!--Viewport Height-->
@@ -337,42 +402,24 @@
 <div class="nav">
     <div class="container">
         <div><img src="assets/logo.png" alt="logo" width="100px" height="90px"></div>
-        <a href="home.jsp" class="btn">Home</a>
-        <a href="MyPosts.jsp" class="btn">profile</a>
-        <a href="addItem.jsp" class="btn" >report lost/found item </a>
-        <a href="index.jsp" class="btn">about</a>
-        <svg
-                class="outline"
-                overflow="visible"
-                width="100%"
-                height="100px"
-                viewBox="0 0 100% 100px"
-                xmlns="http://www.w3.org/2000/svg"
-        >
-            <rect
-                    class="rect"
-                    pathLength="100"
-                    x="0"
-                    y="0"
-                    width="100%"
-                    height="100px"
-                    fill="transparent"
-                    stroke-width="5"
-            ></rect>
-        </svg>
+        <a href="home.jsp" class="btn poppins-semibold">Home</a>
+        <a href="MyPosts.jsp" class="btn poppins-semibold">profile</a>
+        <a href="addItem.jsp" class="btn poppins-semibold" >report lost/found item </a>
+        <a href="index.jsp" class="btn poppins-semibold">about</a>
+
     </div>
 </div>
 <!-- From Uiverse.io by Yaya12085 -->
 <form class="form mx-auto" action="addItem" method="post" enctype="multipart/form-data">
-    <p class="title text-center">add item </p>
+    <p class="title text-center poppins-semibold-italic">add item </p>
     <div class="flex">
         <label>
-            <input required="" placeholder="" type="text" name="name" class="input">
+            <input required="" placeholder="" type="text" name="name" class="input" style="width:250px;">
             <span>name</span>
         </label>
 
         <label>
-            <input required="" placeholder="" type="text" name="description" class="input">
+            <textarea style="width:250px;" required="" placeholder="" type="text" name="description" class="input"></textarea>
             <span>description</span>
         </label>
     </div>
@@ -380,7 +427,7 @@
     <label>
 
         <label>
-        <select style="border-radius:1px solid gray;" class="input" id="category" name="category" required >
+        <select style="border-radius:1px solid gray; width:500px;" class="input poppins-light-italic" id="category" name="category" required >
             <option value="Electronics">Electronics</option>
             <option value="Personal Accessories">Personal Accessories</option>
             <option value="Identification & Documents">Identification & Documents</option>
@@ -392,7 +439,7 @@
         </label>
     </label>
     <label>
-        <select style="border-radius:1px solid gray;" class="input" id="location" name="location" required >
+        <select style="border-radius:1px solid gray;width:500px;" class="input poppins-light-italic" id="location" name="location" required >
 
                 <option value="Tunis">Tunis</option>
                 <option value="Sidi Bouzid">Sidi Bouzid</option>
@@ -424,7 +471,7 @@
     </label>
     <label>
 
-        <label class="custum-file-upload" for="file">
+        <label style="width:500px;" class="custum-file-upload" for="file">
             <div class="icon">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="" viewBox="0 0 24 24"><g stroke-width="0" id="SVGRepo_bgCarrier"></g><g stroke-linejoin="round" stroke-linecap="round" id="SVGRepo_tracerCarrier"></g><g id="SVGRepo_iconCarrier"> <path fill="" d="M10 1C9.73478 1 9.48043 1.10536 9.29289 1.29289L3.29289 7.29289C3.10536 7.48043 3 7.73478 3 8V20C3 21.6569 4.34315 23 6 23H7C7.55228 23 8 22.5523 8 22C8 21.4477 7.55228 21 7 21H6C5.44772 21 5 20.5523 5 20V9H10C10.5523 9 11 8.55228 11 8V3H18C18.5523 3 19 3.44772 19 4V9C19 9.55228 19.4477 10 20 10C20.5523 10 21 9.55228 21 9V4C21 2.34315 19.6569 1 18 1H10ZM9 7H6.41421L9 4.41421V7ZM14 15.5C14 14.1193 15.1193 13 16.5 13C17.8807 13 19 14.1193 19 15.5V16V17H20C21.1046 17 22 17.8954 22 19C22 20.1046 21.1046 21 20 21H13C11.8954 21 11 20.1046 11 19C11 17.8954 11.8954 17 13 17H14V16V15.5ZM16.5 11C14.142 11 12.2076 12.8136 12.0156 15.122C10.2825 15.5606 9 17.1305 9 19C9 21.2091 10.7909 23 13 23H20C22.2091 23 24 21.2091 24 19C24 17.1305 22.7175 15.5606 20.9844 15.122C20.7924 12.8136 18.858 11 16.5 11Z" clip-rule="evenodd" fill-rule="evenodd"></path> </g></svg>
             </div>
@@ -433,23 +480,31 @@
             </div>
             <input type="file" id="file" name="image">
         </label><br>
-        <label>
+        <label style="width:500px;">
 
-        <input name="date" id="data" type="date" class="infos input" required="" style="width:300px;">
+        <input name="date" id="data" type="date" class="infos input" required="">
 
         </label>
 
-        <div id="firstFilter" class="filter-switch mt-3">
+        <div id="firstFilter" class="filter-switch mt-3" style="width:500px;">
             <input checked="" id="option1" name="type" type="radio" value="lost" required="" />
-            <label class="option" for="option1">lost</label>
+            <label class="option poppins-medium-italic" for="option1">lost</label>
             <input id="option2" name="type" type="radio" value="found" />
-            <label class="option" for="option2">found</label>
+            <label class="option poppins-medium-italic" for="option2">found</label>
             <span class="background"></span>
         </div>
 
 <div class=" justify-content-center mt-2" style="display: flex;">
-    <button class="submit">Submit</button></div></label>
+    <button class="submit poppins-semibold-italic">Submit</button></div></label>
 
 </form>
+
+<div class="containerr gray highlightTextIn">
+    <button alt="HOME"  onclick="window.location.href='home.jsp';">HOME</button>
+    <button alt="MY POSTS"  onclick="window.location.href='MyPosts.jsp';">MY POSTS</button>
+    <button alt="REPORT ITEM"  onclick="window.location.href='addItem.jsp';">REPORT ITEM</button>
+    <button alt="ABOUT"  onclick="window.location.href='index.jsp';">ABOUT</button>
+    <button alt="REGISTER"  onclick="window.location.href='login.jsp';">REGISTER</button>
+</div>
 </body>
 </html>

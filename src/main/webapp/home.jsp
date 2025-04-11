@@ -13,7 +13,9 @@
     <title>Title</title>
 
 
-
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
     <!-- BOX ICONS CSS-->
     <link href="https://cdn.jsdelivr.net/npm/boxicons@2.0.5/css/boxicons.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
@@ -165,7 +167,7 @@
     width: 99%;
     position: absolute;
     inset: 0;
-    background: grey;
+    background-color: #3a3a3a;
     display: flex;
     flex-direction: row;
     justify-content: space-around;
@@ -174,6 +176,7 @@
   }
 
   .btn {
+    border-radius: 5px;
     padding: 0.5em 1em;
     color: #fff;
     font-size: 2em;
@@ -183,7 +186,9 @@
   }
 
   .btn:hover {
-    background: #fff3;
+
+    background-color: rgb(123, 36, 28);
+   /* background: #fff3;*/
   }
 
   .btn:nth-child(1):hover ~ svg .rect {
@@ -290,7 +295,7 @@
   }
 
  .card-img:hover {
-    transform: translateY(-25%);
+    transform: translateY(-17%);
     box-shadow: rgba(226, 196, 63, 0.25) 0px 13px 47px -5px, rgba(180, 71, 71, 0.3) 0px 8px 16px -8px;
   }
 
@@ -588,6 +593,7 @@
 
 
   .filterButton {
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
     padding: 15px 30px;
     color: #fff;
     font-size: 16px;
@@ -612,26 +618,107 @@
   display: none !important;
 }
 .filters{
+  justify-content: center;
+  width: 100%;
   margin-top: 5%;
-  row-gap: 10px;
-  width: 20%;
-  max-width: 20%;
-  display: flex
-;
-  flex-direction: column;
+  display: flex;
+  flex-direction: row;
 }
 .filterButton:hover{
   transform: translateY(-3px);
   background-color: rgb(123, 36, 28);
 }
 .filterCategories{
+  margin-right: 20px;
+  width: 360px;
   text-align: center;
-  height: 28px;
+  height: 58px;
   border-radius: 10px;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
 }
 
 
+  .poppins-extralight {
+    font-family: "Poppins", sans-serif;
+    font-weight: 200;
+    font-style: normal;
+  }
+  .poppins-light {
+    font-family: "Poppins", sans-serif;
+    font-weight: 300;
+    font-style: normal;
+  }
+  .poppins-semibold {
+    font-family: "Poppins", sans-serif;
+    font-weight: 500;
+    font-style: normal;
+  }
+  .poppins-light-italic {
+    font-family: "Poppins", sans-serif;
+    font-weight: 300;
+    font-style: italic;
+  }
+  .poppins-semibold-italic {
+    font-family: "Poppins", sans-serif;
+    font-weight: 600;
+    font-style: italic;
+  }
+  .poppins-medium-italic {
+    font-family: "Poppins", sans-serif;
+    font-weight: 500;
+    font-style: italic;
+  }
+  div.containerr
+  {
+    position: relative;
+    top: 300px;
+    font-size: 20px;
+    display: flex;
+    justify-content: space-evenly;
+    font-family: Raleway;
+    margin: 0 auto;
+    padding: 6em 3em;
+    text-align: center;
+  }
+
+
+
+
+  div.containerr button {
+    background: none;
+    border: none;
+    color: #3a3a3a;
+    font: 20px Raleway, sans-serif;
+    margin: 0 10px;
+    padding: 10px 10px;
+    position: relative;
+    z-index: 0;
+    cursor: pointer;
+  }
+
+  /* Gray background */
+  .gray {
+    background: #9e9e9e;
+  }
+
+  /* Highlight text in */
+  div.highlightTextIn button:before {
+    position: absolute;
+    color: #FFF;
+    top: 0;
+    left: 0;
+    padding: 10px;
+    overflow: hidden;
+    content: attr(alt);
+    transition: all 0.3s;
+    transform: scale(1.2);
+    opacity: 0;
+  }
+
+  div.highlightTextIn button:hover:before {
+    transform: scale(1);
+    opacity: 1;
+  }
 </style>
 
   </head>
@@ -639,35 +726,17 @@
   <div class="nav">
     <div class="container">
       <div><img src="assets/logo.png" alt="logo" width="100px" height="90px"></div>
-      <a href="home.jsp" class="btn">Home</a>
-      <a href="MyPosts.jsp" class="btn">profile</a>
-      <a href="addItem.jsp" class="btn" >report lost/found item </a>
-      <a href="index.jsp" class="btn">about</a>
-      <svg
-              class="outline"
-              overflow="visible"
-              width="100%"
-              height="100px"
-              viewBox="0 0 100% 100px"
-              xmlns="http://www.w3.org/2000/svg"
-      >
-        <rect
-                class="rect"
-                pathLength="100"
-                x="0"
-                y="0"
-                width="100%"
-                height="100px"
-                fill="transparent"
-                stroke-width="5"
-        ></rect>
-      </svg>
+      <a href="home.jsp" class="btn poppins-semibold">Home</a>
+      <a href="MyPosts.jsp" class="btn poppins-semibold">profile</a>
+      <a href="addItem.jsp" class="btn poppins-semibold" >report lost/found item </a>
+      <a href="index.jsp" class="btn poppins-semibold">about</a>
+
     </div>
   </div>
 
     <div class="filters">
-      <select id="categoryFilter" class="filterCategories">
-        <option value="">All Categories</option>
+      <select id="categoryFilter" class="filterCategories poppins-light-italic">
+        <option value="" >All Categories</option>
         <option value="Personal Accessories">Personal Accessories</option>
         <option value="Identification & Documents">Identification & Documents</option>
         <option value="Clothing & Wearables">Clothing & Wearables</option>
@@ -675,8 +744,8 @@
         <option value="Travel & Transport Items">Travel & Transport Items</option>
         <option value="Household & Miscellaneous Items">Household & Miscellaneous Items</option>
       </select>
-      <select id="locationFilter" class="filterCategories">
-        <option value="">All Locations</option>
+      <select id="locationFilter" class="filterCategories poppins-light-italic">
+        <option value="" >All Locations</option>
         <option value="Tunis">Tunis</option>
         <option value="Sidi Bouzid">Sidi Bouzid</option>
         <option value="Sfax">Sfax</option>
@@ -701,7 +770,7 @@
         <option value="Siliana">Siliana</option>
       </select>
     
-      <button class="filterButton" onclick="applyFilters()">Apply Filters</button>
+      <button class="filterButton poppins-light-italic " onclick="applyFilters()">Apply Filters</button>
     </div>
 
 
@@ -744,7 +813,7 @@
       if(items.length ===0){
         notFound.classList.remove('hidden');
         cardItems.classList.add('hidden');
-        notFound.innerHTML=`<p style="font-size: 28px;">No items are found <svg style="position: relative;top: 14px;
+        notFound.innerHTML=`<p style="font-size: 28px;" class="poppins-semibold-italic">No items are found <svg style="position: relative;top: 14px;
     width: 50px;
     height: 50px;" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="256" height="256" viewBox="0 0 256 256" xml:space="preserve">
                 <g style="stroke: none; stroke-width: 0; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: none; fill-rule: nonzero; opacity: 1;" transform="translate(1.4065934065934016 1.4065934065934016) scale(2.81 2.81)">
@@ -764,7 +833,7 @@
         console.log(item.image);
         var cardItem = document.createElement("div");
         cardItem.classList.add("card");
-        cardItem.setAttribute("data-aos","zoom-in-down");
+        cardItem.setAttribute("data-aos","zoom-in-up");
         var imageSrc = item.image === "no image is found" ? "assets/img/noPic.png" : item.image;
         cardItem.innerHTML = `
         <div class="card-img">
@@ -772,16 +841,16 @@
            <img src="`+imageSrc+`" alt="no image was provided" width="250px" height="250px" style="height:100%; padding:3px; ">
         </div>
         <div class="card-info" >
-            <p class="text-title">`+item.name+` <br>`+item.category+`</p>
-            <p class="text-body"><em>location: &nbsp;</em>`+item.location+`</p>
-            <p><em>date found/lost: &nbsp;</em>`+item.datefound+` <br> <em>description: &nbsp;</em> `+item.description+`</p>
-            <p><em>type: &nbsp;</em><strong>`+item.type+`</strong></p>
+            <p class="text-title poppins-semibold-italic">`+item.name+` <br>`+item.category+`</p>
+            <p class="text-body poppins-medium-italic "><em>location: &nbsp;</em>`+item.location+`<br>
+            <em>date found/lost: &nbsp;</em>`+item.datefound+` <br> <em>description: &nbsp;</em> `+item.description+`<br>
+            <em>type: &nbsp;</em><strong>`+item.type+`</strong></p>
         </div>
 
-<div style="display: flex; justify-content: center; margin: auto;">
-            <div class="tooltip-container">
-              <button class="tooltip-trigger" onmouseover="fetchUserInfos(` + item.UserId + `, this)">poster's infos</button>
-              <div class="tooltip">This is a 3D glassmorphic tooltip!</div>
+<div style="left: 20%;bottom: 15px;position: absolute;display: flex;justify-content: center;">
+            <div class="tooltip-container" style=" margin-bottom:6px;">
+              <button class="tooltip-trigger poppins-light-italic" onmouseover="fetchUserInfos(` + item.UserId + `, this)">poster's infos</button>
+                 <div class="tooltip">This is a 3D glassmorphic tooltip!</div>
             </div>
           </div>
 
@@ -824,21 +893,14 @@
           tooltip.innerHTML = `
             <p><strong>Name:</strong> `+data.name+`</p>
             <p><strong>Email:</strong> `+data.email+`</p>
-            <p><strong>Phone:</strong> `+data.phone+`</p>
+
           `;
         })
         .catch(error => {
           console.log(error);
         });
       }
-
-
   </script>
-
-
-
-
-
   <div id="notFound" class="hidden"></div>
 
   <div id="cardItems" class="mt-5 " style="margin-top: 10%;margin-left: 10%; " >
@@ -846,6 +908,17 @@
   <div class="d-flex justify-content-center" style="width:80%;margin-left: 20%; margin-top:5%;">
   <div id="pagination" class="pagination"></div>
   </div>
-  <script src="webcoscketNotif.js"></script>
+
+  <div class="containerr gray highlightTextIn">
+    <button alt="HOME"  onclick="window.location.href='home.jsp';">HOME</button>
+    <button alt="MY POSTS"  onclick="window.location.href='MyPosts.jsp';">MY POSTS</button>
+    <button alt="REPORT ITEM"  onclick="window.location.href='addItem.jsp';">REPORT ITEM</button>
+    <button alt="ABOUT"  onclick="window.location.href='index.jsp';">ABOUT</button>
+    <button alt="REGISTER"  onclick="window.location.href='login.jsp';">REGISTER</button>
+  </div>
+  <script> AOS.init({
+  once: true,
+  mirror: false
+  });</script>
   </body>
 </html>

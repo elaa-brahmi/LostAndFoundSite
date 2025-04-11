@@ -35,16 +35,17 @@
     <style>
         /* From Uiverse.io by Madflows */
         .cardUser {
+            box-shadow: -1rem 0 1rem #00000067;
             display: flex;
             position: relative;
             flex-direction: column;
-            height: 350px;
-            width: 190px;
-            min-width: 250px;
+            height: auto;
+            width: 68%;
+            min-width: 200px;
             padding: 1rem;
             border-radius: 16px;
             background: #17141d;
-            box-shadow: -1rem 0 3rem #00000067;
+
             transition: .2s;
             font-family: 'Inter', sans-serif;
         }
@@ -83,8 +84,10 @@
 
 
         .card-header {
+            display: flex;
             margin-bottom: auto;
             color: #7a7a8c;
+            flex-direction: column;
         }
 
         .card-header p {
@@ -101,7 +104,7 @@
         }
 
         .card-header .title:hover {
-            background: linear-gradient(90deg,#ff8a00,#e52e71);
+            background-color: rgb(123, 36, 28);
             text-shadow: none;
             background-clip: text;
             -webkit-background-clip: text;
@@ -206,6 +209,9 @@
             font-family: "Dosis", sans-serif;
         }
         .acceptedBtn{
+            right: -75%;
+
+            position: relative;
             border-radius: 50px;
             background-image: linear-gradient(135deg, #58d68d 0%, #58d68d 100%);
             box-shadow: 0 20px 30px -6px rgba(238, 103, 97, 0.5);
@@ -225,6 +231,9 @@
             opacity: 0.5;
         }
         .lostbtn {
+            right: -75%;
+
+            position: relative;
 
             border-radius: 50px;
             background-image: linear-gradient(135deg, #feb692 0%, #f9e79f 100%);
@@ -248,6 +257,7 @@
 
         /* From Uiverse.io by ZAKARIAE48CHELLE */
         .BtnEdit {
+            cursor: pointer !important;
             position: relative;
             display: flex;
             align-items: center;
@@ -259,7 +269,7 @@
             background-color: black;
             color: white;
             font-weight: 700;
-            cursor: pointer;
+
             border-radius: 10px;
             box-shadow: 5px 5px 0px black;
             transition-duration: 0.3s;
@@ -325,7 +335,7 @@
             width: 99%;
             position: absolute;
             inset: 0;
-            background: grey;
+            background-color: #3a3a3a;
             display: flex;
             flex-direction: row;
             justify-content: space-around;
@@ -334,6 +344,7 @@
         }
 
         .btn {
+            border-radius: 5px;
             padding: 0.5em 1em;
             color: #fff;
             font-size: 2em;
@@ -343,7 +354,8 @@
         }
 
         .btn:hover {
-            background: #fff3;
+            background-color: rgb(123, 36, 28);
+            /*background: #fff3;*/
         }
 
         .btn:nth-child(1):hover ~ svg .rect {
@@ -460,6 +472,7 @@
 }
 
 #notFound{
+    margin-top:4%;
     margin-left: 5% !important;
 }
         .cookie-card {
@@ -529,13 +542,15 @@
             width: 400px;
             background: white;
             border-radius: 0.5rem;
-            box-shadow: 0.5rem 0.5rem 2rem rgba(0, 0, 0, 0.2);
+           /* box-shadow: 0.5rem 0.5rem 2rem rgba(0, 0, 0, 0.2);*/
             font-weight: 300;
             margin-bottom: 20px;
         }
 
         .notification-container h3 {
             text-transform: uppercase;
+            display: flex;
+            justify-content: space-between;
             font-size: 75%;
             font-weight: 700;
             color: #84929f;
@@ -616,7 +631,7 @@
             border-radius: 50%;
         }
         .msg-container {
-            position:absolute;
+            position:fixed;
             right:400px;
             bottom:0;
             height:350px;
@@ -716,7 +731,7 @@
         }
         #requestContainerDiv{
             width:300px;
-            border-bottom:2px solid black;
+           /* border-bottom:2px solid black;*/
             border-radius:5px;
             position:relative;
             height:auto;
@@ -789,9 +804,9 @@
         .containerC.conversations {
             box-shadow: 0 2px 8px rgb(0 0 0 / 87%);
             width: 400px;
-            height: 78vh;
+            height: 79vh;
             background-color: white;
-            position: absolute;
+            position: fixed;
             border-radius: 10px;
             top: 120px;
             right: 0;
@@ -925,7 +940,7 @@
             transform: translate(-50%, -50%);
             width: 12px;
             height: 12px;
-            background-color: rgb(194, 3, 3);
+            background-color: rgb(123, 36, 28);
             border-radius: 100%;
         }
         .dotnotif{
@@ -943,6 +958,83 @@
             top: 6px;
             left: 5px;
         }
+        .poppins-semibold {
+            font-family: "Poppins", sans-serif;
+            font-weight: 500;
+            font-style: normal;
+        }
+        .poppins-light-italic {
+            font-family: "Poppins", sans-serif;
+            font-weight: 300;
+            font-style: italic;
+        }
+        .poppins-semibold-italic {
+            font-family: "Poppins", sans-serif;
+            font-weight: 400;
+            font-style: italic;
+        }
+        .poppins-medium-italic {
+            font-family: "Poppins", sans-serif;
+            font-weight: 500;
+            font-style: italic;
+        }
+        .poppins-regular {
+            font-family: "Poppins", sans-serif;
+            font-weight: 400;
+            font-style: normal;
+        }
+        div.containerr
+        {
+            position: relative;
+            top: 300px;
+            font-size: 20px;
+            display: flex;
+            justify-content: space-evenly;
+            font-family: Raleway;
+            margin: 0 auto;
+            padding: 6em 3em;
+            text-align: center;
+        }
+
+
+
+
+        div.containerr button {
+            background: none;
+            border: none;
+            color: #3a3a3a;
+            font: 20px Raleway, sans-serif;
+            margin: 0 10px;
+            padding: 10px 10px;
+            position: relative;
+            z-index: 0;
+            cursor: pointer;
+        }
+
+        /* Gray background */
+        .gray {
+            background: #9e9e9e;
+        }
+
+        /* Highlight text in */
+        div.highlightTextIn button:before {
+            position: absolute;
+            color: #FFF;
+            top: 0;
+            left: 0;
+            padding: 10px;
+            overflow: hidden;
+            content: attr(alt);
+            transition: all 0.3s;
+            transform: scale(1.2);
+            opacity: 0;
+        }
+
+        div.highlightTextIn button:hover:before {
+            transform: scale(1);
+            opacity: 1;
+        }
+
     </style>
 </head>
 
@@ -957,29 +1049,11 @@
 <div class="nav">
     <div class="container">
         <div><img src="assets/logo.png" alt="logo" width="100px" height="90px"></div>
-        <a href="home.jsp" class="btn">Home</a>
-        <a href="MyPosts.jsp" class="btn">profile</a>
-        <a href="addItem.jsp" class="btn" >report lost/found item </a>
-        <a href="index.jsp" class="btn">about</a>
-        <svg
-                class="outline"
-                overflow="visible"
-                width="100%"
-                height="100px"
-                viewBox="0 0 100% 100px"
-                xmlns="http://www.w3.org/2000/svg"
-        >
-            <rect
-                    class="rect"
-                    pathLength="100"
-                    x="0"
-                    y="0"
-                    width="100%"
-                    height="100px"
-                    fill="transparent"
-                    stroke-width="5"
-            ></rect>
-        </svg>
+        <a href="home.jsp" class="btn poppins-semibold">Home</a>
+        <a href="MyPosts.jsp" class="btn poppins-semibold">profile</a>
+        <a href="addItem.jsp" class="btn poppins-semibold" >report lost/found item </a>
+        <a href="index.jsp" class="btn poppins-semibold">about</a>
+
     </div>
 </div>
 <script>
@@ -990,11 +1064,11 @@
 
 
     <% if (request.getAttribute("alert_update_item") != null) { %>
-    toastr.info('<%= request.getAttribute("alert_update_item") %>', 'info');
+    toastr.success('<%= request.getAttribute("alert_update_item") %>', 'success');
     <% } %>
 
     <% if (request.getAttribute("alert_update_user") != null) { %>
-    toastr.info('<%= request.getAttribute("alert_update_user") %>', 'info');
+    toastr.success('<%= request.getAttribute("alert_update_user") %>', 'success');
     <% } %>
     $(document).ready(function () {
         fetchItems();
@@ -1066,11 +1140,11 @@
             div.setAttribute("data-aos-anchor-placement","bottom-bottom");
             div.setAttribute("data-item-id", item.id); // Add this line
             div.innerHTML = `
-<div style="display: table-row;>
+<div class="poppins-regular" style="display: table-row;>
              <span style="font-size:18px;">` + item.name + `: ` + item.description + `</span></div>
 <div style="display: table-row;">
-        <div style="font-size:18px;">` + item.datefound + `</div>
-        <div style="font-size:18px;"><strong>` + item.type + `</strong></div></div>
+        <div class="poppins-regular"  style="font-size:18px;">` + item.datefound + `</div>
+        <div class="poppins-semibold-italic" style="font-size:18px;"><strong>` + item.type + `</strong></div></div>
 
 <div style="display: flex;
     justify-content: center;
@@ -1114,12 +1188,12 @@
             divPosts.setAttribute("data-item-id", item.id); // Add this line
 
             divPosts.innerHTML = `
-<div style="display: table-row;>
+<div class="poppins-regular" style="display: table-row;>
              <span style="font-size:18px;">` + item.name + `: ` + item.description + `</span>
 </div>
-        <div style="display: table-row;">
-<div style="font-size:18px;">` + item.datefound + `</div>
-        <div style="font-size:18px;"><strong>` + item.type + `</strong></div>
+        <div  style="display: table-row;">
+<div class="poppins-regular" style="font-size:18px;">` + item.datefound + `</div>
+        <div class="poppins-semibold-italic" style="font-size:18px;"><strong>` + item.type + `</strong></div>
 </div>
 <div style="display: flex;
     justify-content: center;
@@ -1182,9 +1256,7 @@
 <button class="notifbutton" onclick="editProfile(` +user.id+ `)">
    <svg viewBox="0 0 448 512" class="bell"><path d="M410.3 231l11.3-11.3-33.9-33.9-62.1-62.1L291.7 89.8l-11.3 11.3-22.6 22.6L58.6 322.9c-10.4 10.4-18 23.3-22.2 37.4L1 480.7c-2.5 8.4-.2 17.5 6.1 23.7s15.3 8.5 23.7 6.1l120.3-35.4c14.1-4.2 27-11.8 37.4-22.2L387.7 253.7 410.3 231zM160 399.4l-9.1 22.7c-4 3.1-8.5 5.4-13.3 6.9L59.4 452l23-78.1c1.4-4.9 3.8-9.4 6.9-13.3l22.7-9.1v32c0 8.8 7.2 16 16 16h32zM362.7 18.7L348.3 33.2 325.7 55.8 314.3 67.1l33.9 33.9 62.1 62.1 33.9 33.9 11.3-11.3 22.6-22.6 14.5-14.5c25-25 25-65.5 0-90.5L453.3 18.7c-25-25-65.5-25-90.5 0zm-47.4 168l-144 144c-6.2 6.2-16.4 6.2-22.6 0s-6.2-16.4 0-22.6l144-144c6.2-6.2 16.4-6.2 22.6 0s6.2 16.4 0 22.6z"></path></svg>
 </button>
-<button class="notifbutton" onclick="logout()">
-   <svg viewBox="0 0 448 512" class="bell"><path d="M377.9 105.9L500.7 228.7c7.2 7.2 11.3 17.1 11.3 27.3s-4.1 20.1-11.3 27.3L377.9 406.1c-6.4 6.4-15 9.9-24 9.9c-18.7 0-33.9-15.2-33.9-33.9l0-62.1-128 0c-17.7 0-32-14.3-32-32l0-64c0-17.7 14.3-32 32-32l128 0 0-62.1c0-18.7 15.2-33.9 33.9-33.9c9 0 17.6 3.6 24 9.9zM160 96L96 96c-17.7 0-32 14.3-32 32l0 256c0 17.7 14.3 32 32 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-64 0c-53 0-96-43-96-96L0 128C0 75 43 32 96 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32z"></path></svg>
-</button>
+
 
 <button class="notifbutton" onclick="fetchConversations()">
  <div class="dotConvo dot"></div>
@@ -1199,6 +1271,9 @@
         <path d="M19 16v6"></path>
         <path d="M22 19h-6"></path>
   </svg>
+</button>
+<button class="notifbutton" onclick="logout()">
+   <svg viewBox="0 0 448 512" class="bell"><path d="M377.9 105.9L500.7 228.7c7.2 7.2 11.3 17.1 11.3 27.3s-4.1 20.1-11.3 27.3L377.9 406.1c-6.4 6.4-15 9.9-24 9.9c-18.7 0-33.9-15.2-33.9-33.9l0-62.1-128 0c-17.7 0-32-14.3-32-32l0-64c0-17.7 14.3-32 32-32l128 0 0-62.1c0-18.7 15.2-33.9 33.9-33.9c9 0 17.6 3.6 24 9.9zM160 96L96 96c-17.7 0-32 14.3-32 32l0 256c0 17.7 14.3 32 32 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-64 0c-53 0-96-43-96-96L0 128C0 75 43 32 96 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32z"></path></svg>
 </button>
         </div>
     </div>
@@ -1220,7 +1295,7 @@
                 var container=document.getElementById("requestContainerDiv");
                 container.innerHTML="";
                 if(data.length===0){
-                    container.innerHTML=`<p style="color: #000000;">No friend requests</p>`;
+                    container.innerHTML=`<p class="poppins-medium-italic" style="color: #000000;">No friend requests</p>`;
                 }
                 else{
                     data.forEach(function(request){
@@ -1325,7 +1400,7 @@ function fetchConversations(){
             </div>
             <author>`+conversation.otherMemberName+`</author>
             <time>`+hours+`:`+minutes+`</time>
-            <p>`+conversation.lastMessage+`</p>
+            <p class="poppins-regular">`+conversation.lastMessage+`</p>
 <span><svg style="cursor:pointer;position: relative;right: -75%;top: -10px;width: 20px;" onclick="deleteConvo(`+conversation.conversationId+`)" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg></span>
 
                     `
@@ -1345,10 +1420,8 @@ function fetchConversations(){
 <div style="margin-top: 5%;
     display: flex;
     flex-direction: row;">
-    <div id="userProfile" style="width: 41%;
+    <div id="userProfile" style="width: 40%;margin-left: 10%;
     position: relative;
-    top: 7%;
-    margin-left: 5%;
  transition: transform 0.1s ease-out;">
     </div>
     <div id="notFound" class="hiddenn">
@@ -1378,8 +1451,9 @@ function fetchConversations(){
 
 <div id="friendRequestsContainer" style="box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     background-color: white;
-    border-radius: 10px;
-    top: 90%;
+    border-radius: 10px;padding-bottom: 9px;
+    top: 570px;
+    left: 20%;
     position: absolute;" class="hiddenn">
     <h3 style="padding-left: 10px;">friend requests</h3>
     <div id="requestContainerDiv">
@@ -1391,14 +1465,14 @@ function fetchConversations(){
     <h3>Notifications
         <i class="material-icons dp48 right">settings</i>
     </h3>
-    <div id="notificationContainerTexts" style="padding-bottom:9px;"></div>
+    <div id="notificationContainerTexts"></div>
 </div>
 
 
 
 <div class="conversations containerC hiddenn" id="conversationsHolder">
     <header>
-        <h2>Conversations</h2>
+        <h2 class="poppins-semibold-italic">Conversations</h2>
         <span><svg style="cursor: pointer;" onclick="closeConversation()" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></span>
     </header>
     <form class="search">
@@ -1417,7 +1491,7 @@ function fetchConversations(){
     <div class="msg-header">
 <span style="display: flex; justify-content: center;">
         <div class="img-avatar"></div>
-        <div class="text-chat">Chat</div></span>
+        <div class="text-chat poppins-semibold-italic">Chat</div></span>
         <span><svg style="cursor: pointer;" onclick="closeChat()" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></span>
 
     </div>
@@ -1434,7 +1508,13 @@ function fetchConversations(){
     </div>
 </div>
 
-
+<div class="containerr gray highlightTextIn">
+    <button alt="HOME"  onclick="window.location.href='home.jsp';">HOME</button>
+    <button alt="MY POSTS"  onclick="window.location.href='MyPosts.jsp';">MY POSTS</button>
+    <button alt="REPORT ITEM"  onclick="window.location.href='addItem.jsp';">REPORT ITEM</button>
+    <button alt="ABOUT"  onclick="window.location.href='index.jsp';">ABOUT</button>
+    <button alt="REGISTER"  onclick="window.location.href='login.jsp';">REGISTER</button>
+</div>
 <script>
     function deleteConvo(id){
         $.ajax({
@@ -1695,15 +1775,16 @@ function fetchConversations(){
                     console.log(`${hours}:${minutes}`);
                     var div = document.createElement("div");
                     div.setAttribute("data-notif-id", notif.id); // Add a unique identifier for each popped notif
-                    div.style="padding-bottom:9px;";
+                    div.style="font-size: 17px;";
                     div.innerHTML = ` <input class="checkbox" type="checkbox" value="small" checked />
             <label class="notification new" >
                 <em>`+i+`</em> ` + notif.message + `.<br>
-                <a onclick="ItemDetails(`+notif.possibleId+`, ` + notif.id + `)" style="color:blue; cursor:pointer;"> view item details</a><br>`
-                 +hours+ `:`+minutes+ `
-                <i class="material-icons dp48 right" style="cursor:pointer; position: relative;
-    top: -25px;
-    right: -300px;" onclick="deleteNotif(` +notif.id+ `)">clear</i>
+                <a onclick="ItemDetails(`+notif.possibleId+`, ` + notif.id + `)" style="color:blue; cursor:pointer;"> view item details</a>
+<span style="position: relative;right: -80%;">
+                 `+hours+ `:`+minutes+ `</span>
+               <span> <i class="material-icons dp48 right" style="cursor:pointer; position: relative;
+   top: -15px;
+    left: 70%;" onclick="deleteNotif(` +notif.id+ `)">clear</i></span>
             </label>
                         `;
                 NotifContainerText.append(div);
@@ -1882,6 +1963,11 @@ function fetchConversations(){
     }
 
 </script>
-
+<script>
+    AOS.init({
+        once: true,
+        mirror: false
+    });
+</script>
 </body>
 </html>

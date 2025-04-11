@@ -8,6 +8,10 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
     <title>item details</title>
     <!-- Inclure Toastr CSS -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Material+Icons">
@@ -407,7 +411,57 @@
             background-color: #f1f1f1;
             color: #333;
         }
+        div.containerr
+        {
+            position: relative;
+            top: 300px;
+            font-size: 20px;
+            display: flex;
+            justify-content: space-evenly;
+            font-family: Raleway;
+            margin: 0 auto;
+            padding: 6em 3em;
+            text-align: center;
+        }
 
+
+
+
+        div.containerr button {
+            background: none;
+            border: none;
+            color: #3a3a3a;
+            font: 20px Raleway, sans-serif;
+            margin: 0 10px;
+            padding: 10px 10px;
+            position: relative;
+            z-index: 0;
+            cursor: pointer;
+        }
+
+        /* Gray background */
+        .gray {
+            background: #9e9e9e;
+        }
+
+        /* Highlight text in */
+        div.highlightTextIn button:before {
+            position: absolute;
+            color: #FFF;
+            top: 0;
+            left: 0;
+            padding: 10px;
+            overflow: hidden;
+            content: attr(alt);
+            transition: all 0.3s;
+            transform: scale(1.2);
+            opacity: 0;
+        }
+
+        div.highlightTextIn button:hover:before {
+            transform: scale(1);
+            opacity: 1;
+        }
     </style>
 </head>
 <body>
@@ -457,7 +511,13 @@
     </div>
 
 
-
+    <div class="containerr gray highlightTextIn">
+        <button alt="HOME"  onclick="window.location.href='home.jsp';">HOME</button>
+        <button alt="MY POSTS"  onclick="window.location.href='MyPosts.jsp';">MY POSTS</button>
+        <button alt="REPORT ITEM"  onclick="window.location.href='addItem.jsp';">REPORT ITEM</button>
+        <button alt="ABOUT"  onclick="window.location.href='index.jsp';">ABOUT</button>
+        <button alt="REGISTER"  onclick="window.location.href='login.jsp';">REGISTER</button>
+    </div>
     <script>
         toastr.options = {
     "closeButton": true,
