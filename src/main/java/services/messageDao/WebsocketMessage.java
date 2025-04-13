@@ -82,10 +82,13 @@ public class WebsocketMessage {
         try{
             String SenderId=session.getUserProperties().get("userId").toString();
             JSONObject json = new JSONObject(message);
+            System.out.println(json.toString());
             String receiverId = json.getString("receiverId");
             String messageContent = json.getString("content");
+            String conversationId = json.getString("conversationId");
             System.out.println("message sent to receiverId: " + receiverId + " messageContent: " + messageContent + " senderId: " + SenderId);
             JSONObject jsonResponse = new JSONObject();
+            jsonResponse.put("conversationId", conversationId);
             jsonResponse.put("from", SenderId);
             jsonResponse.put("to", receiverId);
             jsonResponse.put("messageForwarded", messageContent);

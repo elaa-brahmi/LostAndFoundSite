@@ -781,22 +781,20 @@
     top: 200px;">
     <ul>
         <li>
-            <div class="poppins-medium-italic">
+            <div class="poppins-medium-italic" style="color:white;">
                 If you forget or lose an item, if you wish, you can use our online reporting service.Simply fill out our online form describing the lost item and the potential location(s) of loss.
             </div>
         </li>
         <li>
-            <div class="poppins-medium-italic">
+            <div class="poppins-medium-italic" style="color:white;">
                 we have set up a dedicated section that allows Internet users to consult the most recent reports from our platform.
 
 
             </div>
         </li>
         <li>
-            <div class="poppins-medium-italic">
-                We have listed contact information for many Lost and Found services for over 300 cities around the world.
-                We have classified our publications by country and then by city.
-            </div>
+            <div class="poppins-medium-italic" style="color:white;">
+                If your item matches with others, you’ll receive suggestions for potential matches. You can review these and accept the ones that fit your needs. Once a match is accepted, you’ll be able to connect and communicate directly with the other party.</div>
         </li>
 
     </ul>

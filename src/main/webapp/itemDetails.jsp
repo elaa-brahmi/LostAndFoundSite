@@ -23,28 +23,30 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
     <!-- AOS JavaScript -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             AOS.init();
         });
-    </script><script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    </script>
     <style>
-        @import url('https://fonts.googleapis.com/css?family=Fira+Sans:400,500,600,700,800');
-        @import url('https://fonts.googleapis.com/css?family=Fira+Sans:400,500,600,700,800');
-        * {
-            box-sizing: border-box;
-        }
+        /*@import url('https://fonts.googleapis.com/css?family=Fira+Sans:400,500,600,700,800');*/
+        /*@import url('https://fonts.googleapis.com/css?family=Fira+Sans:400,500,600,700,800');*/
+        /** {*/
+        /*    box-sizing: border-box;*/
+        /*}*/
         body {
 
             min-height: 100vh;
             font-family: 'Fira Sans', sans-serif;
-            display: flex;
+
         }
 
         .blog-slider {
             width: 95%;
             position: relative;
+            top: 120px;
             max-width: 800px;
             margin: auto;
             background: #fff;
@@ -53,225 +55,10 @@
             border-radius: 25px;
             height: 400px;
             transition: all .3s;
-
-
-            @media screen and (max-width: 992px) {
-                max-width: 680px;
-                height: 400px;
-            }
-
-            @media screen and (max-width: 768px) {
-                min-height: 500px;
-                height: auto;
-                margin: 180px auto;
-            }
-
-
-            @media screen and (max-height: 500px) and (min-width: 992px) {
-                height: 350px;
-            }
-
-            &__item {
-                display: flex;
-                align-items: center;
-
-                @media screen and (max-width: 768px) {
-                    flex-direction: column;
-                }
-
-                &.swiper-slide-active {
-                    .blog-slider__img {
-                        img {
-                            opacity: 1;
-                            transition-delay: .3s;
-                        }
-                    }
-                    .blog-slider__content {
-                        > * {
-
-                            opacity: 1;
-                            transform: none;
-
-
-                        }
-                    }
-                }
-
-            }
-
-            &__img {
-            // width: 40%;
-                width: 300px;
-                flex-shrink: 0;
-                height: 300px;
-                background-image: linear-gradient(147deg, #fe8a39 0%, #fd3838 74%);
-                box-shadow: 4px 13px 30px 1px rgba(252, 56, 56, 0.2);
-                border-radius: 20px;
-                transform: translateX(-80px);
-
-                overflow: hidden;
-
-                &:after {
-                    content: '';
-                    position: absolute;
-                    top: 0;
-                    left: 0;
-                    width: 100%;
-                    height: 100%;
-                    background-image: linear-gradient(147deg, #fe8a39 0%, #fd3838 74%);
-                    border-radius: 20px;
-                    opacity: 0.8;
-                }
-
-                img {
-                    width: 100%;
-                    height: 100%;
-                    object-fit: cover;
-                    display: block;
-                    opacity: 0;
-                    border-radius: 20px;
-                    transition: all .3s;
-                }
-
-
-                @media screen and (max-width: 992px) {
-                // width: 45%;
-                }
-                @media screen and (max-width: 768px) {
-                    transform: translateY(-50%);
-                    width: 90%;
-                }
-                @media screen and (max-width: 576px) {
-                    width: 95%;
-                }
-                @media screen and (max-height: 500px) and (min-width: 992px) {
-                    height: 270px;
-                }
-            }
-
-            &__content {
-            // width: 60%;
-                padding-right: 25px;
-                @media screen and (max-width: 992px) {
-                // width: 55%;
-                }
-                @media screen and (max-width: 768px) {
-                    margin-top: -80px;
-                    text-align: center;
-                    padding: 0 30px;
-                }
-
-                @media screen and (max-width: 576px) {
-                    padding: 0
-                }
-                > * {
-                    opacity: 0;
-                    transform: translateY(25px);
-                    transition: all .4s;
-
-
-                }
-
-            }
-
-            &__code {
-                color: #7b7992;
-                margin-bottom: 15px;
-                display: block;
-                font-weight: 500;
-            }
-
-            &__title {
-                font-size: 24px;
-                font-weight: 700;
-                color: #0d0925;
-                margin-bottom: 20px;
-            }
-
-            &__text {
-                color: #4e4a67;
-                margin-bottom: 30px;
-                line-height: 1.5em;
-            }
-
-            &__button {
-                display: inline-flex;
-                background-image: linear-gradient(147deg, #fe8a39 0%, #fd3838 74%);
-                padding: 15px 35px;
-                border-radius: 50px;
-                color: #fff;
-                box-shadow: 0px 14px 80px rgba(252, 56, 56, 0.4);
-                text-decoration: none;
-                font-weight: 500;
-                justify-content: center;
-                text-align: center;
-                letter-spacing: 1px;
-                @media screen and (max-width: 576px) {
-                    width: 100%;
-                }
-
-            }
-            .swiper-container-horizontal>.swiper-pagination-bullets, .swiper-pagination-custom, .swiper-pagination-fraction {
-                bottom: 10px;
-                left: 0;
-                width: 100%;
-
-            }
-            &__pagination {
-                position: absolute;
-                z-index: 21;
-                right: 20px;
-                width: 11px!important;
-                text-align: center;
-                left: auto!important;
-                top: 50%;
-                bottom: auto!important;
-                transform: translateY(-50%);
-                @media screen and (max-width: 768px) {
-                    transform: translateX(-50%);
-                    left: 50%!important;
-                    top: 205px;
-                    width: 100%!important;
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                }
-                &.swiper-pagination-bullets .swiper-pagination-bullet {
-                    margin: 8px 0;
-                    @media screen and (max-width: 768px) {
-                        margin: 0 5px;
-                    }
-                }
-
-                .swiper-pagination-bullet {
-                    width: 11px;
-                    height: 11px;
-                    display: block;
-                    border-radius: 10px;
-                    background: #062744;
-                    opacity: 0.2;
-                    transition: all .3s;
-                    &-active {
-                        opacity: 1;
-                        background: #fd3838;
-                        height: 30px;
-                        box-shadow: 0px 0px 20px rgba(252, 56, 56, 0.3);
-
-                        @media screen and (max-width: 768px) {
-                            height: 11px;
-                            width: 30px;
-                        }
-                    }
-                }
-
-            }
-
         }
         .hidden{
             display:none !important;
         }
-
-
         .warning {
             font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
             /*width: 320px;*/
@@ -286,7 +73,7 @@
             box-shadow: 0px 0px 5px -3px #111;
             position: absolute;
             right: 0;
-            top: 5px;
+            top: 120px;
             width: 500px;
             height: 50px;
         }
@@ -318,99 +105,7 @@
         .warning__close path {
             fill: #755118;
         }
-        .msg-container {
-            position:absolute;
-            right:0;
-            bottom:0;
-            height:300px;
-            overflow-y: scroll;
-            background-color: #fff;
-            border-radius: 10px;
-            padding: 15px;
-            margin: 20px;
-            display: flex;
-            flex-direction: column;
-            width: 300px;
-        }
 
-        .msg-header {
-            display: flex;
-            align-items: center;
-            padding-bottom: 10px;
-            border-bottom: 1px solid #ccc;
-        }
-
-        .msg-header .img-avatar {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            margin-right: 20px;
-            background-color: #333;
-        }
-
-        .msg-header .text-chat {
-            color: black;
-            margin: 0;
-            font-size: 20px;
-        }
-
-        .msg-body {
-            flex: 1;
-            overflow-y: auto;
-        }
-
-        .messages-container {
-            padding: 15px;
-        }
-
-        .message-box {
-            padding: 10px;
-            margin-bottom: 5px;
-            border-radius: 10px;
-        }
-
-        .message-box.left {
-            background-color: #f1f1f1;
-            color: black;
-            font-size: 13px;
-            left: 0;
-        }
-
-        .message-box.right {
-            background-color: #333;
-            color: #fff;
-            font-size: 13px;
-            right: 0;
-        }
-
-        .message-input {
-            padding: 5px;
-            border-top: 1px solid #ccc;
-        }
-
-        .message-input .message-send {
-            width: 100%;
-            padding: 10px;
-            border: none;
-            border-radius: 10px;
-            resize: none;
-        }
-
-        .message-input .button-send {
-            background-color: #333;
-            color: #fff;
-            padding: 10px 20px;
-            border: none;
-            cursor: pointer;
-            margin-left: 10px;
-            border-radius: 10px;
-            font-size: 13px;
-        }
-
-        .message-input .button-send:hover {
-            background-color: #f1f1f1;
-            color: #333;
-        }
         div.containerr
         {
             position: relative;
@@ -423,10 +118,6 @@
             padding: 6em 3em;
             text-align: center;
         }
-
-
-
-
         div.containerr button {
             background: none;
             border: none;
@@ -437,6 +128,17 @@
             position: relative;
             z-index: 0;
             cursor: pointer;
+        }
+        div.containerr button {
+            border: none;
+            outline: none;
+            box-shadow: none;
+            transform: none;
+            transition: none;
+        }
+        div.containerr button:active {
+            transform: none;
+            box-shadow: none;
         }
 
         /* Gray background */
@@ -462,6 +164,113 @@
             transform: scale(1);
             opacity: 1;
         }
+
+        .nav {
+            top:8px;
+            position: relative;
+            height: 100px;
+        }
+
+        .container:hover .outline .rect {
+            transition: 999999s;
+            stroke-dashoffset: 1;
+            stroke-dasharray: 0;
+        }
+
+        .container {
+            width: 99%;
+            position: absolute;
+            inset: 0;
+            background-color: #3a3a3a;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around;
+            align-items: center;
+            padding: 0.5em;
+        }
+
+        .btnn {
+            padding: 0.5em 1em;
+            color: #fff;
+            font-size: 2em;
+            text-decoration: none;
+            cursor: pointer;
+            transition: 0.1s;
+            border-radius: 5px;
+        }
+
+        .btnn:hover {
+
+            background-color: rgb(123, 36, 28);
+            /* background: #fff3;*/
+        }
+
+        .btnn:nth-child(1):hover ~ svg .rect {
+            stroke-dashoffset: 0;
+            stroke-dasharray: 0 2 8 73.3 8 10.7;
+        }
+
+        .btnn:nth-child(2):hover ~ svg .rect {
+            stroke-dashoffset: 0;
+            stroke-dasharray: 0 12.6 9.5 49.3 9.5 31.6;
+        }
+
+        .btnn:nth-child(3):hover ~ svg .rect {
+            stroke-dashoffset: 0;
+            stroke-dasharray: 0 24.5 8.5 27.5 8.5 55.5;
+        }
+
+        .btnn:nth-child(4):hover ~ svg .rect {
+            stroke-dashoffset: 0;
+            stroke-dasharray: 0 34.7 6.9 10.2 6.9 76;
+        }
+
+        .btnn:hover ~ .outline .rect {
+            stroke-dashoffset: 0;
+            stroke-dasharray: 0 0 10 40 10 40;
+            transition: 0.5s !important;
+        }
+        .toast-info {
+        background-color: #007bff !important; /* Blue background for info notifications */
+        color: #ffffff !important; /* White text */
+    }
+
+    .toast-success {
+        background-color: #28a745 !important; /* Green background for success notifications */
+        color: #ffffff !important; /* White text */
+    }
+
+    .toast-error {
+        background-color: #dc3545 !important; /* Red background for error notifications */
+        color: #ffffff !important; /* White text */
+    }
+
+    .toast-warning {
+        background-color: #ffc107 !important; /* Yellow background for warning notifications */
+        color: #000000 !important; /* Black text */
+    }
+
+    /* Customize the progress bar color */
+    .toast-progress {
+        background-color: #ffffff !important; /* White progress bar */
+    }
+        @media (min-width: 576px) {
+            .container,
+            .container-sm {
+                max-width: none !important;
+            }
+        }
+        @media (min-width: 768px) {
+            .container, .container-md, .container-sm {
+                max-width: none !important;
+            }
+        }
+        @media (min-width: 992px) {
+            .container, .container-lg, .container-md, .container-sm {
+                max-width:none !important;
+            }
+        }
+
     </style>
 </head>
 <body>
@@ -469,7 +278,16 @@
 
 <!-- Inclure Toastr JS -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <div class="nav">
+        <div class="container">
+            <div><img src="assets/logo.png" alt="logo" width="100px" height="90px"></div>
+            <a href="home.jsp" class="btnn poppins-semibold">Home</a>
+            <a href="MyPosts.jsp" class="btnn poppins-semibold">profile</a>
+            <a href="addItem.jsp" class="btnn poppins-semibold" >report lost/found item </a>
+            <a href="index.jsp" class="btnn poppins-semibold">about</a>
 
+        </div>
+    </div>
 
     <div class="warning hidden" data-aos="fade-up">
         <div class="warning__icon">
@@ -623,7 +441,7 @@ function deleteNotif(id){
             console.log(data);
             setTimeout(function () {
                 window.location.href = "MyPosts.jsp";
-            }, 3000); // 3000ms = 3 seconds
+            }, 4000); // 3000ms = 3 seconds
 
 
         },error: function (data) {
@@ -657,6 +475,7 @@ function updateNotif(status){
                 else{
                     toastr.info('you item is still pending ,you will be notified if theres a new potential match','info' );
                     console.log("you item is still pending ,you will be notified if there's a new potential match");
+                    deleteNotif(notifId);
                 }
             }
         },

@@ -227,4 +227,26 @@ public class MessageDao {
             e.printStackTrace();
         }
     }
+    public static Integer getNumberOfUnreadMessagesByUser(Integer userId){
+        String sql = "SELECT COUNT(*) " +
+        "FROM messages m " +
+        "JOIN conversations c ON m.conversation_id = c.id " +
+        "WHERE m.sender_id != ? " +
+        "AND m.is_read = false " +
+        "AND (c.user1_id = ? OR c.user2_id = ?)";
+try (Connection con = BDConnection.getConnection();
+PreparedStatement ps = con.prepareStatement(sql)) {
+ps.setInt(1, userId); // Exclude messages sent by the user
+ps.setInt(2, userId); // Check if the user is part of the conversation (user1_id)
+ps.setInt(3, userId); // Check if the user is part of the conversation (user2_id)
+try (ResultSet rs = ps.executeQuery()) {
+   if (rs.next()) {
+       return rs.getInt(1); // Return the count of unread messages
+   }
+}
+} catch (SQLException e) {
+e.printStackTrace();
+}
+return 0; // Return 0 if no unread messages are found or an error occurs
+}
 }

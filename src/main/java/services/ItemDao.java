@@ -355,7 +355,7 @@ public class ItemDao {
     }
 
     public static List<Item> getAllItems() throws SQLException{
-        String query = "SELECT * FROM item";
+        String query = "SELECT * FROM item ORDER BY datefound DESC";
     List<Item> items = new ArrayList<>();
     try (Connection con = BDConnection.getConnection();
          PreparedStatement ps = con.prepareStatement(query);

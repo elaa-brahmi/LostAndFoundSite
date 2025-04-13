@@ -16,6 +16,10 @@
 %>
 <html>
 <head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-V5r6eMclcfOo3qNnUw9MvEQuuVZMKWRWy4R4aRIhIG8rypYcszK4G+HdJ6ZfQByTZFn5DkEYq0IHk9s9DBQ1Eg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Material+Icons">
@@ -576,7 +580,7 @@
             display: none;
         }
         input.checkbox[type='checkbox']:checked + label {
-            height: 3.25rem;
+
             padding: 1.125rem 4rem 0.75rem 2rem;
             font-size: 75%;
             border-top: 1px solid rgba(0, 0, 0, 0.1);
@@ -738,7 +742,7 @@
             height:auto;
         }
         .request{ width:100%;
-            border-bottom:1px solid black;
+
             border-radius:5px;
             position:relative;
             height:100px;}
@@ -797,8 +801,8 @@
         .containerC .inner-container {
             overflow-y: scroll;
             overflow-x: hidden;
-            width: calc(100% + 20px);
-            margin: 0 -10px;
+            width: 400px;
+
             padding: 0 10px;
         }
 
@@ -1252,7 +1256,7 @@
         </div>
         <div class="tags" style="display: flex;column-gap: 9%;flex-direction: row;">
 <button class="notifbutton" onclick="fetchNotifss()">
- <div class="dotnotif dot hidden"></div>
+ <div class="dotnotif dot hidden" id="dotnotiff"></div>
    <svg viewBox="0 0 448 512" class="bell"><path d="M224 0c-17.7 0-32 14.3-32 32V49.9C119.5 61.4 64 124.2 64 200v33.4c0 45.4-15.5 89.5-43.8 124.9L5.3 377c-5.8 7.2-6.9 17.1-2.9 25.4S14.8 416 24 416H424c9.2 0 17.6-5.3 21.6-13.6s2.9-18.2-2.9-25.4l-14.9-18.6C399.5 322.9 384 278.8 384 233.4V200c0-75.8-55.5-138.6-128-150.1V32c0-17.7-14.3-32-32-32zm0 96h8c57.4 0 104 46.6 104 104v33.4c0 47.9 13.9 94.6 39.7 134.6H72.3C98.1 328 112 281.3 112 233.4V200c0-57.4 46.6-104 104-104h8zm64 352H224 160c0 17 6.7 33.3 18.7 45.3s28.3 18.7 45.3 18.7s33.3-6.7 45.3-18.7s18.7-28.3 18.7-45.3z"></path></svg>
 </button>
 <button class="notifbutton" onclick="editProfile(` +user.id+ `)">
@@ -1261,12 +1265,12 @@
 
 
 <button class="notifbutton" onclick="fetchConversations()">
- <div class="dotConvo dot"></div>
+ <div class="dotConvo dot hidden" id="dotConvoCheck"></div>
 
   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
 </button>
 <button class="notifbutton" onclick="seeFriendRequests()">
- <div class="dotrequest dot hidden"></div>
+ <div class="dotrequest dot hidden" id="dotrequestt"></div>
 
   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <path d="M2 21a8 8 0 0 1 13.292-6"></path>
    <circle r="5" cy="8" cx="10"></circle>
@@ -1283,7 +1287,7 @@
         `;
     }
     function seeFriendRequests(){
-        document.querySelector('.dotrequest').classList.add('hidden');
+        document.querySelector('#dotrequestt').classList.add('hidden');
         document.getElementById("friendRequestsContainer").classList.toggle("hiddenn");
         updatefrToRead();
         $.ajax({
@@ -1369,7 +1373,7 @@ function updateFriendRequestStatus(status,requestId) {
         })
 }
 function fetchConversations(){
-        document.getElementById("conversationsHolder").classList.toggle("hiddenn");
+        document.getElementById("conversationsHolder").classList.remove("hiddenn");
         $.ajax({
             url:"http://localhost:8080/getConversations",
             type:'GET',
@@ -1392,8 +1396,12 @@ function fetchConversations(){
                 }) ;
                     const timestamp=conversation.lastMessageTime;
                     const dateObj = new Date(timestamp); // Convert to Date object
-                    const hours = dateObj.getHours().toString().padStart(2, '0'); // Extract hours
-                    const minutes = dateObj.getMinutes().toString().padStart(2, '0'); // Extract minutes
+                    var hours = dateObj.getHours().toString().padStart(2, '0'); // Extract hours
+                    var minutes = dateObj.getMinutes().toString().padStart(2, '0'); // Extract minutes
+                    if(hours==="NaN" && minutes==="NaN"){
+                        hours="";
+                        minutes="";
+                    }
                     var memeberImg=conversation.otherMemberPicture==="no image is found" ? "../assets/img/noUser.png": conversation.otherMemberPicture;
                     article.innerHTML=`
             <div class="avatar">
@@ -1478,8 +1486,8 @@ function fetchConversations(){
         <span><svg style="cursor: pointer;" onclick="closeConversation()" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></span>
     </header>
     <form class="search">
-        <input type="search" placeholder="Search conversations" />
-        <span style="position: relative;top: 8px;width: 50px;"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></span>
+        <input type="search" placeholder="Search conversations" id="filterConvo" onchange="filterConversationByUserName(this)" />
+        <span style="position: relative;top: 8px;width: 50px;"><svg style="cursor:pointer;" onclick="document.getElementById('filterConvo').onchange()" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></span>
     </form>
     <div class="inner-container" id="holder">
 
@@ -1518,6 +1526,66 @@ function fetchConversations(){
     <button alt="REGISTER"  onclick="window.location.href='login.jsp';">REGISTER</button>
 </div>
 <script>
+    function filterConversationByUserName(element) {
+        console.log(element.value);
+        $.ajax({
+            url: 'http://localhost:8080/filterUserConversation',
+            type: 'GET',
+            dataType: 'json',
+            data: {
+                name: element.value,
+                userId:"<%= session.getAttribute("userId") %>"
+            },
+            success: function(data) {
+                console.log(data);
+                var holder=document.getElementById("holder");
+                holder.innerHTML="";
+                if (data.length === 0) {
+                    holder.innerHTML = `<p class="poppins-medium-italic" style=" text-align: center; color: #000000;">No conversations found</p>`;
+                    return;
+                }
+                if(element.value !== ""){
+
+                    data.forEach(function(conversation){
+                        console.log(conversation);
+                        var article=document.createElement("article");
+                        article.className="conversation";
+                        // article.setAttribute("conversationId",conversation.conversationId);
+                        article.addEventListener("click",function () {
+                            openConversation(conversation.conversationId,conversation.otherMemberId);
+                        }) ;
+                        const timestamp=conversation.lastMessageTime;
+                        const dateObj = new Date(timestamp); // Convert to Date object
+                        const hours = dateObj.getHours().toString().padStart(2, '0'); // Extract hours
+                        const minutes = dateObj.getMinutes().toString().padStart(2, '0'); // Extract minutes
+                        var memeberImg=conversation.otherMemberPicture==="no image is found" ? "../assets/img/noUser.png": conversation.otherMemberPicture;
+                        article.innerHTML=`
+            <div class="avatar">
+                <img src="`+memeberImg+`" />
+                <span class="unread">`+conversation.unreadMsg+`</span>
+            </div>
+            <author>`+conversation.otherMemberName+`</author>
+            <time>`+hours+`:`+minutes+`</time>
+            <p class="poppins-regular">`+conversation.lastMessage+`</p>
+<span><svg style="cursor:pointer;position: relative;right: -75%;top: -10px;width: 20px;" onclick="deleteConvo(`+conversation.conversationId+`)" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg></span>
+
+                    `
+                        holder.appendChild(article);
+                    });
+
+
+                }
+                else{
+                    fetchConversations();
+                }
+            },
+            error: function(data) {
+                console.log(data);
+            }
+
+        });
+
+    }
     function deleteConvo(id){
         $.ajax({
             url:"http://localhost:8080/deleteConvo",
@@ -1543,6 +1611,9 @@ function fetchConversations(){
         document.getElementById('chat').classList.add('hiddenn');
     }
     function openConversation(idConvo,idRecei){
+        document.querySelector("#dotConvoCheck").classList.add("hidden");
+
+        fetchConversations();
         updateMgStatus(idConvo);
         console.log("open conversation with id "+idConvo);
         console.log("open conversation with id receiver "+idRecei);
@@ -1619,7 +1690,7 @@ function fetchConversations(){
         window.location.href = "EditItem.jsp?itemId=" + itemId;
     }
     function fetchNotifss(){
-        document.querySelector('.dotnotif').classList.add('hidden');
+        document.querySelector('#dotnotiff').classList.add('hidden');
         //todo update  unread notif statueses
         updateUnreadNotifs();
 
@@ -1830,7 +1901,7 @@ function fetchConversations(){
             success:function(data){
                 console.log("unread notifs "+data);
                 if(data>0){
-                    document.querySelector(".dotnotif").classList.remove("hidden");
+                    document.querySelector("#dotnotiff").classList.remove("hidden");
                 }
             },
             error:function(xhr,status,error){
@@ -1848,7 +1919,7 @@ function fetchConversations(){
             success:function(data){
                 console.log("pending friend requests "+data);
                 if(data>0){
-                    document.querySelector(".dotrequest").classList.remove("hidden");
+                    document.querySelector("#dotrequestt").classList.remove("hidden");
                 }
             },
             error:function(data){
@@ -1857,14 +1928,36 @@ function fetchConversations(){
 
         });
     }
+    function fetchNbUnreadMsg(){
+        $.ajax({
+            url:'http://localhost:8080/unreadMsgUser',
+            type:'GET',
+            data:{
+                userId:"<%= session.getAttribute("userId")%>"
+            },
+            success:function(data){
+                console.log("unread msg "+data);
+                if(data>0){
+                    document.querySelector("#dotConvoCheck").classList.remove("hidden");
+
+                }
+            }
+            ,error:function(data){
+                console.log(data);
+            }
+        });
+    }
     // Check if the user has a picture when the page loads
     window.onload = function() {
         // todo check wether you have friendrequests
         connectToWebsocket();
         connectToWebsocketChat();
+        setTimeout(() => {
+        
         fetchUnreadNotifs("<%=session.getAttribute("userId")%>");
         fetchNumberOfPendingFriendRequests("<%=session.getAttribute("userId")%>");
-
+        fetchNbUnreadMsg();
+    }, 500); // Delay by 500ms to allow the DOM to update
 
 
         setTimeout(() => {
@@ -1891,7 +1984,22 @@ function fetchConversations(){
         };
 
         socketChat.onmessage = function (event) {
+            fetchConversations();
             const message = JSON.parse(event.data);
+
+            if(!document.querySelector(".msg-container").classList.contains("hiddenn")){
+                updateMgStatus(message.conversationId);
+
+            }
+            if(document.getElementById("conversationsHolder").classList.contains("hiddenn")){
+
+                document.getElementById("dotConvoCheck").classList.remove("hidden");
+
+            }
+
+            console.log(message);
+         //   updateMgStatus(message.conversationId);
+
             console.log("you received a message from :"+message.from);
             console.log("Message received from the server: ", message);
             try{
@@ -1926,6 +2034,7 @@ function fetchConversations(){
             console.log("msg sent :"+msg);
             //console.log(sessionStorage.getItem('receiverId'));
             const message = {
+                conversationId:idConvo.toString(),
                 receiverId: idRecei.toString(),
                 content: msg
             };
@@ -1939,6 +2048,7 @@ function fetchConversations(){
                 messageBox.innerHTML = `<p>`+msg+`</p>`;
                 MsgContainer.appendChild(messageBox);
                 document.getElementById("contentMsg").value = "";
+                fetchConversations();
                 //todo save message to conversation id
                 $.ajax({
                     url:"http://localhost:8080/addMsg",

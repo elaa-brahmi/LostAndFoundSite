@@ -400,9 +400,10 @@ function fetchAllItemsPending(){
 function signout(){
     fetch("logout", { method: "GET" })
         .then(response => {
-            if (response.redirected) {
-                window.location.href = response.url; // Redirect to login page
-            }
+            console.log(response);
+
+                window.location.href = "login.jsp"; // Redirect to login page
+
         });
 }
 function deleteUser(id){

@@ -66,7 +66,7 @@ public class GetAllItems extends HttpServlet {
             int totalPages = (int) Math.ceil((double) totalItems / pageSize);
             
                // Query to get the items with pagination
-               String itemQuery = "SELECT * FROM item WHERE status = 'ACCEPTED'" + filterQuery + " ORDER BY datefound LIMIT ? OFFSET ?";
+               String itemQuery = "SELECT * FROM item WHERE status = 'ACCEPTED'" + filterQuery + " ORDER BY datefound DESC LIMIT ? OFFSET ?";
                try (PreparedStatement ps = con.prepareStatement(itemQuery)) {
             paramIndex = 1;
             if (!categoryS.isEmpty()) {

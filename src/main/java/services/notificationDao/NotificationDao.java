@@ -105,6 +105,7 @@ public class NotificationDao {
             int rows = ps.executeUpdate();
             if (rows > 0) {
                 System.out.println("Notification with ID " + notificationId + " has been updated to " + status);
+                //deleteNotificationById(notificationId);
             }
         } catch (SQLException e) {
             e.printStackTrace();
