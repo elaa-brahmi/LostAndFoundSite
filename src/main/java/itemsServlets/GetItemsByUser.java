@@ -60,7 +60,7 @@ public class GetItemsByUser extends HttpServlet {
         }
     }
     private void fetchItemsByStatus(Integer userId, String status, List<Item> items) throws SQLException {
-        String query = "SELECT * FROM item WHERE status = ? AND userid = ?";
+        String query = "SELECT * FROM item WHERE status = ? AND userid = ? ORDER BY datefound DESC";
         try (Connection con = BDConnection.getConnection();
              PreparedStatement ps = con.prepareStatement(query)) {
 

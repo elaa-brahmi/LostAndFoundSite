@@ -8,8 +8,10 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
-
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
@@ -105,83 +107,63 @@
             transform: rotate(-35deg);
         }
 
-        .outline {
-        position: absolute;
-        inset: 0;
-        pointer-events: none;
-    }
+        /* begin header*/
+        div.containerr
+        {
 
-    .rect {
-        stroke-dashoffset: 5;
-        stroke-dasharray: 0 0 10 40 10 40;
-        transition: 0.5s;
-        stroke: #fff;
-    }
+            z-index:2;
+            min-width: 600px;
+            width: 100%;
+            position: sticky;
+            top:0;
+            height: 15%;
+            display: flex;
+            justify-content: space-evenly;
+            font-family: Raleway;
+            margin: 0 auto;
+            text-align: center;
+        }
 
-    .nav {
-        position: relative;
-        height: 100px;
-    }
 
-    .container:hover .outline .rect {
-        transition: 999999s;
-        stroke-dashoffset: 1;
-        stroke-dasharray: 0;
-    }
 
-    .container {
-        width: 99%;
-        position: absolute;
-        inset: 0;
-        background-color: #3a3a3a;
-        display: flex;
-        flex-direction: row;
-        justify-content: space-around;
-        align-items: center;
-        padding: 0.5em;
-    }
 
-    .btn {
-        padding: 0.5em 1em;
-        color: #fff;
-        font-size: 2em;
-        text-decoration: none;
-        cursor: pointer;
-        transition: 0.1s;
-        border-radius: 5px;
-    }
+        div.containerr button {
+            background: none;
+            border: none;
+            color: #3a3a3a;
+            font: 25px Raleway, sans-serif;
 
-    .btn:hover {
+            padding: 10px 10px;
+            position: relative;
+            z-index: 0;
+            cursor: pointer;
+        }
 
-        background-color: rgb(123, 36, 28);
-      /*  background: #fff3;*/
-    }
 
-    .btn:nth-child(1):hover ~ svg .rect {
-        stroke-dashoffset: 0;
-        stroke-dasharray: 0 2 8 73.3 8 10.7;
-    }
+        /* Highlight text in */
+        div.highlightTextIn button:before {
+            position: absolute;
+            color: #fff;
+            top: 25%;
+            left: 0;
+            padding: 10px;
+            overflow: hidden;
+            content: attr(alt);
+            transition: all 0.3s;
+            transform: scale(1.2);
+            opacity: 0;
+        }
 
-    .btn:nth-child(2):hover ~ svg .rect {
-        stroke-dashoffset: 0;
-        stroke-dasharray: 0 12.6 9.5 49.3 9.5 31.6;
-    }
-
-    .btn:nth-child(3):hover ~ svg .rect {
-        stroke-dashoffset: 0;
-        stroke-dasharray: 0 24.5 8.5 27.5 8.5 55.5;
-    }
-
-    .btn:nth-child(4):hover ~ svg .rect {
-        stroke-dashoffset: 0;
-        stroke-dasharray: 0 34.7 6.9 10.2 6.9 76;
-    }
-
-    .btn:hover ~ .outline .rect {
-        stroke-dashoffset: 0;
-        stroke-dasharray: 0 0 10 40 10 40;
-        transition: 0.5s !important;
-    }
+        div.highlightTextIn button:hover:before {
+            transform: scale(1);
+            opacity: 1;
+        }
+        /* end header */
+        .row>* {
+            flex-shrink: 0;
+            padding-right: 0 !important;
+            padding-left: 0 !important;
+        }
     .container1{
         margin-top: 1rem;
         display: flex;
@@ -202,10 +184,6 @@
     .img1:hover{
         transform: translateY(-0.4rem);
     }
-
-
-
-
         @media (max-width: 768px) {
             .img1{
                 width: 100%;
@@ -252,12 +230,14 @@
         .hidden{
             display: none;
         }
-
-
-
         .poppins-semibold {
             font-family: "Poppins", sans-serif;
             font-weight: 500;
+            font-style: normal;
+        }
+        .poppins-extrabold {
+            font-family: "Poppins", sans-serif;
+            font-weight: 800;
             font-style: normal;
         }
         .poppins-light-italic {
@@ -275,17 +255,7 @@
             font-weight: 500;
             font-style: italic;
         }
-        .scroll {
-            opacity:7;
-            position: relative;
-            width: 100%;
-            height: auto;
-            background-color: transparent;
-            overflow: hidden;
-            z-index: 1;
 
-            padding: 0;
-        }
 
         .scroll img {
             height: 100%;
@@ -295,14 +265,7 @@
             opacity: 0.7; /* Slightly dim the images for better text visibility */
         }
 
-        .m-scroll {
-           
-            animation: scrollImg 30s infinite linear;
-            display: flex;
-            width: max-content;
-            height: 100%;
-         /*    height: 100%; */
-        }
+
 
         span {
             display: inline-block;
@@ -322,143 +285,12 @@
                 transform: translateX(-50%);
             }
         }
-        .lobster-regular {
-            font-family: "Lobster", sans-serif;
-            font-weight: 600;
-            font-style: normal;
-            z-index:2;
-        }
-
-        .card-title {
-            color: #262626;
-            font-size: 1.5em;
-            line-height: normal;
-            font-weight: 700;
-            margin-bottom: 0.5em;
-        }
-
-        .small-desc {
-            font-size: 1em;
-            font-weight: 400;
-            line-height: 1.5em;
-            color: #452c2c;
-        }
-
-        .small-desc {
-            font-size: 1em;
-        }
-
-        .go-corner {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: absolute;
-            width: 2em;
-            height: 2em;
-            overflow: hidden;
-            top: 0;
-            right: 0;
-            background: linear-gradient(135deg, #6293c8, #384c6c);
-            border-radius: 0 4px 0 32px;
-        }
-
-        .go-arrow {
-            margin-top: -4px;
-            margin-right: -4px;
-            color: white;
-            font-family: courier, sans;
-        }
-
-        .card {
-            box-shadow: rgba(142, 142, 142, 0.3) 0px 30px 30px -10px;
-
-            font-size: 18px;
-            display: block;
-            position: relative;
-            top: 100px;
-            width: 600px;
-            height: auto;
-            background-color: #f2f8f9;
-            border-radius: 10px;
-            padding: 2em 1.2em;
-            margin: 12px;
-            text-decoration: none;
-            z-index: 0;
-            overflow: hidden;
-            background: linear-gradient(to bottom, #c3e6ec, #a7d1d9);
-            font-family: Arial, Helvetica, sans-serif;
-        }
-
-        .card:before {
-            content: '';
-            position: absolute;
-            z-index: -1;
-            top: -16px;
-            right: -16px;
-            background: linear-gradient(135deg, #364a60, #384c6c);
-            height: 32px;
-            width: 32px;
-            border-radius: 32px;
-            transform: scale(1);
-            transform-origin: 50% 50%;
-            transition: transform 0.35s ease-out;
-        }
-
-        .card:hover:before {
-            transform: scale(50);
-        }
-
-        .card:hover .small-desc {
-            transition: all 0.5s ease-out;
-            color: rgba(255, 255, 255, 0.8);
-        }
-
-        .card:hover .card-title {
-            transition: all 0.5s ease-out;
-            color: #ffffff;
-        }
-        .roboto {
-                     font-family: "Roboto", sans-serif;
-                     font-optical-sizing: auto;
-                     font-weight:600;
-                     font-style: normal;
-                     font-variation-settings:
-                             "wdth" 100;
-            position: absolute;
-            top: 350px;
-            left: 100px;
-            font-size: 5rem;
-            z-index: 2;
-                 }
-        .parent {
-
-            position: relative;
-            top: 70px;
-            width: 470px;
-            padding: 20px;
-            perspective: 1000px;
-        }
-
-        .img3d{
 
 
-            transform-style: preserve-3d;
-            background: linear-gradient(135deg,#0000 18.75%,#f3f3f3 0 31.25%,#0000 0),
-            repeating-linear-gradient(45deg,#f3f3f3 -6.25% 6.25%,#ffffff 0 18.75%);
-            background-size: 60px 60px;
-            background-position: 0 0, 0 0;
-            background-color: #f0f0f0;
-            width: 100%;
-            box-shadow: rgba(142, 142, 142, 0.3) 0px 30px 30px -10px;
-            transition: all 0.5s ease-in-out;
-        }
 
-        .img3d:hover {
-            background-position: -100px 100px, -100px 100px;
-            transform: rotate3d(0.5, 1, 0, 30deg);
-        }
+
         .timeline ul {
-            background-color: #3a3a3a;
+
             padding: 50px 0;
         }
 
@@ -468,7 +300,7 @@
             width: 6px;
             margin: 0 auto;
             padding-top: 50px;
-            background: #fff;
+            background: black;
         }
 
         .timeline ul li::after {
@@ -648,165 +480,279 @@
             }
         }
 
+        #report:hover{
+            color: #fff; /* Darker purple */
+          width:250px;
+            font-size:25px;
 
 
 
-
-        div.containerr
-        {
-            position: relative;
-            top: 300px;
-            font-size: 20px;
-            display: flex;
-            justify-content: space-evenly;
-            font-family: Raleway;
-            margin: 0 auto;
-            padding: 6em 3em;
-            text-align: center;
         }
-
-
-
-
-        div.containerr button {
-            background: none;
-            border: none;
-            color: #3a3a3a;
-            font: 20px Raleway, sans-serif;
-            margin: 0 10px;
-            padding: 10px 10px;
-            position: relative;
-            z-index: 0;
+        #report{
+            transition: all 0.3s ease;
             cursor: pointer;
+            background-color: #8d8ddd;
+            font-size: 20px;
+            height: 70px;
+            width: 200px;
+            border-radius: 25px;
+            border: 1px;
+        }
+        .step-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 90px;
         }
 
-        /* Gray background */
-        .gray {
-            background: #9e9e9e;
+        .step {
+            position: relative;
         }
 
-        /* Highlight text in */
-        div.highlightTextIn button:before {
-            position: absolute;
-            color: #FFF;
-            top: 0;
-            left: 0;
-            padding: 10px;
-            overflow: hidden;
-            content: attr(alt);
-            transition: all 0.3s;
-            transform: scale(1.2);
-            opacity: 0;
+        .circle {
+            width: 120px;
+            height: 120px;
+            background: white;
+            border-radius: 30px;
+            box-shadow: 0 0 0 20px rgba(0, 128, 128, 0.02),
+            0 0 0 40px rgba(0, 128, 128, 0.02),
+            0 0 20px rgba(0, 0, 0, 0.05);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease-in-out;
         }
 
-        div.highlightTextIn button:hover:before {
-            transform: scale(1);
-            opacity: 1;
+        .circle i {
+            font-size: 40px;
+            color: #67c5bb;
+            transition: color 0.3s ease-in-out;
         }
 
+        .circle:hover {
+            animation: ring 0.6s ease-in-out;
+            box-shadow: 0 0 0 20px rgba(141, 141, 221, 0.1),
+            0 0 0 40px rgba(141, 141, 221, 0.05),
+            0 0 30px rgba(141, 141, 221, 0.4);
+        }
+
+        .circle:hover i {
+            color: #8d8ddd;
+        }
+
+        /* Ring animation (like a bell wiggle) */
+        @keyframes ring {
+            0% { transform: rotate(0deg); }
+            15% { transform: rotate(15deg); }
+            30% { transform: rotate(-10deg); }
+            45% { transform: rotate(8deg); }
+            60% { transform: rotate(-6deg); }
+            75% { transform: rotate(4deg); }
+            100% { transform: rotate(0deg); }
+        }
+        .dots {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .dots span {
+            width: 6px;
+            height: 6px;
+            background-color: #2f4f4f;
+            border-radius: 50%;
+            animation: pulse 2s infinite ease-in-out;
+        }
+
+        /* Make dot sizes vary like in your image */
+        .dots span:nth-child(1),
+        .dots span:nth-child(10) {
+            width: 3px;
+            height: 3px;
+        }
+
+        .dots span:nth-child(2),
+        .dots span:nth-child(9) {
+            width: 5px;
+            height: 5px;
+        }
+
+        .dots span:nth-child(3),
+        .dots span:nth-child(8) {
+            width: 7px;
+            height: 7px;
+        }
+
+        .dots span:nth-child(4),
+        .dots span:nth-child(7) {
+            width: 9px;
+            height: 9px;
+        }
+
+        .dots span:nth-child(5),
+        .dots span:nth-child(6) {
+            width: 11px;
+            height: 11px;
+        }
+        @media (min-width: 1200px) {
+            .ms-lg-7rem {
+                margin-left: 7rem;
+            }
+        }
+        .info-card {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+            transition: box-shadow 0.3s ease;
+        }
+
+        .info-card:hover {
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .icon-wrapper {
+            background-color: #fef3c7;
+            border-radius: 50%;
+            padding: 0.75rem;
+            flex-shrink: 0;
+        }
+
+        .icon {
+            width: 2rem;
+            height: 2rem;
+            color: #fcd34d;
+        }
+
+        .title {
+            color: #065f46;
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .message {
+            color: #374151;
+            font-size: 0.875rem;
+            line-height: 1.5;
+            margin-bottom: 0;
+        }
+
+        .highlight {
+            color: #10b981;
+            font-weight: 500;
+        }
+
+        @media (min-width: 576px) {
+            .icon {
+                width: 2.5rem;
+                height: 2.5rem;
+            }
+
+            .title {
+                font-size: 1.5rem;
+            }
+
+            .message {
+                font-size: 1rem;
+            }
+        }
+        /* From Uiverse.io by Yaya12085 */
+        .cookie-card {
+            max-width: 550px;
+            padding: 1rem;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 20px 20px 30px rgba(0, 0, 0, .05);
+        }
+
+        .titleCookie {
+            font-weight: 600;
+            color: rgb(31 41 55);
+        }
+
+        .description {
+            margin-top: 1rem;
+            font-size: 0.875rem;
+            line-height: 1.25rem;
+            color: rgb(75 85 99);
+        }
+
+        .description a {
+            --tw-text-opacity: 1;
+            color: rgb(59 130 246);
+        }
+
+        .description a:hover {
+            -webkit-text-decoration-line: underline;
+            text-decoration-line: underline;
+        }
+
+        .actions {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 1rem;
+            -moz-column-gap: 1rem;
+            column-gap: 1rem;
+            flex-shrink: 0;
+        }
+
+        .pref {
+            font-size: 0.75rem;
+            line-height: 1rem;
+            color: rgb(31 41 55 );
+            -webkit-text-decoration-line: underline;
+            text-decoration-line: underline;
+            transition: all .3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: none;
+            background-color: transparent;
+        }
+
+        .pref:hover {
+            color: rgb(156 163 175);
+        }
+
+        .pref:focus {
+            outline: 2px solid transparent;
+            outline-offset: 2px;
+        }
+
+        .accept {
+            font-size: 0.75rem;
+            line-height: 1rem;
+            background-color: rgb(17 24 39);
+            font-weight: 500;
+            border-radius: 0.5rem;
+            color: #fff;
+            padding-left: 1rem;
+            padding-right: 1rem;
+            padding-top: 0.625rem;
+            padding-bottom: 0.625rem;
+            border: none;
+            transition: all .15s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .accept:hover {
+            background-color: rgb(55 65 81);
+        }
+
+        .accept:focus {
+            outline: 2px solid transparent;
+            outline-offset: 2px;
+        }
     </style>
 </head>
-<body>
-
-
-<div class="nav">
-    <div class="container">
-        <div><img src="assets/logo.png" alt="logo" width="100px" height="90px"></div>
-        <a href="home.jsp" class="btn poppins-semibold">Home</a>
-        <a href="MyPosts.jsp" class="btn poppins-semibold">profile</a>
-        <a href="addItem.jsp" class="btn poppins-semibold" >report lost/found item </a>
-        <a href="index.jsp" class="btn poppins-semibold">about</a>
-
-    </div>
-</div>
-<div>
-    <div class="roboto">
-        <div>Lost & Found Tunisia</div>
-        <div>about the website</div></div>
-    <div class="scroll">
-        <div class="m-scroll">
-
-
-            <span><img  src="assets/img/item1.jpg"  alt="img1"></span>
-            <span><img  src="assets/img/item4.jpg" alt="img4"></span>
-            <span><img  src="assets/img/item5.jpg" alt="img5"></span>
-            <span ><img src="assets/img/item3.jpg" alt="img3" ></span>
-            <span><img src="assets/img/item2.jpg" alt="img2"></span>
-             <!-- Duplicate images for seamless scrolling -->
-            <span><img  src="assets/img/item4.jpg" alt="img4"></span>
-            <span><img  src="assets/img/item5.jpg" alt="img5"></span>
-            <span ><img src="assets/img/item3.jpg" alt="img3" ></span>
-            <span><img src="assets/img/item2.jpg" alt="img2"></span>
-    
-         
-
-
-        </div>
-    </div>
-
-</div>
 
 
 
-
-<div style="display: flex; align-items: center; justify-content: space-evenly;">
-    <div data-aos="fade-right" class="parent">
-        <div class="img3d">
-
-            <img  src="assets/img/puzzle.jpg" width="100%" height="100%" alt="banner">
-
-        </div>
-    </div>
+<body style="overflow-x: hidden;">
+<div class="containerr highlightTextIn" style="background-color: #CCCCFF;">
 
 
-<div class="card" data-aos="fade-left">
-    <p class="card-title">What is lost and found TN </p>
-    <p class="small-desc">
-        The Lost & Found Inventory Management Software and Dynamic Matching System provides a comprehensive,
-        web-based solution for organizations to report, manage, and track lost and found items.
-        The platform enables users to efficiently organize and maintain a structured database,
-        with real-time in-platform notifications and email alerts when potential matches are identified.
-        Users can then connect directly with their matches through a secure, built-in chat system,
-        making it easy to coordinate the return of lost items.
-
-    </p>
-    <div class="go-corner">
-        <div class="go-arrow">→</div>
-    </div>
-</div>
-</div>
-
-
-<section class="timeline" style="position: relative;
-    top: 200px;">
-    <ul>
-        <li>
-            <div class="poppins-medium-italic" style="color:white;">
-                If you forget or lose an item, if you wish, you can use our online reporting service.Simply fill out our online form describing the lost item and the potential location(s) of loss.
-            </div>
-        </li>
-        <li>
-            <div class="poppins-medium-italic" style="color:white;">
-                we have set up a dedicated section that allows Internet users to consult the most recent reports from our platform.
-
-
-            </div>
-        </li>
-        <li>
-            <div class="poppins-medium-italic" style="color:white;">
-                If your item matches with others, you’ll receive suggestions for potential matches. You can review these and accept the ones that fit your needs. Once a match is accepted, you’ll be able to connect and communicate directly with the other party.</div>
-        </li>
-
-    </ul>
-</section>
-
-
-
-
-
-
-
-<div class="containerr gray highlightTextIn">
     <button alt="HOME"  onclick="window.location.href='home.jsp';">HOME</button>
     <button alt="MY POSTS"  onclick="window.location.href='MyPosts.jsp';">MY POSTS</button>
     <button alt="REPORT ITEM"  onclick="window.location.href='addItem.jsp';">REPORT ITEM</button>
@@ -814,12 +760,160 @@
     <button alt="REGISTER"  onclick="window.location.href='login.jsp';">REGISTER</button>
 </div>
 
+<div class="row" style="background-color: #ccccff;">
+    <div class="col-12 col-md-6" style="text-align:center;margin:auto;padding: 4rem;">
+        <span class="poppins-extrabold" style=" color: #000;text-transform: capitalize;font-size: 2rem;">Turn panic into peace of mind</span><div class="w-100"></div>
+       <span style=" color: #000;font-size: 1.5rem;"> Lost something? Found something?<div class="w-100"></div>
+        We’ll take it from here</span><div class="w-100"></div>
+        <button id="report" class="mt-3" onclick="window.location.href='login.jsp';">report an item</button>
 
+    </div>
+    <div class="col-12 col-md-6" style="display: flex
+;
+    justify-content: center;
+    align-items: center;">
+        <img style="width:500px;" src="assets/img/search-Photoroom.png" alt="">
+    </div>
+</div>
+<div class="mx-auto mt-5">
+    <h1 class="poppins-semibold text-center">HOW CAN WE HELP YOU</h1>
+    <div class="step-container row">
+        <div class="col-12 col-md-12 col-lg-12 col-xl-3">
+            <div class="step-content mx-auto" style="max-width: 400px;gap: 2rem;">
+            <div class="step-dots-content ms-lg-7rem  d-flex flex-column flex-xl-row align-items-center" style="gap: 4rem;
+    margin-bottom: 2rem;" >
+                <div class="step text-center">
+                    <div class="circle mx-auto">
+                        <i class="fas fa-clipboard-list"></i>
+                    </div>
+                </div>
+                <div class="dots">
+                    <span></span><span></span><span></span><span></span><span></span>
+                    <span></span><span></span><span></span><span></span><span></span>
+                </div>
+            </div>
+            <div class="content text-center p-1">
+                <h3 class="text-center">Report a lost or found item</h3>
+
+                    Fill the declaration and give as much detail as possible (the location of loss, the type of item, the description) to help the algorithm to identify it quickly
+            </div></div>
+        </div>
+
+    <div class="col-12 col-md-12 col-lg-12 col-xl-3">
+        <div class="step-content mx-auto" style="max-width: 400px;gap: 2rem;">
+            <div class="step-dots-content ms-lg-7rem  d-flex flex-column flex-xl-row align-items-center" style="gap: 4rem;
+    margin-bottom: 2rem;">
+                <div class="step text-center">
+                    <div class="circle mx-auto">
+                        <i class="fas fa-user-shield"></i>
+                    </div>
+                </div>
+                <div class="dots">
+                    <span></span><span></span><span></span><span></span><span></span>
+                    <span></span><span></span><span></span><span></span><span></span>
+                </div></div>
+                <div class="content text-center p-1">
+                   <h3 class="text-center">Prove ownership of the item</h3>
+                    Once the lost item "matched", prove who you are thanks to a security question (ex: describe the shell of your phone, ...). Then, our partner who found this item will be able to validate that this is yours
+
+                </div></div>
+        </div>
+        <div class="col-12 col-md-12 col-lg-12 col-xl-3">
+            <div class="step-content mx-auto row" style="max-width: 400px;gap: 1.7rem;">
+        <div class="step">
+            <div class="circle mx-auto">
+                <i class="fas fa-handshake"></i>
+            </div>
+        </div>
+            <div class="content text-center p-1"> <h3 class="text-center">Get it back!</h3>
+                As soon as you are authenticated, you receive the information to pick it up or have it delivered. Remember to communicate the reference's number found
+            </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="container mx-auto" style="margin-top: 9rem !important;">
+        <div class="row g-4">
+            <div class="col-12 col-md-6 col-lg-4 mx-auto" style="width: 60%;">
+                <div class="info-card">
+                    <div class="d-flex flex-column flex-sm-row align-items-center align-items-sm-start gap-3">
+                        <div class="icon-wrapper">
+                            <img src="https://raw.githubusercontent.com/lucide-icons/lucide/main/icons/lightbulb.svg" alt="Lightbulb icon" class="icon">
+                        </div>
+                        <div class="text-center text-sm-start">
+                            <h3 class="title">You should know</h3>
+                            <p class="message">If you add a photo to your report, you increase <span class="highlight">by more than 50%</span> your chances of finding your lost item</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+</div>
+</div>
+    <div class="cookie-card" data-aos="fade-left" id="cookie" style="position: fixed;
+    bottom: 15px;
+    right: 15px;
+    font-size: 29px;
+
+    z-index: 1;">
+        <span class="titleCookie ">🍪 Cookie Notice</span>
+        <p class="description">We use cookies to ensure that we give you the best experience on our website. <a href="#">Read cookies policies</a>. </p>
+        <div class="actions">
+            <button class="pref">
+                Manage your preferences
+            </button>
+            <button class="accept" onclick="hideCookie()">
+                Accept
+            </button>
+        </div>
+    </div>
+<!-- footer -->
+<div style="width: 100%;;position: relative;
+    top: 200px;left: 0;right: 0;margin-top: 10rem !important;">
+
+    <section class="">
+        <!-- Footer -->
+        <footer class="text-center text-white" style="background-color: #ccccff;
+    color: black !important;">
+            <!-- Grid container -->
+            <div class="container p-4 pb-0">
+                <!-- Section: CTA -->
+                <section class="">
+                    <p class="d-flex justify-content-center align-items-center">
+                        <span class="me-3"><a style="text-decoration:none; color:black;" href="login.jsp">Register for free</a></span>
+                        <button type="button" class="btn btn-outline-light btn-rounded">
+                            <a style="text-decoration:none; color:black;" href="login.jsp">Sign up!</a>
+                        </button>
+                    </p>
+                </section>
+                <!-- Section: CTA -->
+            </div>
+            <!-- Grid container -->
+
+            <!-- Copyright -->
+            <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+                © 2025 Copyright:
+                <a class="text-black" href="https://mdbootstrap.com/">Lost&Found TN</a>
+            </div>
+            <!-- Copyright -->
+        </footer>
+        <!-- Footer -->
+    </section>
+
+</div>
+<!-- End of .container -->
+
+</div>
 
 
 
 
 <script>
+    function hideCookie(){
+        var cookie=document.querySelector("#cookie");
+        cookie.style.display='none';
+
+    }
     window.onload = function() {
         <% if (session.getAttribute("userId") != null && "user".equals(session.getAttribute("role"))) { %>
             document.getElementById("register").classList.toggle("hidden");
@@ -862,35 +956,7 @@
 </script>
 
 
-<%--<div id="register" style="margin-top: 3rem;--%>
-<%--    text-align: center;">--%>
-<%--    <button class="styled-button" onclick="login()">--%>
-<%--        Register Now--%>
-<%--        <div class="inner-button">--%>
-<%--            <svg--%>
-<%--                    id="Arrow"--%>
-<%--                    viewBox="0 0 32 32"--%>
-<%--                    xmlns="http://www.w3.org/2000/svg"--%>
-<%--                    height="30px"--%>
-<%--                    width="30px"--%>
-<%--                    class="icon"--%>
-<%--            >--%>
-<%--                <defs>--%>
-<%--                    <linearGradient y2="100%" x2="100%" y1="0%" x1="0%" id="iconGradient">--%>
-<%--                        <stop style="stop-color:#FFFFFF;stop-opacity:1" offset="0%"></stop>--%>
-<%--                        <stop style="stop-color:#AAAAAA;stop-opacity:1" offset="100%"></stop>--%>
-<%--                    </linearGradient>--%>
-<%--                </defs>--%>
-<%--                <path--%>
-<%--                        fill="url(#iconGradient)"--%>
-<%--                        d="M4 15a1 1 0 0 0 1 1h19.586l-4.292 4.292a1 1 0 0 0 1.414 1.414l6-6a.99.99 0 0 0 .292-.702V15c0-.13-.026-.26-.078-.382a.99.99 0 0 0-.216-.324l-6-6a1 1 0 0 0-1.414 1.414L24.586 14H5a1 1 0 0 0-1 1z"--%>
-<%--                ></path>--%>
-<%--            </svg>--%>
-<%--        </div>--%>
-<%--    </button>--%>
 
-<%--</div>--%>
-<%--</div>--%>
 <script>
     function login(){
         window.location.href="login.jsp";

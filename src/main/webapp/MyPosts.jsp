@@ -16,6 +16,8 @@
 %>
 <html>
 <head>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
@@ -39,13 +41,15 @@
     <style>
         /* From Uiverse.io by Madflows */
         .cardUser {
+            margin-right: auto !important;
+            margin-left: auto !important;
             box-shadow: -1rem 0 1rem #00000067;
             display: flex;
             position: relative;
             flex-direction: column;
             height: auto;
-            width: 68%;
-            min-width: 200px;
+            width: 80%;
+            min-width: 360px;
             padding: 1rem;
             border-radius: 16px;
             background: #17141d;
@@ -116,6 +120,7 @@
         }
 
         .tags {
+            justify-content: center;
             margin: 1rem 0 2rem;
             padding: .5rem 0 1rem;
             line-height: 2;
@@ -213,12 +218,12 @@
             font-family: "Dosis", sans-serif;
         }
         .acceptedBtn{
-            right: -75%;
+
 
             position: relative;
             border-radius: 50px;
             background-image: linear-gradient(135deg, #58d68d 0%, #58d68d 100%);
-            box-shadow: 0 20px 30px -6px rgba(238, 103, 97, 0.5);
+            box-shadow: 0 20px 30px -6px #a5abb0;
             outline: none;
             cursor: pointer;
             border: none;
@@ -235,13 +240,13 @@
             opacity: 0.5;
         }
         .lostbtn {
-            right: -75%;
+
 
             position: relative;
 
             border-radius: 50px;
             background-image: linear-gradient(135deg, #feb692 0%, #f9e79f 100%);
-            box-shadow: 0 20px 30px -6px rgba(238, 103, 97, 0.5);
+            box-shadow: 0 20px 30px -6px #a5abb0;
             outline: none;
             cursor: pointer;
             border: none;
@@ -312,81 +317,9 @@
             border-radius: 16px;
             padding: 5%;
             background: #f8f9f9;
-            box-shadow: -1rem 0 3rem #00000067;
-        }
-        .outline {
-            position: absolute;
-            inset: 0;
-            pointer-events: none;
-        }
-        .rect {
-            stroke-dashoffset: 5;
-            stroke-dasharray: 0 0 10 40 10 40;
-            transition: 0.5s;
-            stroke: #fff;
-        }
-        .nav {
-            position: relative;
-            height: 100px;
-        }
-        .container:hover .outline .rect {
-            transition: 999999s;
-            stroke-dashoffset: 1;
-            stroke-dasharray: 0;
+            box-shadow: 1rem 0 1rem #a5abb0;
         }
 
-        .container {
-            width: 99%;
-            position: absolute;
-            inset: 0;
-            background-color: #3a3a3a;
-            display: flex;
-            flex-direction: row;
-            justify-content: space-around;
-            align-items: center;
-            padding: 0.5em;
-        }
-
-        .btn {
-            border-radius: 5px;
-            padding: 0.5em 1em;
-            color: #fff;
-            font-size: 2em;
-            text-decoration: none;
-            cursor: pointer;
-            transition: 0.1s;
-        }
-
-        .btn:hover {
-            background-color: rgb(123, 36, 28);
-            /*background: #fff3;*/
-        }
-
-        .btn:nth-child(1):hover ~ svg .rect {
-            stroke-dashoffset: 0;
-            stroke-dasharray: 0 2 8 73.3 8 10.7;
-        }
-
-        .btn:nth-child(2):hover ~ svg .rect {
-            stroke-dashoffset: 0;
-            stroke-dasharray: 0 12.6 9.5 49.3 9.5 31.6;
-        }
-
-        .btn:nth-child(3):hover ~ svg .rect {
-            stroke-dashoffset: 0;
-            stroke-dasharray: 0 24.5 8.5 27.5 8.5 55.5;
-        }
-
-        .btn:nth-child(4):hover ~ svg .rect {
-            stroke-dashoffset: 0;
-            stroke-dasharray: 0 34.7 6.9 10.2 6.9 76;
-        }
-
-        .btn:hover ~ .outline .rect {
-            stroke-dashoffset: 0;
-            stroke-dasharray: 0 0 10 40 10 40;
-            transition: 0.5s !important;
-        }
 
         .profileimage {
             background-color: transparent;
@@ -429,10 +362,7 @@
         margin-top: 10px;
     }
 
-    .cardUser {
-        width: 100%;
-        margin-bottom: 20px;
-    }
+
 
     #userProfile {
         width: 100%;
@@ -476,13 +406,15 @@
 }
 
 #notFound{
-    margin-top:4%;
-    margin-left: 5% !important;
+    margin-top:0;
+
 }
         .cookie-card {
+            margin-right: auto !important;
+            margin-left: auto !important;
             border-radius: 15px;
-            width: 320px;
-            height: 200px;
+            width: 250px;
+            height: 300px;
             background-color: #fff;
         }
 
@@ -639,8 +571,8 @@
             position:fixed;
             right:400px;
             bottom:0;
-            height:350px;
-
+            height:450px;
+            box-shadow: 0 2px 8px rgb(0 0 0 / 87%);
             background-color: #fff;
             border:1px solid black;
             border-radius: 10px;
@@ -648,7 +580,7 @@
             margin-right: 20px;
             display: flex;
             flex-direction: column;
-            width: 300px;
+            width: 350px;
         }
 
         .msg-header {
@@ -680,9 +612,9 @@
         }
 
         .messages-container {
-            padding: 15px;
 
-            height: 35%;
+
+            height: 270px;
             overflow-y: scroll;
         }
 
@@ -693,17 +625,22 @@
         }
 
         .message-box.left {
+            width: 80%;
+            position: relative;
             background-color: #f1f1f1;
             color: black;
             font-size: 13px;
             left: 0;
+
         }
 
         .message-box.right {
+            width: 80%;
+            position: relative;
             background-color: #333;
             color: #fff;
             font-size: 13px;
-            right: 0;
+            right: -20% !important;
         }
 
         .message-input {
@@ -712,7 +649,9 @@
         }
 
         .message-input .message-send {
+            margin-bottom: 1px;
             width: 100%;
+            height: 50px;
             padding: 10px;
             border: none;
             border-radius: 10px;
@@ -720,9 +659,11 @@
         }
 
         .message-input .button-send {
+            height:40px;
+            width:80px;
             background-color: #333;
             color: #fff;
-            padding: 10px 20px;
+
             border: none;
             cursor: pointer;
             margin-left: 10px;
@@ -814,7 +755,7 @@
             background-color: white;
             position: fixed;
             border-radius: 10px;
-            top: 120px;
+            bottom: 0 !important;
             right: 0;
 
         }
@@ -856,7 +797,7 @@
         }
 
         article.conversation .avatar {
-            width: 40px;
+            width: 60px;
             float: left;
             margin-right: 20px;
             position: relative;
@@ -910,7 +851,7 @@
 
             color: #555555;
             font-size: 13px;
-            padding-right: 30px;
+
         }
         form.search {
 
@@ -989,16 +930,20 @@
             font-weight: 400;
             font-style: normal;
         }
+        /* begin header*/
         div.containerr
         {
-            position: relative;
-            top: 300px;
-            font-size: 20px;
+
+            z-index:2;
+            min-width: 600px;
+            width: 100%;
+            position: sticky;
+            top:0;
+            height: 15%;
             display: flex;
             justify-content: space-evenly;
             font-family: Raleway;
             margin: 0 auto;
-            padding: 6em 3em;
             text-align: center;
         }
 
@@ -1009,24 +954,20 @@
             background: none;
             border: none;
             color: #3a3a3a;
-            font: 20px Raleway, sans-serif;
-            margin: 0 10px;
+            font: 25px Raleway, sans-serif;
+
             padding: 10px 10px;
             position: relative;
             z-index: 0;
             cursor: pointer;
         }
 
-        /* Gray background */
-        .gray {
-            background: #9e9e9e;
-        }
 
         /* Highlight text in */
         div.highlightTextIn button:before {
             position: absolute;
-            color: #FFF;
-            top: 0;
+            color: #fff;
+            top: 25%;
             left: 0;
             padding: 10px;
             overflow: hidden;
@@ -1040,11 +981,13 @@
             transform: scale(1);
             opacity: 1;
         }
+        /* end header */
 
     </style>
 </head>
 
-<body class="vh-100" style="overflow-x: hidden;  padding:0;">
+
+<body style="overflow-x: hidden;"><!--Viewport Height-->
 <!-- Inclure jQuery (nécessaire pour Toastr) -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
@@ -1052,15 +995,14 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
 
-<div class="nav">
-    <div class="container">
-        <div><img src="assets/logo.png" alt="logo" width="100px" height="90px"></div>
-        <a href="home.jsp" class="btn poppins-semibold">Home</a>
-        <a href="MyPosts.jsp" class="btn poppins-semibold">profile</a>
-        <a href="addItem.jsp" class="btn poppins-semibold" >report lost/found item </a>
-        <a href="index.jsp" class="btn poppins-semibold">about</a>
+<div class="containerr highlightTextIn" style="background-color: #CCCCFF;">
 
-    </div>
+
+    <button alt="HOME"  onclick="window.location.href='home.jsp';">HOME</button>
+    <button alt="MY POSTS"  onclick="window.location.href='MyPosts.jsp';">MY POSTS</button>
+    <button alt="REPORT ITEM"  onclick="window.location.href='addItem.jsp';">REPORT ITEM</button>
+    <button alt="ABOUT"  onclick="window.location.href='index.jsp';">ABOUT</button>
+    <button alt="REGISTER"  onclick="window.location.href='login.jsp';">REGISTER</button>
 </div>
 <script>
     <% if (request.getAttribute("alert_add") != null) { %>
@@ -1411,7 +1353,7 @@ function fetchConversations(){
             <author>`+conversation.otherMemberName+`</author>
             <time>`+hours+`:`+minutes+`</time>
             <p class="poppins-regular">`+conversation.lastMessage+`</p>
-<span><svg style="cursor:pointer;position: relative;right: -75%;top: -10px;width: 20px;" onclick="deleteConvo(`+conversation.conversationId+`)" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg></span>
+<span><svg style="cursor:pointer;position: relative;right:-95%;top: -10px;width: 20px;" onclick="deleteConvo(`+conversation.conversationId+`)" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg></span>
 
                     `
                     holder.appendChild(article);
@@ -1427,26 +1369,14 @@ function fetchConversations(){
 
 }
 </script>
-<div style="margin-top: 5%;
-    display: flex;
-    flex-direction: row;">
-    <div id="userProfile" style="width: 40%;margin-left: 10%;
-    position: relative;
- transition: transform 0.1s ease-out;">
+<div class="container">
+<div style="margin-top: 5%"; class="row">
+    <div class="col-12 col-md-6 " id="userProfile" style="padding: 5px; transition: transform 0.1s ease-out;">
     </div>
-    <div id="notFound" class="hiddenn">
-        <div class="cookie-card">
-            <span class="cookie-title">No posts yet</span>
-            <p class="cookie-description">"Lost something? Found an item? Post it here and let our system reunite owners with their belongings!"
-            </p>
-            <button class="accept-button" onclick="redirect()">post now</button>
-        </div>
-    </div>
-    <div style="height: auto;
-    width: 40%;
-    margin-right: 10%;
+
+    <div class="col-12 col-md-6 " style="
     display: flex;
-    flex-direction: column;" id="PostContainer">
+    flex-direction: column;font-size: 15px;" id="PostContainer">
         <div id="PendingPosts" style="display: flex;
     height: auto;
     row-gap: 7%;
@@ -1457,8 +1387,16 @@ function fetchConversations(){
     row-gap: 7%;
     flex-direction: column;"></div>
     </div>
-</div>
 
+
+    <div class="col-12 col-md-6 hiddenn" id="notFound">
+        <div class="cookie-card">
+            <img src="assets/img/notFound.svg" alt="404" style="width: 300px;height: 300px;">
+        </div>
+    </div>
+
+</div>
+</div>
 <div id="friendRequestsContainer" style="box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     background-color: white;
     border-radius: 10px;padding-bottom: 9px;
@@ -1518,13 +1456,41 @@ function fetchConversations(){
     </div>
 </div>
 
-<div class="containerr gray highlightTextIn">
-    <button alt="HOME"  onclick="window.location.href='home.jsp';">HOME</button>
-    <button alt="MY POSTS"  onclick="window.location.href='MyPosts.jsp';">MY POSTS</button>
-    <button alt="REPORT ITEM"  onclick="window.location.href='addItem.jsp';">REPORT ITEM</button>
-    <button alt="ABOUT"  onclick="window.location.href='index.jsp';">ABOUT</button>
-    <button alt="REGISTER"  onclick="window.location.href='login.jsp';">REGISTER</button>
+<!-- footer -->
+<div class="my-5" style="width: 100%;;position: relative;
+    top: 200px;left: 0;right: 0;z-index: -1;">
+
+    <section class="">
+        <!-- Footer -->
+        <footer class="text-center text-white" style="background-color: #ccccff;
+    color: black !important;">
+            <!-- Grid container -->
+            <div class="container p-4 pb-0">
+                <!-- Section: CTA -->
+                <section class="">
+                    <p class="d-flex justify-content-center align-items-center">
+                        <span class="me-3"><a style="text-decoration:none; color:black;" href="login.jsp">Register for free</a></span>
+                        <button type="button" class="btn btn-outline-light btn-rounded">
+                            <a style="text-decoration:none; color:black;" href="login.jsp">Sign up!</a>
+                        </button>
+                    </p>
+                </section>
+                <!-- Section: CTA -->
+            </div>
+            <!-- Grid container -->
+
+            <!-- Copyright -->
+            <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+                © 2025 Copyright:
+                <a class="text-black" href="https://mdbootstrap.com/">Lost&Found TN</a>
+            </div>
+            <!-- Copyright -->
+        </footer>
+        <!-- Footer -->
+    </section>
+
 </div>
+<!-- End of .container -->
 <script>
     function filterConversationByUserName(element) {
         console.log(element.value);

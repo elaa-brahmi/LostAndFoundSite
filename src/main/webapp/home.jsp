@@ -11,7 +11,9 @@
 <html>
   <head>
     <title>Title</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -139,83 +141,6 @@
     -webkit-transition: "color 9999s ease-out, background-color 9999s ease-out";
     -webkit-transition-delay: 9999s;
   }
-  .outline {
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-  }
-
-  .rect {
-    stroke-dashoffset: 5;
-    stroke-dasharray: 0 0 10 40 10 40;
-    transition: 0.5s;
-    stroke: #fff;
-  }
-
-  .nav {
-    position: relative;
-    height: 100px;
-  }
-
-  .container:hover .outline .rect {
-    transition: 999999s;
-    stroke-dashoffset: 1;
-    stroke-dasharray: 0;
-  }
-
-  .container {
-    width: 99%;
-    position: absolute;
-    inset: 0;
-    background-color: #3a3a3a;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    align-items: center;
-    padding: 0.5em;
-  }
-
-  .btn {
-    border-radius: 5px;
-    padding: 0.5em 1em;
-    color: #fff;
-    font-size: 2em;
-    text-decoration: none;
-    cursor: pointer;
-    transition: 0.1s;
-  }
-
-  .btn:hover {
-
-    background-color: rgb(123, 36, 28);
-   /* background: #fff3;*/
-  }
-
-  .btn:nth-child(1):hover ~ svg .rect {
-    stroke-dashoffset: 0;
-    stroke-dasharray: 0 2 8 73.3 8 10.7;
-  }
-
-  .btn:nth-child(2):hover ~ svg .rect {
-    stroke-dashoffset: 0;
-    stroke-dasharray: 0 12.6 9.5 49.3 9.5 31.6;
-  }
-
-  .btn:nth-child(3):hover ~ svg .rect {
-    stroke-dashoffset: 0;
-    stroke-dasharray: 0 24.5 8.5 27.5 8.5 55.5;
-  }
-
-  .btn:nth-child(4):hover ~ svg .rect {
-    stroke-dashoffset: 0;
-    stroke-dasharray: 0 34.7 6.9 10.2 6.9 76;
-  }
-
-  .btn:hover ~ .outline .rect {
-    stroke-dashoffset: 0;
-    stroke-dasharray: 0 0 10 40 10 40;
-    transition: 0.5s !important;
-  }
 
   .btn-search {
     --bg: grey;
@@ -239,14 +164,13 @@
     opacity: 1;
   }
 
-  button:active {
-    top: 4px;
-    box-shadow:#283542 0px 3px 2px,#000 0px 3px 5px;
-  }
+  /*button:active {*/
+  /*  top: 4px;*/
+  /*  box-shadow:#283542 0px 3px 2px,#000 0px 3px 5px;*/
+  /*}*/
   .card {
-    width:26%;
-    height:550px;
-    padding: .8em;
+    height: 550px;
+    padding: 2rem;
     background: #f5f5f5;
     position: relative;
     overflow: visible;
@@ -256,7 +180,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #e5e7e9;
+
     height: 40%;
     width: 100%;
     border-radius: .5rem;
@@ -320,25 +244,24 @@
     background-color: #026602;
   }
   #cardItems{
-    justify-content: start;
-    display: flex;
-    margin-top: 180px;
-    margin-left: 130px;
-    padding-left: 5%;
-    max-width: 80%;
-    min-width: 80%;
-    max-height: 1200px;
-    min-height: 1200px;
-    flex-direction: row;
-    flex-wrap: wrap;
-    row-gap: 50px;
-    column-gap: 15px;
+    /*justify-content: start;*/
+    /*display: flex;*/
+    /*margin-top: 180px;*/
+    /*margin-left: 130px;*/
+    /*padding-left: 5%;*/
+    /*max-width: 80%;*/
+    /*min-width: 80%;*/
+    /*max-height: 1200px;*/
+    /*min-height: 1200px;*/
+    /*flex-direction: row;*/
+    /*flex-wrap: wrap;*/
+    /*row-gap: 50px;*/
+    /*column-gap: 15px;*/
   }
   .pagination {
     justify-content: center;
-    display: flex
-  ;
-    width: 80%;
+    display: flex;
+
   }
   .pagination button {
     margin: 0 5px;
@@ -587,13 +510,14 @@
   .tooltip-trigger:hover {
     /*background: linear-gradient(45deg, #4facfe, #00f2fe);*/
     transform: translateY(-3px);
-    background-color: rgb(123, 36, 28);
+    background-color: #6c63ff;
     /*box-shadow: 0 6px 15px rgba(0, 255, 255, 0.5);*/
   }
 
 
   .filterButton {
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+    width:200px;
+
     padding: 15px 30px;
     color: #fff;
     font-size: 16px;
@@ -619,22 +543,22 @@
 }
 .filters{
   justify-content: center;
-  width: 100%;
+  width: 80%;
+  gap:5px;
   margin-top: 5%;
   display: flex;
   flex-direction: row;
 }
 .filterButton:hover{
   transform: translateY(-3px);
-  background-color: rgb(123, 36, 28);
+  background-color: #6c63ff;
 }
 .filterCategories{
-  margin-right: 20px;
-  width: 360px;
+
   text-align: center;
   height: 58px;
   border-radius: 10px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+
 }
 
 
@@ -668,16 +592,21 @@
     font-weight: 500;
     font-style: italic;
   }
+
+  /* begin header*/
   div.containerr
   {
-    position: relative;
-    top: 300px;
-    font-size: 20px;
+
+    z-index:2;
+    min-width: 600px;
+    width: 100%;
+    position: sticky;
+    top:0;
+    height: 15%;
     display: flex;
     justify-content: space-evenly;
     font-family: Raleway;
     margin: 0 auto;
-    padding: 6em 3em;
     text-align: center;
   }
 
@@ -688,24 +617,20 @@
     background: none;
     border: none;
     color: #3a3a3a;
-    font: 20px Raleway, sans-serif;
-    margin: 0 10px;
+    font: 25px Raleway, sans-serif;
+
     padding: 10px 10px;
     position: relative;
     z-index: 0;
     cursor: pointer;
   }
 
-  /* Gray background */
-  .gray {
-    background: #9e9e9e;
-  }
 
   /* Highlight text in */
   div.highlightTextIn button:before {
     position: absolute;
-    color: #FFF;
-    top: 0;
+    color: #fff;
+    top: 25%;
     left: 0;
     padding: 10px;
     overflow: hidden;
@@ -723,19 +648,21 @@
 
   </head>
   <body class="vh-100" style="overflow-x: hidden;  padding:0;">
-  <div class="nav">
-    <div class="container">
-      <div><img src="assets/logo.png" alt="logo" width="100px" height="90px"></div>
-      <a href="home.jsp" class="btn poppins-semibold">Home</a>
-      <a href="MyPosts.jsp" class="btn poppins-semibold">profile</a>
-      <a href="addItem.jsp" class="btn poppins-semibold" >report lost/found item </a>
-      <a href="index.jsp" class="btn poppins-semibold">about</a>
 
-    </div>
+  <div class="containerr highlightTextIn" style="background-color: #CCCCFF;">
+
+
+    <button alt="HOME"  onclick="window.location.href='home.jsp';">HOME</button>
+    <button alt="MY POSTS"  onclick="window.location.href='MyPosts.jsp';">MY POSTS</button>
+    <button alt="REPORT ITEM"  onclick="window.location.href='addItem.jsp';">REPORT ITEM</button>
+    <button alt="ABOUT"  onclick="window.location.href='index.jsp';">ABOUT</button>
+    <button alt="REGISTER"  onclick="window.location.href='login.jsp';">REGISTER</button>
   </div>
 
-    <div class="filters">
-      <select id="categoryFilter" class="filterCategories poppins-light-italic">
+
+
+    <div class="row filters mx-auto">
+      <select id="categoryFilter" class="col-12 col-md-5 filterCategories poppins-light-italic">
         <option value="" >All Categories</option>
         <option value="Personal Accessories">Personal Accessories</option>
         <option value="Identification & Documents">Identification & Documents</option>
@@ -744,7 +671,7 @@
         <option value="Travel & Transport Items">Travel & Transport Items</option>
         <option value="Household & Miscellaneous Items">Household & Miscellaneous Items</option>
       </select>
-      <select id="locationFilter" class="filterCategories poppins-light-italic">
+      <select id="locationFilter" class=" col-12 col-md-5 filterCategories poppins-light-italic">
         <option value="" >All Locations</option>
         <option value="Tunis">Tunis</option>
         <option value="Sidi Bouzid">Sidi Bouzid</option>
@@ -770,7 +697,7 @@
         <option value="Siliana">Siliana</option>
       </select>
     
-      <button class="filterButton poppins-light-italic " onclick="applyFilters()">Apply Filters</button>
+      <button class="filterButton poppins-light-italic col-12 col-md-2 " onclick="applyFilters()">Apply Filters</button>
     </div>
 
 
@@ -813,16 +740,10 @@
       if(items.length ===0){
         notFound.classList.remove('hidden');
         cardItems.classList.add('hidden');
-        notFound.innerHTML=`<p style="font-size: 28px;" class="poppins-semibold-italic">No items are found <svg style="position: relative;top: 14px;
-    width: 50px;
-    height: 50px;" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="256" height="256" viewBox="0 0 256 256" xml:space="preserve">
-                <g style="stroke: none; stroke-width: 0; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: none; fill-rule: nonzero; opacity: 1;" transform="translate(1.4065934065934016 1.4065934065934016) scale(2.81 2.81)">
-                  <path d="M 45 90 C 20.187 90 0 69.813 0 45 C 0 20.187 20.187 0 45 0 c 24.813 0 45 20.187 45 45 C 90 69.813 69.813 90 45 90 z M 45 4 C 22.393 4 4 22.393 4 45 s 18.393 41 41 41 s 41 -18.393 41 -41 S 67.607 4 45 4 z" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(0,0,0); fill-rule: nonzero; opacity: 1;" transform=" matrix(1 0 0 1 0 0) " stroke-linecap="round"/>
-                  <circle cx="30.344" cy="33.274" r="5.864" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(0,0,0); fill-rule: nonzero; opacity: 1;" transform="  matrix(1 0 0 1 0 0) "/>
-                  <circle cx="59.663999999999994" cy="33.274" r="5.864" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(0,0,0); fill-rule: nonzero; opacity: 1;" transform="  matrix(1 0 0 1 0 0) "/>
-                  <path d="M 72.181 65.49 c -0.445 0 -0.893 -0.147 -1.265 -0.451 c -7.296 -5.961 -16.5 -9.244 -25.916 -9.244 c -9.417 0 -18.62 3.283 -25.916 9.244 c -0.854 0.7 -2.115 0.572 -2.814 -0.283 c -0.699 -0.855 -0.572 -2.115 0.283 -2.814 C 24.561 55.398 34.664 51.795 45 51.795 c 10.336 0 20.438 3.604 28.447 10.146 c 0.855 0.699 0.982 1.959 0.283 2.814 C 73.335 65.239 72.76 65.49 72.181 65.49 z" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(0,0,0); fill-rule: nonzero; opacity: 1;" transform=" matrix(1 0 0 1 0 0) " stroke-linecap="round"/>
-                </g>
-      </svg></p>`;
+        notFound.innerHTML=`<div class="mx-auto mt-5"><p style="font-size: 28px;" class=" text-center poppins-semibold-italic">No items are found </p>
+<img src="assets/img/empty.svg" alt="empty" style="width: 400px;height: 400px; min-width: 300px;min-height:300px;">
+</div>
+`;
 
       } else{
         notFound.classList.add('hidden');
@@ -833,6 +754,9 @@
         console.log(item.image);
         var cardItem = document.createElement("div");
         cardItem.classList.add("card");
+
+      cardItem.classList.add("col-12", "col-sm-12", "col-md-6", "col-lg-6", "col-xl-4");
+
         cardItem.setAttribute("data-aos","zoom-in-up");
         var imageSrc = item.image === "no image is found" ? "assets/img/noPic.png" : item.image;
         cardItem.innerHTML = `
@@ -903,19 +827,47 @@
   </script>
   <div id="notFound" class="hidden"></div>
 
-  <div id="cardItems" class="mt-5 " style="margin-top: 10%;margin-left: 10%; " >
+  <div id="cardItems" class="row mt-5 g-3 mx-auto" style="
+    width: 70%;">
   </div>
-  <div class="d-flex justify-content-center" style="width:80%;margin-left: 20%; margin-top:5%;">
+  <div class="row mx-auto" style="margin-top:5%;">
   <div id="pagination" class="pagination"></div>
   </div>
+  <!-- footer -->
+  <div class="my-5" style="width: 100%;;position: relative;
+    top: 200px;left: 0;right: 0;">
 
-  <div class="containerr gray highlightTextIn">
-    <button alt="HOME"  onclick="window.location.href='home.jsp';">HOME</button>
-    <button alt="MY POSTS"  onclick="window.location.href='MyPosts.jsp';">MY POSTS</button>
-    <button alt="REPORT ITEM"  onclick="window.location.href='addItem.jsp';">REPORT ITEM</button>
-    <button alt="ABOUT"  onclick="window.location.href='index.jsp';">ABOUT</button>
-    <button alt="REGISTER"  onclick="window.location.href='login.jsp';">REGISTER</button>
+    <section class="">
+      <!-- Footer -->
+      <footer class="text-center text-white" style="background-color: #ccccff;
+    color: black !important;">
+        <!-- Grid container -->
+        <div class="container p-4 pb-0">
+          <!-- Section: CTA -->
+          <section class="">
+            <p class="d-flex justify-content-center align-items-center">
+              <span class="me-3"><a style="text-decoration:none; color:black;" href="login.jsp">Register for free</a></span>
+              <button type="button" class="btn btn-outline-light btn-rounded">
+                <a style="text-decoration:none; color:black;" href="login.jsp">Sign up!</a>
+              </button>
+            </p>
+          </section>
+          <!-- Section: CTA -->
+        </div>
+        <!-- Grid container -->
+
+        <!-- Copyright -->
+        <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+          © 2025 Copyright:
+          <a class="text-black" href="https://mdbootstrap.com/">Lost&Found TN</a>
+        </div>
+        <!-- Copyright -->
+      </footer>
+      <!-- Footer -->
+    </section>
+
   </div>
+  <!-- End of .container -->
   <script> AOS.init({
   once: true,
   mirror: false

@@ -17,6 +17,8 @@ int idUser=Integer.parseInt(request.getParameter("idUser"));
 %>
 <html>
 <head>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
@@ -30,92 +32,16 @@ int idUser=Integer.parseInt(request.getParameter("idUser"));
         .swal-footer{
             text-align: center!important;
         }
-        .outline {
-            position: absolute;
-            inset: 0;
-            pointer-events: none;
-        }
-
-        .rect {
-            stroke-dashoffset: 5;
-            stroke-dasharray: 0 0 10 40 10 40;
-            transition: 0.5s;
-            stroke: #fff;
-        }
-
-        .nav {
-            position: relative;
-            height: 100px;
-        }
-
-        .container:hover .outline .rect {
-            transition: 999999s;
-            stroke-dashoffset: 1;
-            stroke-dasharray: 0;
-        }
-
-        .container {
-            width: 99%;
-            position: absolute;
-            inset: 0;
-            background-color: #3a3a3a;
-            display: flex;
-            flex-direction: row;
-            justify-content: space-around;
-            align-items: center;
-            padding: 0.5em;
-        }
-
-        .btn {
-            padding: 0.5em 1em;
-            color: #fff;
-            font-size: 2em;
-            text-decoration: none;
-            cursor: pointer;
-            transition: 0.1s;
-            border-radius: 5px;
-        }
-
-        .btn:hover {
-
-            background-color: rgb(123, 36, 28);
-           /* background: #fff3;*/
-        }
-
-        .btn:nth-child(1):hover ~ svg .rect {
-            stroke-dashoffset: 0;
-            stroke-dasharray: 0 2 8 73.3 8 10.7;
-        }
-
-        .btn:nth-child(2):hover ~ svg .rect {
-            stroke-dashoffset: 0;
-            stroke-dasharray: 0 12.6 9.5 49.3 9.5 31.6;
-        }
-
-        .btn:nth-child(3):hover ~ svg .rect {
-            stroke-dashoffset: 0;
-            stroke-dasharray: 0 24.5 8.5 27.5 8.5 55.5;
-        }
-
-        .btn:nth-child(4):hover ~ svg .rect {
-            stroke-dashoffset: 0;
-            stroke-dasharray: 0 34.7 6.9 10.2 6.9 76;
-        }
-
-        .btn:hover ~ .outline .rect {
-            stroke-dashoffset: 0;
-            stroke-dasharray: 0 0 10 40 10 40;
-            transition: 0.5s !important;
-        }
 
         .profile-container {
+            min-width: 400px;
             margin-top: 4%;
             max-width: 28rem; /* matches max-w-md */
             margin-left: auto;
             margin-right: auto;
             position: relative;
             overflow: hidden;
-            z-index: 10;
+            z-index: 0;
             background-color: #1f2937; /* Tailwind bg-gray-800 */
             padding: 2rem;
             border-radius: 0.5rem;
@@ -204,31 +130,21 @@ int idUser=Integer.parseInt(request.getParameter("idUser"));
             font-weight: 500;
             font-style: normal;
         }
-        .poppins-light-italic {
-            font-family: "Poppins", sans-serif;
-            font-weight: 300;
-            font-style: italic;
-        }
-        .poppins-semibold-italic {
-            font-family: "Poppins", sans-serif;
-            font-weight: 600;
-            font-style: italic;
-        }
-        .poppins-medium-italic {
-            font-family: "Poppins", sans-serif;
-            font-weight: 500;
-            font-style: italic;
-        }
+
+        /* begin header*/
         div.containerr
         {
-            position: relative;
-            top: 300px;
-            font-size: 20px;
+
+            z-index:2;
+            min-width: 600px;
+            width: 100%;
+            position: sticky;
+            top:0;
+            height: 15%;
             display: flex;
             justify-content: space-evenly;
             font-family: Raleway;
             margin: 0 auto;
-            padding: 6em 3em;
             text-align: center;
         }
 
@@ -239,24 +155,20 @@ int idUser=Integer.parseInt(request.getParameter("idUser"));
             background: none;
             border: none;
             color: #3a3a3a;
-            font: 20px Raleway, sans-serif;
-            margin: 0 10px;
+            font: 25px Raleway, sans-serif;
+
             padding: 10px 10px;
             position: relative;
             z-index: 0;
             cursor: pointer;
         }
 
-        /* Gray background */
-        .gray {
-            background: #9e9e9e;
-        }
 
         /* Highlight text in */
         div.highlightTextIn button:before {
             position: absolute;
-            color: #FFF;
-            top: 0;
+            color: #fff;
+            top: 25%;
             left: 0;
             padding: 10px;
             overflow: hidden;
@@ -270,22 +182,32 @@ int idUser=Integer.parseInt(request.getParameter("idUser"));
             transform: scale(1);
             opacity: 1;
         }
+        /* end header */
+        .row>* {
+            flex-shrink: 0;
+            padding-right: 0 !important;
+            padding-left: 0 !important;
+
+            /* padding-right: calc(var(--bs-gutter-x)* .5); */
+            /* padding-left: calc(var(--bs-gutter-x)* .5); */
+            margin-top: var(--bs-gutter-y);
+        }
+
     </style>
 </head>
 
-
-<body class="vh-100" style="overflow-x: hidden;  padding:0;">
+<body style="overflow-x: hidden;"><!--Viewport Height-->
 <input type="hidden" id="error" value="<%=request.getAttribute("error")%>">
 
-<div class="nav">
-    <div class="container">
-        <div><img src="assets/logo.png" alt="logo" width="100px" height="90px"></div>
-        <a href="home.jsp" class="btn poppins-semibold">Home</a>
-        <a href="MyPosts.jsp" class="btn poppins-semibold">profile</a>
-        <a href="addItem.jsp" class="btn poppins-semibold" >report lost/found item </a>
-        <a href="index.jsp" class="btn poppins-semibold">about</a>
 
-    </div>
+<div class="containerr highlightTextIn" style="background-color: #CCCCFF;">
+
+
+    <button alt="HOME"  onclick="window.location.href='home.jsp';">HOME</button>
+    <button alt="MY POSTS"  onclick="window.location.href='MyPosts.jsp';">MY POSTS</button>
+    <button alt="REPORT ITEM"  onclick="window.location.href='addItem.jsp';">REPORT ITEM</button>
+    <button alt="ABOUT"  onclick="window.location.href='index.jsp';">ABOUT</button>
+    <button alt="REGISTER"  onclick="window.location.href='login.jsp';">REGISTER</button>
 </div>
 <div class="profile-container">
     <h2 class="title">Update Your Profile</h2>
@@ -325,13 +247,41 @@ int idUser=Integer.parseInt(request.getParameter("idUser"));
     </form>
 </div>
 
-<div class="containerr gray highlightTextIn">
-    <button alt="HOME"  onclick="window.location.href='home.jsp';">HOME</button>
-    <button alt="MY POSTS"  onclick="window.location.href='MyPosts.jsp';">MY POSTS</button>
-    <button alt="REPORT ITEM"  onclick="window.location.href='addItem.jsp';">REPORT ITEM</button>
-    <button alt="ABOUT"  onclick="window.location.href='index.jsp';">ABOUT</button>
-    <button alt="REGISTER"  onclick="window.location.href='login.jsp';">REGISTER</button>
+<!-- footer -->
+<div class="my-5" style="width: 100%;;position: relative;
+    top: 200px;left: 0;right: 0;">
+
+    <section class="">
+        <!-- Footer -->
+        <footer class="text-center text-white" style="background-color: #ccccff;
+    color: black !important;">
+            <!-- Grid container -->
+            <div class="container p-4 pb-0">
+                <!-- Section: CTA -->
+                <section class="">
+                    <p class="d-flex justify-content-center align-items-center">
+                        <span class="me-3"><a style="text-decoration:none; color:black;" href="login.jsp">Register for free</a></span>
+                        <button type="button" class="btn btn-outline-light btn-rounded">
+                            <a style="text-decoration:none; color:black;" href="login.jsp">Sign up!</a>
+                        </button>
+                    </p>
+                </section>
+                <!-- Section: CTA -->
+            </div>
+            <!-- Grid container -->
+
+            <!-- Copyright -->
+            <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+                © 2025 Copyright:
+                <a class="text-black" href="https://mdbootstrap.com/">Lost&Found TN</a>
+            </div>
+            <!-- Copyright -->
+        </footer>
+        <!-- Footer -->
+    </section>
+
 </div>
+<!-- End of .container -->
 
 <script type="text/javascript">
     let errorMessage = document.getElementById('error');
