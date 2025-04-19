@@ -4,7 +4,7 @@ import model.Conversation;
 import model.FriendRequest;
 import model.Message;
 import services.BDConnection;
-
+import java.util.Base64;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -181,7 +181,11 @@ public class ConversationDao {
                     message.setId(rs.getInt("id"));
                     message.setConversationId(rs.getInt("conversation_id"));
                     message.setSenderId(rs.getInt("sender_id"));
-                    message.setContact(rs.getString("content"));
+                 
+                // Decode the message content
+                String encodedContent = rs.getString("content");
+                String decodedContent = new String(Base64.getDecoder().decode(encodedContent));
+                message.setContact(decodedContent);
                     message.setSendAt(rs.getTimestamp("sent_at").toString());
                     System.out.println(message.toString());
                     return message;

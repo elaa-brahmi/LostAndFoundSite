@@ -250,7 +250,7 @@
         <div style="display: flex; align-items: center; justify-content: center; column-gap: 15px; margin-top: 8%;">
             <button  class="btn btn-secondary hidden" onclick="updateNotif('accepted')">accept match</button>
             <button class="btn btn-danger hidden" onclick="updateNotif('rejected')">reject match</button>
-            <button class="btn btn-info hidden" id="request" onclick="sendFriendRequest()" >send matcher a friend request</button>
+            <button class="btn btn-info hidden" id="request" onclick="sendFriendRequest()" >connect with your match</button>
 
         </div>
     </div>

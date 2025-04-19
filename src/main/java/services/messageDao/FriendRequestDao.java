@@ -15,6 +15,42 @@ import services.BDConnection;
 
 public class FriendRequestDao {
     public static void addFriendRequest(FriendRequest friendRequest) {
+        // Check if a friend request or conversation already exists between the two users
+        String checkSql = "SELECT COUNT(*) FROM friend_requests " +
+                          "WHERE (sender_id = ? AND receiver_id = ?) OR (sender_id = ? AND receiver_id = ?)";
+    
+        try (Connection con = BDConnection.getConnection();
+             PreparedStatement checkPs = con.prepareStatement(checkSql)) {
+            checkPs.setInt(1, friendRequest.getSenderId());
+            checkPs.setInt(2, friendRequest.getReceiverId());
+            checkPs.setInt(3, friendRequest.getReceiverId());
+            checkPs.setInt(4, friendRequest.getSenderId());
+    
+            try (ResultSet rs = checkPs.executeQuery()) {
+                if (rs.next() && rs.getInt(1) > 0) {
+                    System.out.println("A friend request already exists between these users. No new request will be sent.");
+                    return; // Exit the method if a match is found
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return; // Exit the method if an error occurs during the check
+        }
+    
+        // Insert the new friend request if no match is found
+        String insertSql = "INSERT INTO friend_requests (sender_id, receiver_id) VALUES (?, ?)";
+        try (Connection con = BDConnection.getConnection();
+             PreparedStatement insertPs = con.prepareStatement(insertSql)) {
+            insertPs.setInt(1, friendRequest.getSenderId());
+            insertPs.setInt(2, friendRequest.getReceiverId());
+            insertPs.executeUpdate();
+            System.out.println("Friend request sent successfully.");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    /* public static void addFriendRequest(FriendRequest friendRequest) {
+
         String sql = "INSERT INTO friend_requests (sender_id, receiver_id) VALUES (?, ?)";
         try (Connection con = BDConnection.getConnection();
              PreparedStatement ps = con.prepareStatement(sql)) {
@@ -27,7 +63,7 @@ public class FriendRequestDao {
         }
 
 
-    }
+    } */
 
     public static FriendRequest getFriendRequestById(Integer friendRequestId) {
         String sql = "SELECT * FROM friend_requests WHERE id = ?";

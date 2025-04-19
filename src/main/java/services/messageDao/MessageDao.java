@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
-
+import java.util.Base64;
 import model.Message;
 import services.BDConnection;
 
@@ -17,7 +17,9 @@ public class MessageDao {
         String sql = "INSERT INTO messages (content, sender_id, conversation_id) VALUES (?, ?, ?)";
         try (Connection con = BDConnection.getConnection();
              PreparedStatement ps = con.prepareStatement(sql)) {
-            ps.setString(1, msg.getContact());
+                String encodedContent = Base64.getEncoder().encodeToString(msg.getContact().getBytes());
+                ps.setString(1, encodedContent);
+            //ps.setString(1, msg.getContact());
             ps.setInt(2, msg.getSenderId());
             ps.setInt(3, msg.getConversationId());
 
@@ -92,7 +94,10 @@ public class MessageDao {
                 while (rs.next()) {
                     Message message = new Message();
                     message.setId(rs.getInt("id"));
-                    message.setContact(rs.getString("content"));
+                  // Decode the message content
+                String encodedContent = rs.getString("content");
+                String decodedContent = new String(Base64.getDecoder().decode(encodedContent));
+                message.setContact(decodedContent);
                     message.setSenderId(rs.getInt("sender_id"));
                     message.setConversationId(rs.getInt("conversation_id"));
                     message.setSendAt(rs.getTimestamp("sent_at").toString());
@@ -139,7 +144,9 @@ public class MessageDao {
                 if (rs.next()) {
                     Message message = new Message();
                     message.setId(rs.getInt("id"));
-                    message.setContact(rs.getString("content"));
+                    String encodedContent = rs.getString("content");
+                    String decodedContent = new String(Base64.getDecoder().decode(encodedContent));
+                    message.setContact(decodedContent);
                     message.setSenderId(rs.getInt("sender_id"));
                     message.setConversationId(rs.getInt("conversation_id"));
                     message.setSendAt(rs.getTimestamp("sent_at").toString());
