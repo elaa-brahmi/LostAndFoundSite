@@ -11,6 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -83,6 +84,7 @@ public class ConversationDao {
                     int conversationId = rs.getInt("conversationId");
                     String lastMessageTime = getLastMessageTime(conversationId);
 
+
                     // Fetch the last message using the existing method
                     Message lastMessage = getLastMessageByConversationId(conversationId);
                     int unreadMsg = MessageDao.getNumberOfUnreadMessages(conversationId, userId);
@@ -118,7 +120,7 @@ public class ConversationDao {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return null;
+        return Timestamp.from(Instant.now()).toString();
     }
 
     public static int addConversationToUser(Integer userId1, Integer userId2) {
