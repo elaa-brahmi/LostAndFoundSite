@@ -765,7 +765,7 @@
         <span class="poppins-extrabold" style=" color: #000;text-transform: capitalize;font-size: 2rem;">Turn panic into peace of mind</span><div class="w-100"></div>
        <span style=" color: #000;font-size: 1.5rem;"> Lost something? Found something?<div class="w-100"></div>
         We’ll take it from here</span><div class="w-100"></div>
-        <button id="report" class="mt-3" onclick="window.location.href='login.jsp';">report an item</button>
+        <button id="report" class="mt-3" onclick="window.location.href='addItem.jsp';">report an item</button>
 
     </div>
     <div class="col-12 col-md-6" style="display: flex
