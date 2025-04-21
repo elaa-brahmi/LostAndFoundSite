@@ -557,7 +557,7 @@
       <!-- Copyright -->
       <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
         © 2025 Copyright:
-        <a class="text-black" href="https://mdbootstrap.com/">Lost&Found TN</a>
+        <a class="text-black" href="home.jsp">Lost&Found TN</a>
       </div>
       <!-- Copyright -->
     </footer>

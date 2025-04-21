@@ -8,12 +8,14 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Poetsen+One&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poetsen+One&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -30,7 +32,7 @@
             AOS.init();
         });
     </script>
-    <title>Title</title>
+    <title>about</title>
     <style>
         .styled-button {
             position: relative;
@@ -480,7 +482,7 @@
             }
         }
 
-        #report:hover{
+        .report:hover{
             color: #fff; /* Darker purple */
           width:250px;
             font-size:25px;
@@ -488,7 +490,7 @@
 
 
         }
-        #report{
+        .report{
             transition: all 0.3s ease;
             cursor: pointer;
             background-color: #8d8ddd;
@@ -744,6 +746,174 @@
             outline: 2px solid transparent;
             outline-offset: 2px;
         }
+
+        /* From Uiverse.io by Juanes200122 */
+        .containerProgress {
+            /* color: black; */
+            margin-right: auto !important;
+            margin-left: auto !important;
+            margin-top: 4rem;
+            position: relative;
+            /* margin: auto; */
+            max-width: 70%;
+            width: 100%;
+            background: #afa8a7;
+            /* margin: 0 15px; */
+            padding: 10px 20px;
+            border-radius: 7px;
+        }
+
+        .containerProgress .skill-box {
+            width: 100%;
+            margin: 25px 0;
+        }
+
+        .skill-box .title {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            color: black;
+        }
+
+        .skill-box .skill-bar {
+            height: 8px;
+            width: 100%;
+            border-radius: 6px;
+            margin-top: 6px;
+            background: white;
+        }
+
+        .skill-bar .skill-per {
+            position: relative;
+            display: block;
+            height: 100%;
+            width: 90%;
+            border-radius: 6px;
+            background: rgb(226, 226, 226);
+            animation: progress 0.4s ease-in-out forwards;
+            opacity: 0;
+        }
+
+        .skill-per.users{
+            /*progreso de las diferentes lenguajes*/
+            width: 70%;
+            animation-delay: 0.1s;
+        }
+
+        .skill-per.fi{
+            /*progreso de las diferentes lenguajes*/
+            width: 45%;
+            animation-delay: 0.1s;
+        }
+
+        .skill-per.li{
+            /*progreso de las diferentes lenguajes*/
+            width: 55%;
+            animation-delay: 0.2s;
+        }
+
+        @keyframes progress {
+            0% {
+                width: 0;
+                opacity: 1;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+
+        .skill-per .tooltip {
+            opacity:1;
+            position: absolute;
+            right: -14px;
+            top: -28px;
+            font-size: 9px;
+            font-weight: 500;
+            color: rgb(0, 0, 0);
+            font-weight: bold;
+            padding: 2px 6px;
+            border-radius: 3px;
+            background: rgb(226, 226, 226);
+            z-index: 1;
+        }
+
+        .tooltip::before {
+            opacity: 0;
+            content: "";
+            position: absolute;
+            left: 50%;
+            bottom: -2px;
+            height: 10px;
+            width: 10px;
+            z-index: -1;
+            background-color: rgb(226, 226, 226);
+            transform: translateX(-50%) rotate(45deg);
+        }
+
+        /* From Uiverse.io by kamehame-ha */
+
+
+        .cardsTes .green {
+            background-color: #71b1aa;
+        }
+
+        .cardsTes .purple {
+            background-color: #7e7ece;
+        }
+
+        .cardsTes .green {
+            background-color: #71b1aa;
+        }
+
+        .cardsTes .card {
+            margin-bottom:5%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            text-align: center;
+            height: 250px;
+
+            border-radius: 20px;
+            color: white;
+            cursor: pointer;
+            transition: 400ms;
+        }
+
+        .cardsTes .card p.tip {
+            font-size: 15px;
+            font-weight: 700;
+        }
+
+        .cardsTes .card p.second-text {
+            font-size: .7em;
+        }
+
+        .cardsTes .card:hover {
+            transform: scale(1.1, 1.1);
+        }
+
+        .cardsTes :hover > .card:not(:hover) {
+            filter: blur(10px);
+            transform: scale(0.9, 0.9);
+        }
+        .roboto-Poetsen  {
+                     font-family: "Roboto", sans-serif;
+                     font-optical-sizing: auto;
+                     font-weight: 700;
+                     font-style: normal;
+                     font-variation-settings:
+                             "wdth" 100;
+                 }
+        .robotoFont {
+                     font-family: "Roboto", sans-serif;
+                     font-optical-sizing: auto;
+                     font-weight: 800;
+                     font-style: italic;
+                     font-variation-settings:
+                             "wdth" 100;
+                 }
     </style>
 </head>
 
@@ -765,7 +935,7 @@
         <span class="poppins-extrabold" style=" color: #000;text-transform: capitalize;font-size: 2rem;">Turn panic into peace of mind</span><div class="w-100"></div>
        <span style=" color: #000;font-size: 1.5rem;"> Lost something? Found something?<div class="w-100"></div>
         We’ll take it from here</span><div class="w-100"></div>
-        <button id="report" class="mt-3" onclick="window.location.href='addItem.jsp';">report an item</button>
+        <button class="report mt-3" onclick="window.location.href='addItem.jsp';">report an item</button>
 
     </div>
     <div class="col-12 col-md-6" style="display: flex
@@ -813,8 +983,8 @@
                     <span></span><span></span><span></span><span></span><span></span>
                 </div></div>
                 <div class="content text-center p-1">
-                   <h3 class="text-center">Prove ownership of the item</h3>
-                    Once the lost item "matched", prove who you are thanks to a security question (ex: describe the shell of your phone, ...). Then, our partner who found this item will be able to validate that this is yours
+                   <h3 class="text-center">connect with your match</h3>
+                    Once the lost item is matched, you’ll be able to connect with the other user through our secure chat system.
 
                 </div></div>
         </div>
@@ -826,14 +996,14 @@
             </div>
         </div>
             <div class="content text-center p-1"> <h3 class="text-center">Get it back!</h3>
-                As soon as you are authenticated, you receive the information to pick it up or have it delivered. Remember to communicate the reference's number found
+                Once you're authenticated and matched, you can chat with the other user to agree on how to return the item—either by meeting up or arranging a delivery
             </div>
             </div>
         </div>
     </div>
 
 
-    <div class="container mx-auto" style="margin-top: 9rem !important;">
+    <div class="container mx-auto" style="margin-top: 9rem !important;" data-aos="zoom-in">
         <div class="row g-4">
             <div class="col-12 col-md-6 col-lg-4 mx-auto" style="width: 60%;">
                 <div class="info-card">
@@ -867,9 +1037,74 @@
             </button>
         </div>
     </div>
+
+
+        <!-- From Uiverse.io by Juanes200122 -->
+    <h3 class="roboto-Poetsen mt-5 text-center">statistics</h3>
+        <div class="containerProgress" data-aos="zoom-in">
+            <div class="skill-box">
+                <span class="title">users</span>
+
+                <div class="skill-bar">
+      <span class="skill-per users" style="background-color: black;">
+        <span class="tooltip">70%</span>
+      </span>
+                </div>
+            </div>
+
+            <div class="skill-box">
+                <span class="title">found items</span>
+
+                <div class="skill-bar">
+      <span class="skill-per fi" style="background-color: black;">
+        <span class="tooltip">45%</span>
+      </span>
+                </div>
+            </div>
+            <div class="skill-box">
+                <span class="title">lost items</span>
+
+                <div class="skill-bar">
+      <span class="skill-per li" style="background-color: black;">
+        <span class="tooltip">55%</span>
+      </span>
+                </div>
+            </div>
+        </div>
+
+
+<h3 class="roboto-Poetsen mt-5 text-center ">Testimonials</h3>
+    <!-- From Uiverse.io by kamehame-ha -->
+    <div class="cardsTes mx-auto mt-5 row " style="gap: 10%;
+    width: 80%;">
+        <div class="card green col-12 col-md-6 col-lg-3 p-3">
+            <p class="tip">"I lost my backpack on campus and thought it was gone forever. Thanks to this platform, someone found it and contacted me the same day!"
+            </p>
+            <p class="second-text">— Yasmine B., Student</p>
+        </div>
+        <div class="card purple col-12 col-md-6 col-lg-3 p-3">
+            <p class="tip">"I found a phone at a bus stop and wasn’t sure what to do. Reporting it here was so easy, and the owner proved it through chat. We met up safely and she was so grateful!"</p>
+            <p class="second-text">— Omar R., Graphic Designer</p>
+        </div>
+        <div class="card green col-12 col-md-6 col-lg-3 p-3">
+            <p class="tip">"The chat system made everything smooth. I described my lost watch, and the finder confirmed it was mine. We arranged delivery in minutes."</p>
+            <p class="second-text">— Khaled T., Engineer</p>
+        </div>
+    </div>
+<div class="100"></div>
+    <div class="mx-auto mt-5" data-aos="zoom-in-up">
+        <p class="robotoFont" style="text-align: center;
+    font-size: 30px;">Ready to find what you've lost or help someone else?</p>
+        <div class="d-flex justify-content-center align-items-center">
+        <button class="report mt-3 " style="margin-right:5%;"  onclick="window.location.href='addItem.jsp';">lost an item</button>
+        <button class="report mt-3"  onclick="window.location.href='addItem.jsp';">found an item</button>
+        </div>
+    </div>
+
+
 <!-- footer -->
 <div style="width: 100%;;position: relative;
-    top: 200px;left: 0;right: 0;margin-top: 10rem !important;">
+    top: 10px;left: 0;right: 0;margin-top: 10rem !important;">
 
     <section class="">
         <!-- Footer -->
@@ -893,7 +1128,7 @@
             <!-- Copyright -->
             <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
                 © 2025 Copyright:
-                <a class="text-black" href="https://mdbootstrap.com/">Lost&Found TN</a>
+                <a class="text-black" href="home.jsp">Lost&Found TN</a>
             </div>
             <!-- Copyright -->
         </footer>
@@ -912,12 +1147,23 @@
     function hideCookie(){
         var cookie=document.querySelector("#cookie");
         cookie.style.display='none';
+        localStorage.setItem("cookieAccepted", "true");
 
     }
     window.onload = function() {
-        <% if (session.getAttribute("userId") != null && "user".equals(session.getAttribute("role"))) { %>
-            document.getElementById("register").classList.toggle("hidden");
-        <% } %>
+        var cookieAccepted = localStorage.getItem("cookieAccepted");
+        console.log(cookieAccepted);
+        const isAuthenticated = <%= session.getAttribute("userId") != null ? "true" : "false" %>;
+        console.log("user authentication "+isAuthenticated);
+        if(!cookieAccepted || isAuthenticated==="false"){
+            console.log("cookie accepted "+cookieAccepted);
+            console.log("user authenticated "+isAuthenticated);
+
+            var cookie=document.querySelector("#cookie");
+            cookie.style.display='block';}
+            else{
+            console.log("cookie not shown");}
+     
     }</script>
 <script>
     (function () {
