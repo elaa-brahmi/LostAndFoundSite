@@ -120,7 +120,7 @@ public class ConversationDao {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return Timestamp.from(Instant.now()).toString();
+        return null ;
     }
 
     public static int addConversationToUser(Integer userId1, Integer userId2) {

@@ -95,6 +95,8 @@ public class FriendRequestDao {
             conversationImpl.addConversationToUser(friendRequest.getSenderId(), friendRequest.getReceiverId());
         } else {
             deleteFriendRequest(friendRequestId);
+            //todo 2 item status return to matched
+            
         }
         String sql = "UPDATE friend_requests SET status = ? WHERE id = ?";
         try (Connection con = BDConnection.getConnection();
@@ -173,5 +175,24 @@ public class FriendRequestDao {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public static boolean checkFriendship(int user1, int user2) {
+        String sql = "SELECT COUNT(*) FROM friend_requests WHERE (sender_id = ? AND receiver_id = ?) OR (sender_id = ? AND receiver_id = ?) AND status = 'ACCEPTED'";
+        try (Connection con = BDConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setInt(1, user1);
+            ps.setInt(2, user2);
+            ps.setInt(3, user2);
+            ps.setInt(4, user1);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt(1) > 0;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 }

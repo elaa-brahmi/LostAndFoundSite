@@ -1148,12 +1148,16 @@
         var cookie=document.querySelector("#cookie");
         cookie.style.display='none';
         localStorage.setItem("cookieAccepted", "true");
-
     }
+
     window.onload = function() {
         var cookieAccepted = localStorage.getItem("cookieAccepted");
         console.log(cookieAccepted);
         const isAuthenticated = <%= session.getAttribute("userId") != null ? "true" : "false" %>;
+        if(isAuthenticated && cookieAccepted==="true"){
+            var cookie=document.querySelector("#cookie");
+            cookie.style.display='none';
+        }
         console.log("user authentication "+isAuthenticated);
         if(!cookieAccepted || isAuthenticated==="false"){
             console.log("cookie accepted "+cookieAccepted);

@@ -346,6 +346,31 @@
     function closeWarning(){
         document.querySelector(".warning").classList.add('hidden');
     }
+    function checkFriendship(){
+        $.ajax({
+            url: 'http://localhost:8080/checkFriendship',
+            type: 'GET',
+            data: {
+                senderId:<%= session.getAttribute("userId")%>,
+                receiverId:sessionStorage.getItem('receiverId')
+            },
+            success: function(data){
+                console.log(data);
+                if(JSON.stringify(data)==="true"){
+                    document.getElementById("request").classList.add("hidden");
+                    toastr.info('you are already friends','info' );
+                   
+                }
+                else{
+                    document.getElementById("request").classList.remove("hidden");
+                }
+            },
+            error: function(data){
+                console.log(data);
+            }
+
+        });
+    }
 window.onload = function () {
     const urlParams = new URLSearchParams(window.location.search);
     const itemId = urlParams.get('idItem');
@@ -361,7 +386,8 @@ window.onload = function () {
             console.log(data);
             sessionStorage.setItem('receiverId', data.UserId);
             if(data.type==="FOUND" && data.matchedStatus==="RESOLVED"){
-                document.getElementById("request").classList.remove("hidden");
+                //todo check if you're already friends 
+                checkFriendship();
             }
             if(data.type==="FOUND" && data.matchedStatus!=="RESOLVED"){
                 console.info("this is a found item");
@@ -425,9 +451,12 @@ function updateNotif(status){
             if(data.type!=="LOST"){
 
                 if(status === "accepted"){
-                    document.getElementById("request").classList.remove("hidden");
-                    //todo toastr not working
                     toastr.info('you item is matched,you will not receive any further notification about it','info' );
+
+                    checkFriendship()
+
+                    //document.getElementById("request").classList.remove("hidden");
+                    //todo toastr not working
 
                 }
                 else{
