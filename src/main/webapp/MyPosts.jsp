@@ -1576,6 +1576,7 @@ function fetchConversations(){
         document.getElementById('chat').classList.add('hiddenn');
     }
     function openConversation(idConvo,idRecei){
+        console.log("receiverid"+idRecei);
         document.querySelector("#dotConvoCheck").classList.add("hidden");
 
         fetchConversations();
